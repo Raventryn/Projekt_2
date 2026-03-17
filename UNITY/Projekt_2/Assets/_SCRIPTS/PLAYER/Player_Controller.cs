@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Player_Controller : MonoBehaviour
@@ -28,9 +29,12 @@ public class Player_Controller : MonoBehaviour
 
     [Header("Player Grounded")]
     public bool IsGrounded;
-    public float JumpStrength;
+    public float JumpHeight;
     public LayerMask GroundLayers;
     public bool AllowJump = true;
+
+    [Header("Player Crouched")]
+    public bool IsCrouchForced;
 
     [Header("Camera")]
     public GameObject CameraFollowTarget;
@@ -44,10 +48,16 @@ public class Player_Controller : MonoBehaviour
 
     [SerializeField] bool isSprinting;
     [SerializeField] bool isCrouched;
+    [SerializeField] bool isStanding = true;
 
     private float _moveSpeed;
     private float _verticalVelocity;
     private float _gravityStrength = 9.81f;
+
+    private float _terminalVelocity = 53f;
+
+    private float _defaultHeight;
+    
 
     
 
@@ -86,6 +96,7 @@ public class Player_Controller : MonoBehaviour
     private void Start()
     {
         SetMoveSpeed(false, false);
+        _defaultHeight = _characterController.height;
     }
 
     private void Update()
@@ -93,22 +104,32 @@ public class Player_Controller : MonoBehaviour
         Move();
         Look();
         GravityAndGroundedCheck();
+        CrouchCheck();
     }
 
     private void Move()
     {
         Vector2 inputStrength = _moveAction.ReadValue<Vector2>();
 
-        gameObject.transform.Translate(Vector3.forward * _moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
+        /*gameObject.transform.Translate(Vector3.forward * _moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
 
-        gameObject.transform.Translate(Vector3.right * _moveSpeed * inputStrength.x * Time.deltaTime, Space.Self);
+        gameObject.transform.Translate(Vector3.right * _moveSpeed * inputStrength.x * Time.deltaTime, Space.Self);*/
+
+        Vector3 moveDirection = new Vector3(inputStrength.x, 0.0f, inputStrength.y).normalized;
+
+        if(inputStrength != Vector2.zero)
+        {
+            moveDirection = transform.right * inputStrength.x + transform.forward * inputStrength.y;
+        }   
+
+        _characterController.Move(moveDirection.normalized *(_moveSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
     private void Look()
     {
         Vector2 lookInput = _lookAction.ReadValue<Vector2>();
 
-        Debug.Log(lookInput);
+        //Debug.Log(lookInput);
 
         CameraRotation(lookInput);
 
@@ -129,30 +150,27 @@ public class Player_Controller : MonoBehaviour
 
         if (IsGrounded && AllowJump)
         {
-            _verticalVelocity += JumpStrength;
-            Debug.Log(IsGrounded);
+            _verticalVelocity = Mathf.Sqrt(JumpHeight * 2f * _gravityStrength);
+            Debug.Log(_verticalVelocity);
         }
     }
 
     private void GravityAndGroundedCheck()
     {
         //Physics Check to ground
-        IsGrounded = Physics.CheckSphere(transform.position + new Vector3(0, 0.45f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
+        IsGrounded = Physics.CheckSphere(transform.position + new Vector3(0, 0.35f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
 
         //If Player is on ground, reset vertical velocity
-        if(IsGrounded && _verticalVelocity < 0)
+        if(IsGrounded && _verticalVelocity < 0.0f)
         {
-            _verticalVelocity = 0f;
+            _verticalVelocity = -2f;
         }
 
-        if (!IsGrounded)
+        if (!IsGrounded && _verticalVelocity < _terminalVelocity)
         {
             //Gravity
             _verticalVelocity -= _gravityStrength * Time.deltaTime;
         }   
-
-        Vector3 fallVector = new Vector3(0, _verticalVelocity, 0);
-        gameObject.transform.Translate(fallVector * Time.deltaTime, Space.Self);
     }
 
     
@@ -162,10 +180,9 @@ public class Player_Controller : MonoBehaviour
     {
         if (context.performed)
         {
+            if(isCrouched) return;
             isSprinting = true;
-            isCrouched = false;
             SetMoveSpeed(true, isCrouched);
-            CrouchDeform(isCrouched);
         }
         else if (context.canceled)
         {
@@ -213,15 +230,26 @@ public class Player_Controller : MonoBehaviour
     {
         if (toggle)
         {
-            _playerCapsule.transform.localPosition -= new Vector3(0, 0.5f, 0);
-            CameraFollowTarget.transform.localPosition -= new Vector3(0, 0.5f, 0);
-            _characterController.center -= new Vector3(0, 0.5f, 0);
+            isStanding = false;
+            //_playerCapsule.transform.localPosition -= new Vector3(0, 0.5f, 0);
+            _characterController.height -= 1f;
+            _characterController.center = new Vector3(0.0f, _characterController.height * 0.5f, 0.0f);
+            CameraFollowTarget.transform.localPosition *= 0.5f;
         }
-        else
+        else if(!IsCrouchForced)
         {
-            _playerCapsule.transform.localPosition = new Vector3(0, 1, 0);
-            CameraFollowTarget.transform.localPosition = new Vector3(0, 1.6f, 0);
-            _characterController.center = new Vector3(0, 1, 0);
+            isStanding = true;
+            //_playerCapsule.transform.localPosition = new Vector3(0, 1, 0);
+            _characterController.height = _defaultHeight;
+            _characterController.center = new Vector3(0.0f, _characterController.height * 0.5f, 0.0f);
+            CameraFollowTarget.transform.localPosition *= 2f;  
         }
+    }
+
+    private void CrouchCheck()
+    {
+        IsCrouchForced = Physics.CheckSphere(transform.position + new Vector3(0, 1.35f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
+
+        if(!IsCrouchForced && !isStanding && !isCrouched) CrouchDeform(false);
     }
 }
