@@ -4,21 +4,21 @@ using UnityEngine.InputSystem;
 public class Player_Controller : MonoBehaviour
 {
     //PlayerInput Component
-    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private PlayerInput _playerInput;
     //Character Controller Component
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private CharacterController _characterController;
     //Rigidbody Component
-    [SerializeField] private Rigidbody playerRb;
+    [SerializeField] private Rigidbody _playerRb;
     //Capsule Object for testing purposes
-    [SerializeField] private GameObject playerCapsule;
+    [SerializeField] private GameObject _playerCapsule;
 
     //Actions defined in Action Map "Land"
-    private InputAction moveAction;
-    private InputAction jumpAction;
-    private InputAction sprintAction;
-    private InputAction crouchAction;
-    private InputAction interactAction;
-    private InputAction lookAction;
+    private InputAction _moveAction;
+    private InputAction _jumpAction;
+    private InputAction _sprintAction;
+    private InputAction _crouchAction;
+    private InputAction _interactAction;
+    private InputAction _lookAction;
 
     //Properties of Player
     [Header("Player")]
@@ -27,7 +27,7 @@ public class Player_Controller : MonoBehaviour
     public float CrouchSpeed;
 
     [Header("Player Grounded")]
-    public bool isGrounded;
+    public bool IsGrounded;
     public float JumpStrength;
     public LayerMask GroundLayers;
     public bool AllowJump = true;
@@ -40,47 +40,47 @@ public class Player_Controller : MonoBehaviour
     [Range(0.5f, 4.0f)]
     public float LookSensitivity = 1;
 
-    private float cameraPitch;
+    private float CameraPitch;
 
     [SerializeField] bool isSprinting;
     [SerializeField] bool isCrouched;
 
-    private float moveSpeed;
-    private float verticalVelocity;
-    private float gravityStrength = 9.81f;
+    private float _moveSpeed;
+    private float _verticalVelocity;
+    private float _gravityStrength = 9.81f;
 
     
 
     private void Awake()
     {
-        moveAction = playerInput.actions["Move"];
-        jumpAction = playerInput.actions["Jump"];
-        sprintAction = playerInput.actions["Sprint"];
-        crouchAction = playerInput.actions["Crouch"];
-        interactAction = playerInput.actions["Interact"];
-        lookAction = playerInput.actions["Look"];
+        _moveAction = _playerInput.actions["Move"];
+        _jumpAction = _playerInput.actions["Jump"];
+        _sprintAction = _playerInput.actions["Sprint"];
+        _crouchAction = _playerInput.actions["Crouch"];
+        _interactAction = _playerInput.actions["Interact"];
+        _lookAction = _playerInput.actions["Look"];
     }
 
     private void OnEnable()
     {
-        sprintAction.performed += SetSprint;
-        sprintAction.canceled += SetSprint;
+        _sprintAction.performed += SetSprint;
+        _sprintAction.canceled += SetSprint;
 
-        crouchAction.performed += SetCrouch;
-        crouchAction.canceled +=  SetCrouch;
+        _crouchAction.performed += SetCrouch;
+        _crouchAction.canceled +=  SetCrouch;
 
-        jumpAction.performed += Jump;
+        _jumpAction.performed += Jump;
     }
 
     private void OnDisable()
     {
-        sprintAction.performed -= SetSprint;
-        sprintAction.performed -= SetSprint;
+        _sprintAction.performed -= SetSprint;
+        _sprintAction.performed -= SetSprint;
 
-        crouchAction.performed +=  SetCrouch;
-        crouchAction.canceled -=  SetCrouch;
+        _crouchAction.performed +=  SetCrouch;
+        _crouchAction.canceled -=  SetCrouch;
 
-        jumpAction.performed -= Jump;
+        _jumpAction.performed -= Jump;
     }
 
     private void Start()
@@ -97,16 +97,16 @@ public class Player_Controller : MonoBehaviour
 
     private void Move()
     {
-        Vector2 inputStrength = moveAction.ReadValue<Vector2>();
+        Vector2 inputStrength = _moveAction.ReadValue<Vector2>();
 
-        gameObject.transform.Translate(Vector3.forward * moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
+        gameObject.transform.Translate(Vector3.forward * _moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
 
-        gameObject.transform.Translate(Vector3.right * moveSpeed * inputStrength.x * Time.deltaTime, Space.Self);
+        gameObject.transform.Translate(Vector3.right * _moveSpeed * inputStrength.x * Time.deltaTime, Space.Self);
     }
 
     private void Look()
     {
-        Vector2 lookInput = lookAction.ReadValue<Vector2>();
+        Vector2 lookInput = _lookAction.ReadValue<Vector2>();
 
         Debug.Log(lookInput);
 
@@ -117,41 +117,41 @@ public class Player_Controller : MonoBehaviour
 
     private void CameraRotation(Vector2 lookInput)
     {
-        cameraPitch -= lookInput.y * LookSensitivity * Time.deltaTime;
-        cameraPitch = Mathf.Clamp(cameraPitch, BottomClamp,TopClamp);
+        CameraPitch -= lookInput.y * LookSensitivity * Time.deltaTime;
+        CameraPitch = Mathf.Clamp(CameraPitch, BottomClamp,TopClamp);
 
-        CameraFollowTarget.transform.localRotation = Quaternion.Euler(cameraPitch, 0, 0);
+        CameraFollowTarget.transform.localRotation = Quaternion.Euler(CameraPitch, 0, 0);
     }
 
     private void Jump(InputAction.CallbackContext context)
     {
         if(!context.performed) return;
 
-        if (isGrounded && AllowJump)
+        if (IsGrounded && AllowJump)
         {
-            verticalVelocity += JumpStrength;
-            Debug.Log(isGrounded);
+            _verticalVelocity += JumpStrength;
+            Debug.Log(IsGrounded);
         }
     }
 
     private void GravityAndGroundedCheck()
     {
         //Physics Check to ground
-        isGrounded = Physics.CheckSphere(transform.position + new Vector3(0, 0.45f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
+        IsGrounded = Physics.CheckSphere(transform.position + new Vector3(0, 0.45f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
 
         //If Player is on ground, reset vertical velocity
-        if(isGrounded && verticalVelocity < 0)
+        if(IsGrounded && _verticalVelocity < 0)
         {
-            verticalVelocity = 0f;
+            _verticalVelocity = 0f;
         }
 
-        if (!isGrounded)
+        if (!IsGrounded)
         {
             //Gravity
-            verticalVelocity -= gravityStrength * Time.deltaTime;
+            _verticalVelocity -= _gravityStrength * Time.deltaTime;
         }   
 
-        Vector3 fallVector = new Vector3(0, verticalVelocity, 0);
+        Vector3 fallVector = new Vector3(0, _verticalVelocity, 0);
         gameObject.transform.Translate(fallVector * Time.deltaTime, Space.Self);
     }
 
@@ -197,15 +197,15 @@ public class Player_Controller : MonoBehaviour
     {
         if(sprinting)
         {
-            moveSpeed = SprintSpeed;
+            _moveSpeed = SprintSpeed;
         }
         else if (crouching)
         {
-            moveSpeed = CrouchSpeed;
+            _moveSpeed = CrouchSpeed;
         }
         else
         {
-            moveSpeed = WalkSpeed;
+            _moveSpeed = WalkSpeed;
         }
     }
 
@@ -213,15 +213,15 @@ public class Player_Controller : MonoBehaviour
     {
         if (toggle)
         {
-            playerCapsule.transform.localPosition -= new Vector3(0, 0.5f, 0);
+            _playerCapsule.transform.localPosition -= new Vector3(0, 0.5f, 0);
             CameraFollowTarget.transform.localPosition -= new Vector3(0, 0.5f, 0);
-            characterController.center -= new Vector3(0, 0.5f, 0);
+            _characterController.center -= new Vector3(0, 0.5f, 0);
         }
         else
         {
-            playerCapsule.transform.localPosition = new Vector3(0, 1, 0);
+            _playerCapsule.transform.localPosition = new Vector3(0, 1, 0);
             CameraFollowTarget.transform.localPosition = new Vector3(0, 1.6f, 0);
-            characterController.center = new Vector3(0, 1, 0);
+            _characterController.center = new Vector3(0, 1, 0);
         }
     }
 }
