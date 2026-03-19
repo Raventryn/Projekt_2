@@ -18,7 +18,6 @@ public class Player_Controller : MonoBehaviour
     private InputAction _jumpAction;
     private InputAction _sprintAction;
     private InputAction _crouchAction;
-    private InputAction _interactAction;
     private InputAction _lookAction;
 
     //Properties of Player
@@ -41,7 +40,7 @@ public class Player_Controller : MonoBehaviour
     public float TopClamp;
     public float BottomClamp;
 
-    [Range(0.5f, 4.0f)]
+    [Range(0.5f, 6.0f)]
     public float LookSensitivity = 1;
 
     private float CameraPitch;
@@ -57,6 +56,9 @@ public class Player_Controller : MonoBehaviour
     private float _terminalVelocity = 53f;
 
     private float _defaultHeight;
+
+    private bool _allowMove = true;
+    private bool _allowLook = true;
     
 
     
@@ -67,7 +69,6 @@ public class Player_Controller : MonoBehaviour
         _jumpAction = _playerInput.actions["Jump"];
         _sprintAction = _playerInput.actions["Sprint"];
         _crouchAction = _playerInput.actions["Crouch"];
-        _interactAction = _playerInput.actions["Interact"];
         _lookAction = _playerInput.actions["Look"];
     }
 
@@ -80,6 +81,9 @@ public class Player_Controller : MonoBehaviour
         _crouchAction.canceled +=  SetCrouch;
 
         _jumpAction.performed += Jump;
+
+        GameEventsManager.instance.playerEvents.onLockPlayerMovement += LockMovement;
+        GameEventsManager.instance.playerEvents.onLockPlayerCamera += LockCamera;
     }
 
     private void OnDisable()
@@ -91,6 +95,9 @@ public class Player_Controller : MonoBehaviour
         _crouchAction.canceled -=  SetCrouch;
 
         _jumpAction.performed -= Jump;
+
+        GameEventsManager.instance.playerEvents.onLockPlayerMovement -= LockMovement;
+        GameEventsManager.instance.playerEvents.onLockPlayerCamera -= LockCamera;
     }
 
     private void Start()
@@ -109,6 +116,8 @@ public class Player_Controller : MonoBehaviour
 
     private void Move()
     {
+        if(!_allowMove) return;
+
         Vector2 inputStrength = _moveAction.ReadValue<Vector2>();
 
         /*gameObject.transform.Translate(Vector3.forward * _moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
@@ -127,6 +136,8 @@ public class Player_Controller : MonoBehaviour
 
     private void Look()
     {
+        if(!_allowLook) return;
+
         Vector2 lookInput = _lookAction.ReadValue<Vector2>();
 
         //Debug.Log(lookInput);
@@ -251,5 +262,29 @@ public class Player_Controller : MonoBehaviour
         IsCrouchForced = Physics.CheckSphere(transform.position + new Vector3(0, 1.35f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
 
         if(!IsCrouchForced && !isStanding && !isCrouched) CrouchDeform(false);
+    }
+
+    private void LockMovement(bool toggle)
+    {
+        if (toggle)
+        {
+            _allowMove = true;
+        }
+        else if (!toggle)
+        {
+            _allowMove = false;
+        }
+    }
+
+    private void LockCamera(bool toggle)
+    {
+        if (toggle)
+        {
+            _allowLook = true;
+        }
+        else if (!toggle)
+        {
+            _allowLook = false;
+        }
     }
 }
