@@ -162,7 +162,7 @@ public class Player_Controller : MonoBehaviour
         if (IsGrounded && AllowJump)
         {
             _verticalVelocity = Mathf.Sqrt(JumpHeight * 2f * _gravityStrength);
-            Debug.Log(_verticalVelocity);
+            //Debug.Log(_verticalVelocity);
         }
     }
 
@@ -231,7 +231,7 @@ public class Player_Controller : MonoBehaviour
         {
             _moveSpeed = CrouchSpeed;
         }
-        else
+        else if(!IsCrouchForced)
         {
             _moveSpeed = WalkSpeed;
         }
@@ -261,7 +261,11 @@ public class Player_Controller : MonoBehaviour
     {
         IsCrouchForced = Physics.CheckSphere(transform.position + new Vector3(0, 1.35f, 0), 0.5f, GroundLayers, QueryTriggerInteraction.Ignore);
 
-        if(!IsCrouchForced && !isStanding && !isCrouched) CrouchDeform(false);
+        if(!IsCrouchForced && !isStanding && !isCrouched)
+        {
+            CrouchDeform(false);
+            SetMoveSpeed(false, false);
+        } 
     }
 
     private void LockMovement(bool toggle)
