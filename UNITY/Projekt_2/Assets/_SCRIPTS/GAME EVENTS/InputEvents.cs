@@ -5,7 +5,9 @@ using UnityEngine;
 public enum InputEventContext
 {
     DEFAULT,
-    INVENTORY
+    INVENTORY,
+
+    DIALOGUE
 }
 public class InputEvents
 {
@@ -42,6 +44,16 @@ public class InputEvents
         if(onPressedInteract != null)
         {
             onPressedInventory(context);
+        }
+    }
+
+    public event Action<InputEventContext> onPressedEscape;
+
+    public void PressedEscape()
+    {
+        if(onPressedEscape != null)
+        {
+            onPressedEscape(context);
         }
     }
 }
