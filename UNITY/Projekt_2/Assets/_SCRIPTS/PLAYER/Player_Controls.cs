@@ -154,6 +154,15 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3943d32-969b-41d6-a5eb-59973bfddfdd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -314,7 +323,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""45c29109-77b3-4913-be9a-3476f13b7afd"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";PC"",
@@ -352,6 +361,28 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8e87262-f164-4360-a624-e757d5c6f85e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5681762f-046e-4503-bc3c-c9970c9948fb"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -397,6 +428,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         m_Land_Crouch = m_Land.FindAction("Crouch", throwIfNotFound: true);
         m_Land_Interact = m_Land.FindAction("Interact", throwIfNotFound: true);
         m_Land_Look = m_Land.FindAction("Look", throwIfNotFound: true);
+        m_Land_Escape = m_Land.FindAction("Escape", throwIfNotFound: true);
     }
 
     ~@Player_Controls()
@@ -484,6 +516,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Land_Crouch;
     private readonly InputAction m_Land_Interact;
     private readonly InputAction m_Land_Look;
+    private readonly InputAction m_Land_Escape;
     /// <summary>
     /// Provides access to input actions defined in input action map "Land".
     /// </summary>
@@ -523,6 +556,10 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Land/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Land_Look;
+        /// <summary>
+        /// Provides access to the underlying input action "Land/Escape".
+        /// </summary>
+        public InputAction @Escape => m_Wrapper.m_Land_Escape;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -570,6 +607,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Escape.started += instance.OnEscape;
+            @Escape.performed += instance.OnEscape;
+            @Escape.canceled += instance.OnEscape;
         }
 
         /// <summary>
@@ -602,6 +642,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Escape.started -= instance.OnEscape;
+            @Escape.performed -= instance.OnEscape;
+            @Escape.canceled -= instance.OnEscape;
         }
 
         /// <summary>
@@ -717,5 +760,12 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Escape" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

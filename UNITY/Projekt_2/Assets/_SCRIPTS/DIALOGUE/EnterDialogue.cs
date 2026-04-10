@@ -1,109 +1,97 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.Animations;
+using Unity.Cinemachine;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnterDialogue : MonoBehaviour
 {
-    [SerializeField] Camera _dialogueCamera;
+    [Header("Dialogue Knot")]
+    [SerializeField] private string dialogueKnotName;
 
-    [SerializeField] TMP_Text _dialogueText;
+    [SerializeField] CinemachineCamera _dialogueCamera;
 
-    Vector3 _dCameraPosition;
+    [SerializeField] GameObject _contentParent;
 
-    Vector3 _mCameraPosition;
+    [SerializeField] TextMeshProUGUI _dialogueText;
 
-    LookAtConstraint _cameraLookAt;
+    [SerializeField] DialogueChoiceButton[] _choiceButtons;
 
-    ConstraintSource _constraintSource;
-
-    public float CameraTransitionSpeed;
+    void Awake()
+    {
+        ResetPanel();
+        _contentParent.SetActive(false);
+    }
 
     void OnEnable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction += TransitionCamera;
-        GameEventsManager.instance.inputEvents.onPressedEscape += ExitCamera;
+        GameEventsManager.instance.inputEvents.onInteraction += EnterCamera;
+        GameEventsManager.instance.inputEvents.onPressedEscape += EarlyExit;
+        GameEventsManager.instance.dialogueEvents.onDialogueFinished += ExitDialogue;
+
+        GameEventsManager.instance.dialogueEvents.onDialogueFinished += SendFinishedEvent;
     }
 
     void OnDisable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction -= TransitionCamera;
-        GameEventsManager.instance.inputEvents.onPressedEscape -= ExitCamera;
+        GameEventsManager.instance.inputEvents.onInteraction -= EnterCamera;
+        GameEventsManager.instance.inputEvents.onPressedEscape -= EarlyExit;
+        GameEventsManager.instance.dialogueEvents.onDialogueFinished -= ExitDialogue;
+
+        GameEventsManager.instance.dialogueEvents.onDialogueFinished -= SendFinishedEvent;
     }
 
-    void TransitionCamera(GameObject gameObject)
+    public void SendDialogueEvent()
+    {
+        if (!dialogueKnotName.Equals(""))
+        {
+            GameEventsManager.instance.dialogueEvents.EnterDialogue(dialogueKnotName);
+        }
+    }
+
+    private void SendFinishedEvent()
+    {
+        //GameEventsManager.instance.npcEvents.ResumeBehaviour(gameObject);
+    }
+
+    void EnterCamera(GameObject gameObject)
     {
         if(gameObject != this.gameObject) return;
-
-        Debug.Log("Entered");
         
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
         GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
 
-        _cameraLookAt = Camera.main.GetComponent<LookAtConstraint>();
+        GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueText, _choiceButtons);
 
-        _mCameraPosition = Camera.main.transform.position;
+        _dialogueCamera.Priority = 1;
 
-        _dCameraPosition = _dialogueCamera.transform.position;
-
-        _constraintSource = _cameraLookAt.GetSource(0);
-        _constraintSource.sourceTransform = gameObject.transform;
-
-        MoveInCamera();
+        SendDialogueEvent();
     }
 
-    void MoveInCamera()
-    {
-        Vector3 direction = _dCameraPosition - Camera.main.transform.position;
-
-        bool cameraInPosition = false;
-
-        _cameraLookAt.constraintActive = true;
-
-        while(!cameraInPosition)
-        {
-            Camera.main.transform.Translate(direction.normalized * CameraTransitionSpeed * Time.deltaTime);
-
-            if(direction.magnitude >= 0.1f)
-            {
-                cameraInPosition = true;
-            }
-        }
-
-        _dialogueText.enabled = true;
-    }
-
-    void MoveOutCamera()
-    {
-        Vector3 direction = - Camera.main.transform.position - _mCameraPosition ;
-
-        bool cameraInPosition = false;
-
-        _dialogueText.enabled = false;
-
-        while(!cameraInPosition)
-        {
-            Camera.main.transform.Translate(direction.normalized * CameraTransitionSpeed * Time.deltaTime);
-
-            if(direction.magnitude >= 0.1f)
-            {
-                cameraInPosition = true;
-            }
-        }
-
-        _cameraLookAt.constraintActive = false;
-    }
-
-    void ExitCamera(InputEventContext context)
+    void EarlyExit(InputEventContext context)
     {
         if(context != InputEventContext.DIALOGUE) return;
-    
-        MoveOutCamera();
 
-        _constraintSource.sourceTransform = null;
+        ExitDialogue();
+    }
+
+    void ExitDialogue()
+    {
+        _dialogueCamera.Priority = -1;
+
+        _dialogueCamera.LookAt = null;
+
+        GameEventsManager.instance.dialogueEvents.ClearDialogueUIPanel();
 
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
         GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
+    }
+
+    private void ResetPanel()
+    {
+        _dialogueText.text = "";
     }
 }

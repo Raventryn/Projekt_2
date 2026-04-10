@@ -6,8 +6,8 @@ public class GameEventsManager : MonoBehaviour
 
     public PlayerEvents playerEvents;
     public InputEvents inputEvents;
-
     public InventoryEvents inventoryEvents;
+    public DialogueEvents dialogueEvents;
 
     void Awake()
     {
@@ -22,5 +22,6 @@ public class GameEventsManager : MonoBehaviour
         playerEvents = new PlayerEvents();
         inputEvents = new InputEvents();
         inventoryEvents = new InventoryEvents();
+        dialogueEvents = new DialogueEvents();
     }
 }

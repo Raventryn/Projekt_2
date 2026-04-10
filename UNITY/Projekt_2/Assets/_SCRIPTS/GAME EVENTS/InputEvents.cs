@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -11,10 +12,11 @@ public enum InputEventContext
 }
 public class InputEvents
 {
-    private InputEventContext context = InputEventContext.DEFAULT;
+    public InputEventContext Context {get; private set;} = InputEventContext.DEFAULT;
+
     public void ChangeInputContext(InputEventContext newContext)
     {
-        context = newContext;
+        Context = newContext;
     }
 
     public event Action<InputEventContext> onPressedInteract;
@@ -23,7 +25,7 @@ public class InputEvents
     {
         if(onPressedInteract != null)
         {
-            onPressedInteract(context);
+            onPressedInteract(Context);
         }
     }
 
@@ -43,7 +45,7 @@ public class InputEvents
     {
         if(onPressedInteract != null)
         {
-            onPressedInventory(context);
+            onPressedInventory(Context);
         }
     }
 
@@ -53,7 +55,7 @@ public class InputEvents
     {
         if(onPressedEscape != null)
         {
-            onPressedEscape(context);
+            onPressedEscape(Context);
         }
     }
 }
