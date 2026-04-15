@@ -8,7 +8,8 @@ public enum InputEventContext
     DEFAULT,
     INVENTORY,
 
-    DIALOGUE
+    DIALOGUE,
+    DIALOGUE_PLAYING
 }
 public class InputEvents
 {
@@ -58,4 +59,11 @@ public class InputEvents
             onPressedEscape(Context);
         }
     }
+
+    /*public event Action<bool> onShowCursor;
+
+    public void ShowCursor(bool toggle)
+    {
+        onShowCursor?.Invoke(toggle);
+    } */
 }

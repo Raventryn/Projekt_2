@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using Ink.Runtime;
 using Ink.Parsed;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class DialoguePanelUI : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class DialoguePanelUI : MonoBehaviour
     [SerializeField] private GameObject contentParent;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private DialogueChoiceButton[] choiceButtons;
+
+    private bool _dialoguePlaying = false;
+
+    private string _dialogueLine;
 
 
     private void OnEnable()
@@ -21,6 +27,8 @@ public class DialoguePanelUI : MonoBehaviour
 
         GameEventsManager.instance.dialogueEvents.onPassDialogueUIPanel += SetReferences;
         GameEventsManager.instance.dialogueEvents.onClearDialogueUIPanel += ClearReferences;
+
+        GameEventsManager.instance.inputEvents.onPressedInteract += SkipDialogue;
     }
 
     private void OnDisable()
@@ -61,7 +69,15 @@ public class DialoguePanelUI : MonoBehaviour
 
     private void DisplayDialogue(string dialogueLine, List<Ink.Runtime.Choice> dialogueChoices)
     {
-        dialogueText.text = dialogueLine;
+        if(!dialogueLine.Contains("<br>"))
+        {
+            _dialogueLine = dialogueLine;
+            StartCoroutine(ShowChars(dialogueLine));
+        }
+        else
+        {
+            dialogueText.text = dialogueLine;
+        }
 
         if(dialogueChoices.Count > choiceButtons.Length)
         {
@@ -91,6 +107,39 @@ public class DialoguePanelUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-
     
+
+    private void SkipDialogue(InputEventContext context)
+    {
+        if(context != InputEventContext.DIALOGUE_PLAYING) return;
+
+        if(!_dialoguePlaying) return;
+
+        StopAllCoroutines();
+
+        dialogueText.text = _dialogueLine;
+
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
+    }
+
+
+    private IEnumerator ShowChars(string bufferText)
+    {
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE_PLAYING);
+
+        _dialoguePlaying = true;
+
+        string dialogueLine = "";
+
+        foreach(char character in bufferText)
+        {
+            dialogueLine += character;
+            yield return new WaitForSeconds(0.03f);
+            dialogueText.text = dialogueLine;
+        }
+
+        _dialoguePlaying = false;
+
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
+    }
 }

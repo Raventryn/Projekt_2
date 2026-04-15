@@ -160,10 +160,6 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.dialogueEvents.DialogueFinished();
 
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
-
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
-
         //GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
 
         Cursor.lockState = CursorLockMode.Locked;

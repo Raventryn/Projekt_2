@@ -736,7 +736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &588303657
 Transform:
   m_ObjectHideFlags: 0
@@ -2911,7 +2911,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePanelUI
   contentParent: {fileID: 0}
   dialogueText: {fileID: 0}
-  choiceButtons: []
+  choiceButtons:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!43 &1256986957
 Mesh:
   m_ObjectHideFlags: 0
@@ -3417,17 +3419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   inkJson: {fileID: 4900000, guid: d416a55f14edde648a8389061f0b43b9, type: 3}
---- !u!114 &1384567122 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8684852099737772015, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
-  m_PrefabInstance: {fileID: 9073152700412684600}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a9b8a151e3aa49498dfffe796f20d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueChoiceButton
 --- !u!114 &1468690365 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7449387529592472173, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
@@ -4287,7 +4278,6 @@ MonoBehaviour:
   _choiceButtons:
   - {fileID: 1468690365}
   - {fileID: 692060442}
-  - {fileID: 1384567122}
 --- !u!135 &1810439795
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4796,7 +4786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307884809137408605, guid: 9776ea94f3c113a4aa537f117a79e2b1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4882,7 +4872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4754775546955526079, guid: 00203e17bdd64134f918fe4490ced61c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4968,7 +4958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9041345127564983341, guid: 72e173bb3b0685c4494aecb6b98eeab9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5054,7 +5044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8038225190872087650, guid: 3cb408625acf1a242b199ba6ce4e8b86, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5090,6 +5080,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1810439798}
     m_Modifications:
+    - target: {fileID: 2729489960234144165, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4666404592094367379, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4932316615241636555, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.01237824
@@ -5151,7 +5149,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4933718385250371249, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}

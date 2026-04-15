@@ -22,4 +22,11 @@ public class PlayerEvents
             onLockPlayerCamera(toggle);
         }
     }
+
+    public event Action<bool> onShowPlayerCharacter;
+
+    public void ShowPlayerCharacter(bool toggle)
+    {
+        onShowPlayerCharacter?.Invoke(toggle);
+    }
 }

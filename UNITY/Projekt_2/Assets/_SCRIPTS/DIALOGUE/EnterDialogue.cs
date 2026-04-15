@@ -62,6 +62,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
         GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
+        GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
         GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueText, _choiceButtons);
 
@@ -88,6 +89,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
         GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
+        GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
     }
 
     private void ResetPanel()
