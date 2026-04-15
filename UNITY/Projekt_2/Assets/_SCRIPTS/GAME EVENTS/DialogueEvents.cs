@@ -4,6 +4,8 @@ using UnityEngine;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine.UI;
+using Febucci.TextAnimatorForUnity.TextMeshPro;
+using Febucci.TextAnimatorForUnity;
 
 public class DialogueEvents
 {
@@ -77,13 +79,13 @@ public class DialogueEvents
         }
     }
 
-    public event Action <GameObject, TextMeshProUGUI, DialogueChoiceButton[]> onPassDialogueUIPanel;
+    public event Action <GameObject, TypewriterComponent, TextAnimator_TMP, DialogueChoiceButton[]> onPassDialogueUIPanel;
 
-    public void PassDialogueUIPanel(GameObject contentParent, TextMeshProUGUI dialogueText, DialogueChoiceButton[] choiceButtons)
+    public void PassDialogueUIPanel(GameObject contentParent, TypewriterComponent dialogueTypewriter, TextAnimator_TMP dialogueAnimator, DialogueChoiceButton[] choiceButtons)
     {
         if(onPassDialogueUIPanel != null)
         {
-            onPassDialogueUIPanel(contentParent, dialogueText, choiceButtons);
+            onPassDialogueUIPanel(contentParent, dialogueTypewriter, dialogueAnimator, choiceButtons);
         }
     }
 

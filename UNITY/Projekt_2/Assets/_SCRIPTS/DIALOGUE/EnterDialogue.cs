@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
+using Febucci.TextAnimatorForUnity.TextMeshPro;
 using UnityEngine.Animations;
 using Unity.Cinemachine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Febucci.TextAnimatorForUnity;
 
 public class EnterDialogue : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class EnterDialogue : MonoBehaviour
     [SerializeField] GameObject _contentParent;
 
     [SerializeField] TextMeshProUGUI _dialogueText;
+    [SerializeField] TextAnimator_TMP dialogueAnimator;
+    [SerializeField] TypewriterComponent _dialogueTypewriter;
 
     [SerializeField] DialogueChoiceButton[] _choiceButtons;
 
@@ -64,7 +68,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
-        GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueText, _choiceButtons);
+        GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons);
 
         _dialogueCamera.Priority = 1;
 

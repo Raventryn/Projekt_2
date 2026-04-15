@@ -2910,7 +2910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePanelUI
   contentParent: {fileID: 0}
-  dialogueText: {fileID: 0}
+  dialogueTypewriter: {fileID: 0}
+  dialogueAnimator: {fileID: 0}
   choiceButtons:
   - {fileID: 0}
   - {fileID: 0}
@@ -3435,7 +3436,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
   m_PrefabInstance: {fileID: 9073152700412684600}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 9073152700412684601}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -4275,6 +4276,8 @@ MonoBehaviour:
   _dialogueCamera: {fileID: 316044014}
   _contentParent: {fileID: 930063901}
   _dialogueText: {fileID: 1482916758}
+  dialogueAnimator: {fileID: 9073152700412684602}
+  _dialogueTypewriter: {fileID: 9073152700412684605}
   _choiceButtons:
   - {fileID: 1468690365}
   - {fileID: 692060442}
@@ -5148,12 +5151,129 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052347549062542254, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4933718385250371249, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2431378655596418309, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9073152700412684602}
+    - targetCorrespondingSourceObject: {fileID: 2431378655596418309, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9073152700412684605}
   m_SourcePrefab: {fileID: 100100000, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+--- !u!1 &9073152700412684601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2431378655596418309, guid: ccab7c2025f190f48a8bd8d6d60c94d1, type: 3}
+  m_PrefabInstance: {fileID: 9073152700412684600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9073152700412684602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073152700412684601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Febucci.TextAnimatorForUnity.TMP.Runtime::Febucci.TextAnimatorForUnity.TextMeshPro.TextAnimator_TMP
+  localSettings:
+    isResettingTimeOnNewText: 1
+    defaultEffectsMode: 1
+    timeScale: 0
+    defaultBehaviorTags: []
+    defaultAppearanceTags: []
+    defaultDisappearanceTags: []
+    isAnimatingBehaviors: 1
+    isAnimatingAppearances: 1
+    isAnimatingDisappearances: 1
+    useDynamicScaling: 1
+    referenceFontSize: 12
+  sharedSettings: {fileID: 0}
+  animationLoop: 0
+  databaseEffects: {fileID: 0}
+  styleSheet: {fileID: 0}
+--- !u!114 &9073152700412684605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073152700412684601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6b0a2b8ddbab342ad54b5409ccffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Febucci.TextAnimatorForUnity.Runtime::Febucci.TextAnimatorForUnity.TypewriterComponent
+  timingsScriptableBase: {fileID: 11400000, guid: 65af011638846d34b9f619b447cc2fbf, type: 2}
+  actionsDatabase: {fileID: 0}
+  localSettings:
+    useTypeWriter: 1
+    startTypewriterMode: 2
+    hideAppearancesOnSkip: 1
+    hideDisappearancesOnSkip: 0
+    triggerEventsOnSkip: 0
+    resetTypingSpeedAtStartup: 1
+    disappearanceOrientation: 0
+    triggerShowedAfterEffectsEnd: 0
+    triggerDisappearedAfterEffectsEnd: 0
+  sharedSettings: {fileID: 0}
+  onTextShowed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1231234591}
+        m_TargetAssemblyTypeName: DialoguePanelUI, Assembly-CSharp
+        m_MethodName: StopTypewriter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTypewriterStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTextDisappeared:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterVisible:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterWaitStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterWaitFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  onMessage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

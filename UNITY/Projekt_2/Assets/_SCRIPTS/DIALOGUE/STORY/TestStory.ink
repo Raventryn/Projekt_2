@@ -1,7 +1,7 @@
 ->SphereTest
 
 ===SphereTest===
-The dialogue system is working so far!
+The dialogue system is working... <incr><bounce>excellent!</incr></bounce>
 
 <br>
 
