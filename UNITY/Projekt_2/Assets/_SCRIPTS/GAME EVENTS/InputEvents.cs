@@ -60,10 +60,10 @@ public class InputEvents
         }
     }
 
-    /*public event Action<bool> onShowCursor;
+    public event Action<bool> onShowCursor;
 
     public void ShowCursor(bool toggle)
     {
         onShowCursor?.Invoke(toggle);
-    } */
+    }
 }

@@ -85,7 +85,7 @@ public class Player_Controller : MonoBehaviour
         GameEventsManager.instance.playerEvents.onLockPlayerMovement += LockMovement;
         GameEventsManager.instance.playerEvents.onLockPlayerCamera += LockCamera;
         GameEventsManager.instance.playerEvents.onShowPlayerCharacter += ShowPlayer;
-        //GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
+        GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
     }
 
     private void OnDisable()
@@ -101,14 +101,14 @@ public class Player_Controller : MonoBehaviour
         GameEventsManager.instance.playerEvents.onLockPlayerMovement -= LockMovement;
         GameEventsManager.instance.playerEvents.onLockPlayerCamera -= LockCamera;
         GameEventsManager.instance.playerEvents.onShowPlayerCharacter -= ShowPlayer;
-        //GameEventsManager.instance.inputEvents.onShowCursor -= ShowCursor;
+        GameEventsManager.instance.inputEvents.onShowCursor -= ShowCursor;
     }
 
     private void Start()
     {
         SetMoveSpeed(false, false);
         _defaultHeight = _characterController.height;
-        //ShowCursor(false);
+        ShowCursor(false);
     }
 
     private void Update()
@@ -309,7 +309,7 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    /*private void ShowCursor(bool toggle)
+    private void ShowCursor(bool toggle)
     {
         if (toggle)
         {
@@ -321,5 +321,5 @@ public class Player_Controller : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-    }*/
+    }
 }
