@@ -5,14 +5,19 @@ public class InkExternalFunctions
 {
     public void Bind(Story story)
     {
-        //story.BindExternalFunction("AdvanceQuest", (int endingType) => AdvanceQuest(endingType));
+        story.BindExternalFunction("ChangeSphereColour", (string colour) => ChangeSphereColour(colour));
         //story.BindExternalFunction("SendSpitEvent", () => SendSpitEvent());
     }
 
     public void Unbind(Story story)
     {
-        //story.UnbindExternalFunction("AdvanceQuest");
+        story.UnbindExternalFunction("ChangeSphereColour");
         //story.UnbindExternalFunction("SendSpitEvent");
+    }
+
+    private void ChangeSphereColour(string colour)
+    {
+        GameEventsManager.instance.questEvents.ChangeSphereColour(colour);
     }
 
 }

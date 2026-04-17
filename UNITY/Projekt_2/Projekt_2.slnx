@@ -36,8 +36,8 @@
   <Project Path="Unity.VisualScripting.State.csproj" />
   <Project Path="Unity.AI.Navigation.Updater.csproj" />
   <Project Path="Unity.Formats.Fbx.Editor.csproj" />
-  <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="Febucci.TextAnimatorForUnity.Runtime.csproj" />
+  <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="InkEditor.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="Unity.Recorder.csproj" />

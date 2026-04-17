@@ -69,13 +69,13 @@ public class DialogueEvents
         }
     }
 
-    public event Action<string, Ink.Runtime.Object> onUpdateInkDialoguevariable;
+    public event Action<string, Ink.Runtime.Object> onUpdateInkDialogueVariable;
 
     public void UpdateInkDialogueVariable(string name, Ink.Runtime.Object value)
     {
-        if(onUpdateInkDialoguevariable != null)
+        if(onUpdateInkDialogueVariable != null)
         {
-            onUpdateInkDialoguevariable(name, value);
+            onUpdateInkDialogueVariable(name, value);
         }
     }
 

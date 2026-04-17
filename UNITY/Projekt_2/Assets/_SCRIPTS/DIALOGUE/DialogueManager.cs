@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedInteract += PressedInteract;
         GameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex += UpdateChoiceIndex;
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton += PressedButton;
-        GameEventsManager.instance.dialogueEvents.onUpdateInkDialoguevariable += UpdateInkDialogueVariable;
+        GameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable += UpdateInkDialogueVariable;
     }
 
     private void OnDisable()
@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedInteract -= PressedInteract;
         GameEventsManager.instance.dialogueEvents.onUpdateChoiceIndex -= UpdateChoiceIndex;
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton -= PressedButton;
-        GameEventsManager.instance.dialogueEvents.onUpdateInkDialoguevariable -= UpdateInkDialogueVariable;
+        GameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable -= UpdateInkDialogueVariable;
     }
 
     private void UpdateInkDialogueVariable(string name, Ink.Runtime.Object value)
