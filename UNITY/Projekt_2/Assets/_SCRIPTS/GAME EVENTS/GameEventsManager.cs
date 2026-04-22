@@ -9,6 +9,7 @@ public class GameEventsManager : MonoBehaviour
     public InventoryEvents inventoryEvents;
     public DialogueEvents dialogueEvents;
     public QuestEvents questEvents;
+    public InteractionEvents interactionEvents;
 
     void Awake()
     {
@@ -25,5 +26,6 @@ public class GameEventsManager : MonoBehaviour
         inventoryEvents = new InventoryEvents();
         dialogueEvents = new DialogueEvents();
         questEvents = new QuestEvents();
+        interactionEvents = new InteractionEvents();
     }
 }

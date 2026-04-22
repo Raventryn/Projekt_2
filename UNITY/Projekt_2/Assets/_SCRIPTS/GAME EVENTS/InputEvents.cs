@@ -9,7 +9,8 @@ public enum InputEventContext
     INVENTORY,
 
     DIALOGUE,
-    DIALOGUE_PLAYING
+    DIALOGUE_PLAYING,
+    SCANNER
 }
 public class InputEvents
 {
@@ -30,13 +31,13 @@ public class InputEvents
         }
     }
 
-    public event Action<GameObject> onInteraction;
+    public event Action<InteractionType, GameObject> onInteraction;
 
-    public void Interaction(GameObject gameObject)
+    public void Interaction(InteractionType type, GameObject gameObject)
     {
         if(onInteraction != null)
         {
-            onInteraction(gameObject);
+            onInteraction(type, gameObject);
         }
     }
 

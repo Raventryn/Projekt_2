@@ -6,12 +6,12 @@ public class ItemObject : MonoBehaviour
 
     void OnEnable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction += PickUpObject;
+        GameEventsManager.instance.interactionEvents.onPickUpInteraction += PickUpObject;
     }
 
     void OnDisable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction -= PickUpObject;
+        GameEventsManager.instance.interactionEvents.onPickUpInteraction -= PickUpObject;
     }
 
     public void PickUpObject(GameObject gameObject)

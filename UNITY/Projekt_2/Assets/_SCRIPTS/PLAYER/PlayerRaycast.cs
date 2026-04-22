@@ -24,7 +24,22 @@ public class PlayerRaycast : MonoBehaviour
 
         if(Physics.Raycast(ray, out RaycastHit hit, _interactionDistance, _interactionLayer))
         {
-            GameEventsManager.instance.inputEvents.Interaction(hit.collider.gameObject);
+            switch (hit.collider.tag)
+            {
+                case "Untagged":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.DEFAULT, hit.collider.gameObject);
+                    break;
+                case "PickUp_Object":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.PICKUP, hit.collider.gameObject);
+                    break;
+                case "Dialogue_Object":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.DIALOGUE, hit.collider.gameObject);
+                    break;
+                case "Scanner_Object":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.SCANNER, hit.collider.gameObject);
+                    break;
+            }
+            
         }
     }
 }

@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - PickUp_Object
+  - Dialogue_Object
+  - Scanner_Object
   layers:
   - Default
   - TransparentFX

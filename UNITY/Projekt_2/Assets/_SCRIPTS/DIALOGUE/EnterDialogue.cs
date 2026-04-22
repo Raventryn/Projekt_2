@@ -30,7 +30,7 @@ public class EnterDialogue : MonoBehaviour
 
     void OnEnable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction += EnterCamera;
+        GameEventsManager.instance.interactionEvents.onDialogueInteraction += EnterCamera;
         GameEventsManager.instance.inputEvents.onPressedEscape += EarlyExit;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished += ExitDialogue;
 
@@ -39,7 +39,7 @@ public class EnterDialogue : MonoBehaviour
 
     void OnDisable()
     {
-        GameEventsManager.instance.inputEvents.onInteraction -= EnterCamera;
+        GameEventsManager.instance.interactionEvents.onDialogueInteraction -= EnterCamera;
         GameEventsManager.instance.inputEvents.onPressedEscape -= EarlyExit;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= ExitDialogue;
 
