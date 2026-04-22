@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class InteractionEvents
@@ -29,5 +30,12 @@ public class InteractionEvents
     public void ScannerInteraction(GameObject gameObject)
     {
         onScannerInteraction?.Invoke(gameObject);
+    }
+
+    public event Action<CinemachineCamera> onEnterScanView;
+
+    public void EnterScanView(CinemachineCamera camera)
+    {
+        onEnterScanView?.Invoke(camera);
     }
 }

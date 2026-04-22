@@ -29,6 +29,14 @@ public class Player_Actions : MonoBehaviour
         _escapeAction.performed -= Escape;
     }
 
+    void Update()
+    {
+        if (_interactAction.IsPressed())
+        {
+            GameEventsManager.instance.inputEvents.HoldInteract();
+        }
+    }
+
     void Interact(InputAction.CallbackContext context)
     {
         if(!context.performed) return;

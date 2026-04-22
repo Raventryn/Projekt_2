@@ -31,6 +31,13 @@ public class InputEvents
         }
     }
 
+    public event Action<InputEventContext> onHoldInteract;
+
+    public void HoldInteract()
+    {
+        onHoldInteract?.Invoke(Context);
+    }
+
     public event Action<InteractionType, GameObject> onInteraction;
 
     public void Interaction(InteractionType type, GameObject gameObject)
