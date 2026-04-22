@@ -38,6 +38,13 @@ public class InputEvents
         onHoldInteract?.Invoke(Context);
     }
 
+    public event Action<InputEventContext> onReleaseInteract;
+
+    public void ReleaseInteract()
+    {
+        onReleaseInteract?.Invoke(Context);
+    }
+
     public event Action<InteractionType, GameObject> onInteraction;
 
     public void Interaction(InteractionType type, GameObject gameObject)

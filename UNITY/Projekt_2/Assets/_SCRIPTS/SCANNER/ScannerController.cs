@@ -1,24 +1,32 @@
+using System.Collections.Generic;
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class ScannerController : MonoBehaviour
 {
+    public Dictionary<GameObject,bool> ScannedObjects;
+
     [SerializeField] GameObject _scannerPrefab;
     [Range (0f, 10f)]
     [SerializeField] float _depthValue;
     [SerializeField] LayerMask _scannerRaycastLayer;
     [SerializeField]CinemachineCamera _camera;
     GameObject _scannerArm;
+    GameObject _lastScannedObject;
     Vector3 _pointerPosition;
     Vector3 _pointerDirection;
-    bool scanning = false;
+    bool _scanning = false;
+    bool _hitObject = false;
+    bool _scannerLocked = true;
 
     void OnEnable()
     {
         GameEventsManager.instance.interactionEvents.onEnterScanView += ShowScanner;
         GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanner;
-
+        GameEventsManager.instance.inputEvents.onReleaseInteract += ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract += ScannerRaycast;
     }
 
@@ -26,13 +34,18 @@ public class ScannerController : MonoBehaviour
     {
         GameEventsManager.instance.interactionEvents.onEnterScanView -= ShowScanner;
         GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanner;
-
+        GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract -= ScannerRaycast;
+    }
+
+    void Start()
+    {
+        ScannedObjects = new Dictionary<GameObject, bool>();
     }
 
     void Update()
     {
-        if (scanning)
+        if (_scanning)
         {
             ScreenToWorldPoint();
             RotateArm();
@@ -43,20 +56,23 @@ public class ScannerController : MonoBehaviour
     {
         GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
+        GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
         GameEventsManager.instance.inputEvents.ShowCursor(true);
 
-        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+        StartCoroutine(UnlockScanner());
 
         _camera = camera;
 
         _camera.Priority = 1;
 
-        scanning = true;
+        _scanning = true;
 
         _scannerArm = Instantiate(_scannerPrefab, camera.transform);
 
         _scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
+
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
     }
 
     void ScreenToWorldPoint()
@@ -74,7 +90,9 @@ public class ScannerController : MonoBehaviour
     {
         if(context != InputEventContext.SCANNER) return;
 
-        scanning = false;
+        _scanning = false;
+
+        _scannerLocked = true;
 
         _camera.Priority = -1;
 
@@ -82,6 +100,7 @@ public class ScannerController : MonoBehaviour
 
         GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
         GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+        GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
 
         GameEventsManager.instance.inputEvents.ShowCursor(false);
 
@@ -96,16 +115,51 @@ public class ScannerController : MonoBehaviour
 
     void ScannerRaycast(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER) return;
+        if(context != InputEventContext.SCANNER || _scannerLocked) return;
 
         Ray ray = new Ray(_scannerArm.transform.position, _pointerDirection);
 
         Debug.DrawRay(_scannerArm.transform.position, _pointerDirection, Color.red);
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 2, _scannerRaycastLayer))
+        if(Physics.Raycast(ray, out RaycastHit hit, 5, _scannerRaycastLayer))
         {
-            Debug.Log("Hit! " + hit.collider.gameObject);
+            if(_lastScannedObject == null || _lastScannedObject != hit.collider.gameObject)
+            {
+                _lastScannedObject = hit.collider.gameObject;
+                _hitObject = false;
+            }
+                
+            if(!_hitObject)
+            {
+                GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject);
+                _hitObject = true;
+            } 
+
+            if (!ScannedObjects.ContainsKey(hit.collider.gameObject))
+            {
+                ScannedObjects.Add(hit.collider.gameObject, false);
+                Debug.Log("Objects in dictionary: " + ScannedObjects.Count);
+            }
         }
+        else if (_hitObject)
+        {
+            _hitObject = false;
+            ScannerOff(InputEventContext.SCANNER);
+        }
+    }
+
+    void ScannerOff(InputEventContext context)
+    {
+        if(context != InputEventContext.SCANNER) return;
+        _hitObject = false;
+        GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject);
+    }
+
+    IEnumerator UnlockScanner()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        _scannerLocked = false;
     }
 
 }

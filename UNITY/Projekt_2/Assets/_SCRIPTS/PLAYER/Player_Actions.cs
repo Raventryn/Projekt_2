@@ -19,12 +19,14 @@ public class Player_Actions : MonoBehaviour
     void OnEnable()
     {
         _interactAction.performed += Interact;
+        _interactAction.canceled += ReleaseInteract;
         _inventoryAction.performed += Inventory;
         _escapeAction.performed += Escape;
     }
     void OnDisable()
     {
         _interactAction.performed -= Interact;
+        _interactAction.canceled -= ReleaseInteract;
         _inventoryAction.performed -= Inventory;
         _escapeAction.performed -= Escape;
     }
@@ -42,6 +44,13 @@ public class Player_Actions : MonoBehaviour
         if(!context.performed) return;
 
         GameEventsManager.instance.inputEvents.PressedInteract();
+    }
+
+    void ReleaseInteract(InputAction.CallbackContext context)
+    {
+        if(!context.canceled) return;
+
+        GameEventsManager.instance.inputEvents.ReleaseInteract();
     }
 
     void Inventory(InputAction.CallbackContext context)

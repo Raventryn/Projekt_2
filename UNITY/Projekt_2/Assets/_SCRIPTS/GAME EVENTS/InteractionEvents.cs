@@ -38,4 +38,18 @@ public class InteractionEvents
     {
         onEnterScanView?.Invoke(camera);
     }
+
+    public event Action<GameObject> onScanObjectOn;
+
+    public void ScanObjectOn(GameObject gameObject)
+    {
+        onScanObjectOn?.Invoke(gameObject);
+    }
+
+    public event Action<GameObject> onScanObjectOff;
+
+    public void ScanObjectOff(GameObject gameObject)
+    {
+        onScanObjectOff?.Invoke(gameObject);
+    }
 }

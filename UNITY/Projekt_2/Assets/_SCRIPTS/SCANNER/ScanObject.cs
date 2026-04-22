@@ -1,24 +1,35 @@
-using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScanObject : MonoBehaviour
 {
-    [SerializeField] CinemachineCamera _camera;
+    //[SerializeField] Canvas _canvas;
 
     void OnEnable()
     {
-        GameEventsManager.instance.interactionEvents.onScannerInteraction += EnterScanView;
+        GameEventsManager.instance.interactionEvents.onScanObjectOn += ShowCanvas;
+        GameEventsManager.instance.interactionEvents.onScanObjectOff += HideCanvas;
     }
 
     void OnDisable()
     {
-        GameEventsManager.instance.interactionEvents.onScannerInteraction -= EnterScanView;
+        GameEventsManager.instance.interactionEvents.onScanObjectOn -= ShowCanvas;
+        GameEventsManager.instance.interactionEvents.onScanObjectOff -= HideCanvas;
     }
 
-    void EnterScanView(GameObject gameObject)
+    void ShowCanvas(GameObject gameObject)
     {
         if(gameObject != this.gameObject) return;
 
-        GameEventsManager.instance.interactionEvents.EnterScanView(_camera);
+        //_canvas.enabled = true;
+
+        Debug.Log("Scanned Object: " + gameObject);
+    }
+
+    void HideCanvas(GameObject gameObject)
+    {
+        if(gameObject != this.gameObject || !gameObject.activeSelf) return;
+
+        Debug.Log("Hide Object: " + gameObject);
     }
 }
