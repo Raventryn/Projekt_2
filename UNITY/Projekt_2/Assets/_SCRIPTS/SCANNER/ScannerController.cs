@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 
 public class ScannerController : MonoBehaviour
 {
-    public Dictionary<GameObject,bool> ScannedObjects;
-
     [SerializeField] GameObject _scannerPrefab;
     [Range (0f, 10f)]
     [SerializeField] float _depthValue;
@@ -36,11 +34,6 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanner;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract -= ScannerRaycast;
-    }
-
-    void Start()
-    {
-        ScannedObjects = new Dictionary<GameObject, bool>();
     }
 
     void Update()
@@ -135,11 +128,11 @@ public class ScannerController : MonoBehaviour
                 _hitObject = true;
             } 
 
-            if (!ScannedObjects.ContainsKey(hit.collider.gameObject))
+            /*if (!ScannedObjects.ContainsKey(hit.collider.gameObject))
             {
                 ScannedObjects.Add(hit.collider.gameObject, false);
                 Debug.Log("Objects in dictionary: " + ScannedObjects.Count);
-            }
+            }*/
         }
         else if (_hitObject)
         {
