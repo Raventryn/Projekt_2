@@ -1,5 +1,11 @@
-using Unity.VisualScripting;
+
+using System.Collections;
+using Febucci.TextAnimatorForUnity;
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+//using Microsoft.Unity.VisualStudio.Editor;
 
 public class ScanObject : MonoBehaviour
 {
@@ -7,8 +13,13 @@ public class ScanObject : MonoBehaviour
     public ScannableObjectType objectType;
     float _scanTimer = 3;
     bool _objectScanned;
+    bool _scanningObject;
     [SerializeField] GameObject _canvasContainer;
     [SerializeField] Animator _canvasAnimator;
+    [SerializeField]Image _fillBarImage;
+    TMP_Text _tmpText;
+    TypewriterComponent _typewriter;
+    string _descriptionText;
 
     void OnEnable()
     {
@@ -24,29 +35,56 @@ public class ScanObject : MonoBehaviour
 
     void Start()
     {
+        _tmpText = _canvasContainer.GetComponentInChildren<TMP_Text>();
+        _typewriter = _canvasContainer.GetComponentInChildren<TypewriterComponent>();
+        _descriptionText = _tmpText.text;
+        _tmpText.text = "";
+        _fillBarImage.enabled = false;
         _canvasContainer.SetActive(false);
+    }
+
+    void Update()
+    {
+        if(_scanningObject && !_objectScanned)
+        {
+            ScanTimer();
+        }
     }
 
     void ObjectScanOn(GameObject gameObject)
     {
         if(gameObject != this.gameObject) return;
 
+        _scanningObject = true;
+
         if (!ScannerManager.instance.ScannedObjects.ContainsKey(objectType))
         {
             ScannerManager.instance.ScannedObjects.Add(objectType, false);
-
-            FirstTimeScan();
+            _fillBarImage.enabled = true;
         }
-        else
+        else if (!_objectScanned)
         {
-            ShowCanvas();
+            _fillBarImage.enabled = true;
+        }
+        else if (_objectScanned)
+        {
+            ShowCanvas(false);
         }
 
     }
 
     void ObjectScanOff(GameObject gameObject)
     {
-        if(gameObject != this.gameObject || !_canvasContainer.activeSelf) return;
+        if(gameObject != this.gameObject) return;
+
+        _scanningObject = false;
+
+        _fillBarImage.enabled = false;
+
+        if (!_objectScanned)
+        {
+            _scanTimer = 3;
+        }
 
         HideCanvas();
     }
@@ -56,19 +94,7 @@ public class ScanObject : MonoBehaviour
         switch (objectKind)
         {
             case ScannableObjectKind.GENERIC:
-                while (!_objectScanned)
-                {
-                    _scanTimer -= 1 * Time.deltaTime;
-
-                    if(_scanTimer <= 0)
-                    {
-                        _objectScanned = true;
-                        ScannerManager.instance.ScannedObjects[objectType] = true;
-                        ShowCanvas();
-                        return;
-                    } 
-                }
-
+                ShowCanvas(true);
                 break;
             case ScannableObjectKind.SPECIAL:
                 break;
@@ -77,40 +103,65 @@ public class ScanObject : MonoBehaviour
         }
     }
 
-    void ShowCanvas()
+    void ScanTimer()
     {
-        bool isFullScale = false;
-
-        _canvasContainer.SetActive(true);
-
-        _canvasContainer.transform.localScale = Vector3.zero;
-
-        while (!isFullScale)
+        if(_scanTimer > 0)
         {
-            _canvasContainer.transform.localScale += new Vector3(0.001f, 0.001f, 0.001f);
-
-            if(_canvasContainer.transform.localScale.magnitude >= Vector3.one.magnitude)
-            {
-                isFullScale = true;
-            }
+            _scanTimer -= 1 * Time.deltaTime;
+            _fillBarImage.fillAmount = 1 - _scanTimer / 3f;
         }
+        else if(_scanTimer <= 0)
+        {
+            _objectScanned = true;
+            ScannerManager.instance.ScannedObjects[objectType] = true;
+            _fillBarImage.enabled = false;
+            FirstTimeScan();
+        }
+    }
 
-        //Trigger text popup
+    void ShowCanvas(bool firstTimeShowing)
+    {
+        StartCoroutine(TextAnimation(true));
+
+        if (firstTimeShowing)
+        {
+            _typewriter.ShowText(_descriptionText);
+
+            _typewriter.StartShowingText();
+        }    
     }
 
     void HideCanvas()
     {
-        bool isZeroScale = false;
+        StartCoroutine(TextAnimation(false));
 
-        while (!isZeroScale)
+        if(_tmpText.text != _descriptionText)
         {
-            _canvasContainer.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
-
-            if(_canvasContainer.transform.localScale.magnitude <= 0.01f)
-            {
-                isZeroScale = true;
-                _canvasContainer.SetActive(false);
-            }
+            _tmpText.text = "";
         }
+    }
+
+    IEnumerator TextAnimation(bool toggle)
+    {
+        switch (toggle)
+        {
+            case true:
+                _canvasContainer.SetActive(toggle);
+
+                yield return new WaitForSeconds(0.15f);
+
+                _canvasAnimator.SetBool("showText", toggle);
+                break;
+
+            case false:
+                _canvasAnimator.SetBool("showText", toggle);
+
+                yield return new WaitForSeconds(0.15f);
+
+                _canvasContainer.SetActive(toggle);
+                
+                break;
+        }
+        
     }
 }
