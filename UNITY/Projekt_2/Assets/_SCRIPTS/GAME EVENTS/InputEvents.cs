@@ -10,7 +10,8 @@ public enum InputEventContext
 
     DIALOGUE,
     DIALOGUE_PLAYING,
-    SCANNER
+    SCANNER,
+    SCANNER_BUTTONS
 }
 public class InputEvents
 {
@@ -53,6 +54,13 @@ public class InputEvents
         {
             onInteraction(type, gameObject);
         }
+    }
+
+    public event Action<InputEventContext> onPressedAltInteract;
+
+    public void PressedAltInteract()
+    {
+        onPressedAltInteract?.Invoke(Context);
     }
 
     public event Action<InputEventContext> onPressedInventory;

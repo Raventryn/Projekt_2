@@ -39,17 +39,24 @@ public class InteractionEvents
         onEnterScanView?.Invoke(camera);
     }
 
-    public event Action<GameObject> onScanObjectOn;
+    public event Action<GameObject, ScannerMode> onScanObjectOn;
 
-    public void ScanObjectOn(GameObject gameObject)
+    public void ScanObjectOn(GameObject gameObject, ScannerMode mode)
     {
-        onScanObjectOn?.Invoke(gameObject);
+        onScanObjectOn?.Invoke(gameObject, mode);
     }
 
-    public event Action<GameObject> onScanObjectOff;
+    public event Action<GameObject, ScannerMode> onScanObjectOff;
 
-    public void ScanObjectOff(GameObject gameObject)
+    public void ScanObjectOff(GameObject gameObject, ScannerMode mode)
     {
-        onScanObjectOff?.Invoke(gameObject);
+        onScanObjectOff?.Invoke(gameObject, mode);
+    }
+
+    public event Action<ScannerMode> onChangedScannerMode;
+
+    public void ChangedScannerMode(ScannerMode mode)
+    {
+        onChangedScannerMode?.Invoke(mode);
     }
 }

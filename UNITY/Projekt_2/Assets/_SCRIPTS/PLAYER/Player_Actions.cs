@@ -8,12 +8,14 @@ public class Player_Actions : MonoBehaviour
     InputAction _interactAction;
     InputAction _inventoryAction;
     InputAction _escapeAction;
+    InputAction _altInteractAction;
 
     void Awake()
     {
         _interactAction = _playerInput.actions["Interact"];
         _inventoryAction = _playerInput.actions["Inventory"];
         _escapeAction = _playerInput.actions["Escape"];
+        _altInteractAction = _playerInput.actions["AltInteract"];
     }
 
     void OnEnable()
@@ -22,6 +24,7 @@ public class Player_Actions : MonoBehaviour
         _interactAction.canceled += ReleaseInteract;
         _inventoryAction.performed += Inventory;
         _escapeAction.performed += Escape;
+        _altInteractAction.performed += AltInteract;
     }
     void OnDisable()
     {
@@ -29,6 +32,7 @@ public class Player_Actions : MonoBehaviour
         _interactAction.canceled -= ReleaseInteract;
         _inventoryAction.performed -= Inventory;
         _escapeAction.performed -= Escape;
+        _altInteractAction.performed -= AltInteract;
     }
 
     void Update()
@@ -44,6 +48,13 @@ public class Player_Actions : MonoBehaviour
         if(!context.performed) return;
 
         GameEventsManager.instance.inputEvents.PressedInteract();
+    }
+
+    void AltInteract(InputAction.CallbackContext context)
+    {
+        if(!context.performed) return;
+
+        GameEventsManager.instance.inputEvents.PressedAltInteract();
     }
 
     void ReleaseInteract(InputAction.CallbackContext context)

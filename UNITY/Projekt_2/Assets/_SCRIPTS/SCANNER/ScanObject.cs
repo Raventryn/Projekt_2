@@ -3,44 +3,62 @@ using System.Collections;
 using Febucci.TextAnimatorForUnity;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-//using Microsoft.Unity.VisualStudio.Editor;
 
 public class ScanObject : MonoBehaviour
 {
-    public ScannableObjectKind objectKind;
-    public ScannableObjectType objectType;
+    public ScannableObjectKind ObjectKind;
+    public ScannableObjectType ObjectType;
     float _scanTimer = 3;
     bool _objectScanned;
     bool _scanningObject;
-    [SerializeField] GameObject _canvasContainer;
-    [SerializeField] Animator _canvasAnimator;
-    [SerializeField]Image _fillBarImage;
+    [SerializeField] GameObject _InfoCanvasContainer;
+    [SerializeField] GameObject _ButtonsCanvasContainer;
+    [SerializeField] Animator _InfoCanvasAnimator;
+    [SerializeField] Image _fillBarImage;
     TMP_Text _tmpText;
     TypewriterComponent _typewriter;
+    MeshFilter _meshFilter;
+    Renderer _renderer;
     string _descriptionText;
+
 
     void OnEnable()
     {
         GameEventsManager.instance.interactionEvents.onScanObjectOn += ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff += ObjectScanOff;
+
+        if(ObjectKind == ScannableObjectKind.SPECIAL)
+        {
+            GameEventsManager.instance.questEvents.onReplaceInterpretableObjects += ReplaceGameObject;
+        }
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.interactionEvents.onScanObjectOn -= ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff -= ObjectScanOff;
+
+        if(ObjectKind == ScannableObjectKind.SPECIAL)
+        {
+            GameEventsManager.instance.questEvents.onReplaceInterpretableObjects -= ReplaceGameObject;
+        }
     }
 
     void Start()
     {
-        _tmpText = _canvasContainer.GetComponentInChildren<TMP_Text>();
-        _typewriter = _canvasContainer.GetComponentInChildren<TypewriterComponent>();
+        _meshFilter = GetComponent<MeshFilter>();
+        _renderer = GetComponent<Renderer>();
+        _tmpText = _InfoCanvasContainer.GetComponentInChildren<TMP_Text>();
+        _typewriter = _InfoCanvasContainer.GetComponentInChildren<TypewriterComponent>();
+        _ButtonsCanvasContainer = ScannerManager.instance._interpretationButtons;
+        _fillBarImage = ScannerManager.instance._scannerFillBar;
         _descriptionText = _tmpText.text;
         _tmpText.text = "";
         _fillBarImage.enabled = false;
-        _canvasContainer.SetActive(false);
+        if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
+            _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
+        _InfoCanvasContainer.SetActive(false);
     }
 
     void Update()
@@ -51,15 +69,15 @@ public class ScanObject : MonoBehaviour
         }
     }
 
-    void ObjectScanOn(GameObject gameObject)
+    void ObjectScanOn(GameObject gameObject, ScannerMode mode)
     {
-        if(gameObject != this.gameObject) return;
+        if(gameObject != this.gameObject || mode != ScannerMode.SCAN) return;
 
         _scanningObject = true;
 
-        if (!ScannerManager.instance.ScannedObjects.ContainsKey(objectType))
+        if (!ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
         {
-            ScannerManager.instance.ScannedObjects.Add(objectType, false);
+            ScannerManager.instance.ScannedObjects.Add(ObjectType, false);
             _fillBarImage.enabled = true;
         }
         else if (!_objectScanned)
@@ -68,14 +86,14 @@ public class ScanObject : MonoBehaviour
         }
         else if (_objectScanned)
         {
-            ShowCanvas(false);
+            ShowInformationCanvas(false);
         }
 
     }
 
-    void ObjectScanOff(GameObject gameObject)
+    void ObjectScanOff(GameObject gameObject, ScannerMode mode)
     {
-        if(gameObject != this.gameObject) return;
+        if(gameObject != this.gameObject /*|| mode != ScannerMode.SCAN*/) return;
 
         _scanningObject = false;
 
@@ -86,17 +104,18 @@ public class ScanObject : MonoBehaviour
             _scanTimer = 3;
         }
 
-        HideCanvas();
+        HideInformationCanvas();
     }
 
     void FirstTimeScan()
     {
-        switch (objectKind)
+        switch (ObjectKind)
         {
             case ScannableObjectKind.GENERIC:
-                ShowCanvas(true);
+                ShowInformationCanvas(true);
                 break;
             case ScannableObjectKind.SPECIAL:
+                ShowButtonCanvas(true);
                 break;
             case ScannableObjectKind.QUEST:
                 break;
@@ -113,15 +132,16 @@ public class ScanObject : MonoBehaviour
         else if(_scanTimer <= 0)
         {
             _objectScanned = true;
-            ScannerManager.instance.ScannedObjects[objectType] = true;
+            ScannerManager.instance.ScannedObjects[ObjectType] = true;
             _fillBarImage.enabled = false;
             FirstTimeScan();
         }
     }
 
-    void ShowCanvas(bool firstTimeShowing)
+    void ShowInformationCanvas(bool firstTimeShowing)
     {
-        StartCoroutine(TextAnimation(true));
+        StopAllCoroutines();
+        StartCoroutine(InfoTextAnimation(true));
 
         if (firstTimeShowing)
         {
@@ -131,9 +151,10 @@ public class ScanObject : MonoBehaviour
         }    
     }
 
-    void HideCanvas()
+    void HideInformationCanvas()
     {
-        StartCoroutine(TextAnimation(false));
+        StopAllCoroutines();
+        StartCoroutine(InfoTextAnimation(false));
 
         if(_tmpText.text != _descriptionText)
         {
@@ -141,24 +162,48 @@ public class ScanObject : MonoBehaviour
         }
     }
 
-    IEnumerator TextAnimation(bool toggle)
+    void ShowButtonCanvas(bool toggle)
+    {
+        GameEventsManager.instance.inputEvents.ReleaseInteract();
+        GameEventsManager.instance.questEvents.ShowButtonCanvas(toggle, ObjectType);
+    }
+
+    void ReplaceGameObject(ScannableObjectType type, GameObject gameObject)
+    {
+        if(type != ObjectType) return;
+
+        GameObject replacerObject = Instantiate(gameObject, this.gameObject.transform.position, this.gameObject.transform.rotation, this.gameObject.transform.parent);
+        replacerObject.transform.localScale = this.gameObject.transform.localScale;
+        //ScanObject replacerScanObject = replacerObject.GetComponent<ScanObject>();
+        //ScannerManager.instance.ScannedObjects.Add(replacerScanObject.ObjectType, true);
+        //Destroy(gameObject);
+        this.gameObject.SetActive(false);
+    }
+
+    public void SendReplaceEvent(string objectName)
+    {
+        GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(ObjectType, ScannerManager.instance.ScannableObjects[objectName]);
+    }
+
+    IEnumerator InfoTextAnimation(bool toggle)
     {
         switch (toggle)
         {
             case true:
-                _canvasContainer.SetActive(toggle);
+                _InfoCanvasContainer.SetActive(toggle);
+
+                _InfoCanvasAnimator.SetBool("showText", toggle);
 
                 yield return new WaitForSeconds(0.15f);
-
-                _canvasAnimator.SetBool("showText", toggle);
+         
                 break;
 
             case false:
-                _canvasAnimator.SetBool("showText", toggle);
+                _InfoCanvasAnimator.SetBool("showText", toggle);
 
                 yield return new WaitForSeconds(0.15f);
 
-                _canvasContainer.SetActive(toggle);
+                _InfoCanvasContainer.SetActive(toggle);
                 
                 break;
         }

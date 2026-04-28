@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81fe6f899fe67946916f4476a988cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScannerCone
+  _material: {fileID: 2100000, guid: 3809aa8d8f5976849a785221c8ae0a0f, type: 2}
 --- !u!1 &7373237284756987872
 GameObject:
   m_ObjectHideFlags: 0

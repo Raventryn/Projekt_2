@@ -1,4 +1,4 @@
-using System.Collections;
+
 using UnityEngine;
 
 public class ScannerCone : MonoBehaviour
@@ -10,12 +10,16 @@ public class ScannerCone : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onPressedInteract += ToggleVisibility;
         GameEventsManager.instance.inputEvents.onReleaseInteract += ToggleVisibility;
+
+        GameEventsManager.instance.interactionEvents.onChangedScannerMode += ChangeConeColour;
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.inputEvents.onPressedInteract -= ToggleVisibility;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ToggleVisibility;
+
+        GameEventsManager.instance.interactionEvents.onChangedScannerMode -= ChangeConeColour;
     }
 
     void Start()
@@ -30,5 +34,20 @@ public class ScannerCone : MonoBehaviour
 
         _coneVisible = !_coneVisible;
         _renderer.enabled = _coneVisible;
+    }
+
+    void ChangeConeColour(ScannerMode mode)
+    {
+        Debug.Log(_renderer.material.color);
+
+        switch (mode)
+        {
+            case ScannerMode.SCAN:
+                _renderer.material.color = Color.red;
+                break;
+            case ScannerMode.XRAY:
+                _renderer.material.color = Color.blue;
+                break;
+        }
     }
 }

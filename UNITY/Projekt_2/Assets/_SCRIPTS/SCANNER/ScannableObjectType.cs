@@ -1,4 +1,3 @@
-using UnityEngine;
 
 public enum ScannableObjectKind
 {
@@ -11,5 +10,6 @@ public enum ScannableObjectType
 {
     CAPSULE,
     SPHERE,
-    CUBE
+    CUBE,
+    CYLINDER
 }

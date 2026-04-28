@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -10,6 +9,8 @@ public class ScannerController : MonoBehaviour
     [SerializeField] GameObject _scannerPrefab;
     [Range (0f, 10f)]
     [SerializeField] float _depthValue;
+    [Range (3f, 15f)]
+    [SerializeField] float _scannerRange = 5;
     [SerializeField] LayerMask _scannerRaycastLayer;
     [SerializeField]CinemachineCamera _camera;
     GameObject _scannerArm;
@@ -26,6 +27,8 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanner;
         GameEventsManager.instance.inputEvents.onReleaseInteract += ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract += ScannerRaycast;
+
+        GameEventsManager.instance.interactionEvents.onChangedScannerMode += RestartScanner;
     }
 
     void OnDisable()
@@ -34,14 +37,33 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanner;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract -= ScannerRaycast;
+
+        GameEventsManager.instance.interactionEvents.onChangedScannerMode -= RestartScanner;
     }
 
     void Update()
     {
+        if(GameEventsManager.instance.inputEvents.Context != InputEventContext.SCANNER) return;
+
         if (_scanning)
         {
             ScreenToWorldPoint();
             RotateArm();
+        }
+    }
+
+    void RestartScanner(ScannerMode mode)
+    {
+        switch (mode)
+        {
+            case ScannerMode.SCAN:
+                ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
+                break;
+            case ScannerMode.XRAY:
+                ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
+                break;
         }
     }
 
@@ -112,7 +134,7 @@ public class ScannerController : MonoBehaviour
 
         Debug.DrawRay(_scannerArm.transform.position, _pointerDirection, Color.red);
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 5, _scannerRaycastLayer))
+        if(Physics.Raycast(ray, out RaycastHit hit, _scannerRange, _scannerRaycastLayer))
         {
             if(_lastScannedObject == null || _lastScannedObject != hit.collider.gameObject)
             {
@@ -122,15 +144,9 @@ public class ScannerController : MonoBehaviour
                 
             if(!_hitObject)
             {
-                GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject);
+                GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject, ScannerManager.instance.ScannerMode);
                 _hitObject = true;
             } 
-
-            /*if (!ScannedObjects.ContainsKey(hit.collider.gameObject))
-            {
-                ScannedObjects.Add(hit.collider.gameObject, false);
-                Debug.Log("Objects in dictionary: " + ScannedObjects.Count);
-            }*/
         }
         else if (_hitObject)
         {
@@ -143,7 +159,7 @@ public class ScannerController : MonoBehaviour
     {
         if(context != InputEventContext.SCANNER) return;
         _hitObject = false;
-        GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject);
+        GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
     }
 
     IEnumerator UnlockScanner()
