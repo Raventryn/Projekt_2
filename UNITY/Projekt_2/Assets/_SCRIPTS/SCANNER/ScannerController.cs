@@ -64,8 +64,6 @@ public class ScannerController : MonoBehaviour
         _scannerArm = Instantiate(_scannerPrefab, camera.transform);
 
         _scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
-
-        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
     }
 
     void ScreenToWorldPoint()
@@ -108,7 +106,7 @@ public class ScannerController : MonoBehaviour
 
     void ScannerRaycast(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER || _scannerLocked) return;
+        if(context != InputEventContext.SCANNER) return;
 
         Ray ray = new Ray(_scannerArm.transform.position, _pointerDirection);
 
@@ -152,7 +150,7 @@ public class ScannerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
-        _scannerLocked = false;
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
     }
 
 }

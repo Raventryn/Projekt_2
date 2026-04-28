@@ -29,4 +29,18 @@ public class PlayerEvents
     {
         onShowPlayerCharacter?.Invoke(toggle);
     }
+
+    public event Action<GameObject> onRequestPlayer;
+
+    public void RequestPlayer(GameObject callerObject)
+    {
+        onRequestPlayer?.Invoke(callerObject);
+    }
+
+    public event Action<GameObject, GameObject> onReturnPlayer;
+
+    public void ReturnPlayer(GameObject playerObject, GameObject callerObject)
+    {
+        onReturnPlayer?.Invoke(playerObject, callerObject);
+    }
 }
