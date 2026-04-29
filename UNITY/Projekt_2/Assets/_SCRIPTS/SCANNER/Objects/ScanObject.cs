@@ -95,6 +95,8 @@ public class ScanObject : MonoBehaviour
     {
         if(gameObject != this.gameObject /*|| mode != ScannerMode.SCAN*/) return;
 
+        Debug.Log("Entered");
+
         _scanningObject = false;
 
         _fillBarImage.enabled = false;

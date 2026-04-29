@@ -1753,6 +1753,9 @@ MonoBehaviour:
   _scannerRaycastLayer:
     serializedVersion: 2
     m_Bits: 128
+  _pointerLayers:
+    serializedVersion: 2
+    m_Bits: 155
   _camera: {fileID: 0}
 --- !u!114 &448848206
 MonoBehaviour:
@@ -7046,7 +7049,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

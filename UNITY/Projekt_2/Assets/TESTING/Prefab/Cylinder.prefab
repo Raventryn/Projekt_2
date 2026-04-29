@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 2301510815446071434}
   - component: {fileID: 970448295158098053}
   - component: {fileID: 3097556130744742558}
+  - component: {fileID: 2623594949913935405}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -473,7 +474,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6189621909421297370}
   m_LocalRotation: {x: -0.024567269, y: 0.9726919, z: 0.121955305, w: 0.19594365}
-  m_LocalPosition: {x: 0, y: 0, z: -0.822}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -483,7 +484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -14.293, y: 157.221, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.126, y: 0.931}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &739094402413783869
@@ -562,6 +563,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookAtPlayer
   _setRotationOnce: 1
+--- !u!114 &2623594949913935405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189621909421297370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf437f83a84e4204595de359279e299a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScaleScreenSize
+  _scaleFactor: 1
 --- !u!1 &6420885116162379214
 GameObject:
   m_ObjectHideFlags: 0

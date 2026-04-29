@@ -12,6 +12,7 @@ public class ScannerController : MonoBehaviour
     [Range (3f, 15f)]
     [SerializeField] float _scannerRange = 5;
     [SerializeField] LayerMask _scannerRaycastLayer;
+    [SerializeField] LayerMask _pointerLayers;
     [SerializeField]CinemachineCamera _camera;
     GameObject _scannerArm;
     GameObject _lastScannedObject;
@@ -98,11 +99,17 @@ public class ScannerController : MonoBehaviour
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(Screen.width / mousePosition.x, Screen.height / mousePosition.y));
+
+        if(Physics.Raycast(ray, out RaycastHit hit, 15f, _pointerLayers, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 hitDirection = hit.transform.position - Camera.main.transform.position;
+            _depthValue = hitDirection.magnitude;
+        }
+
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, _depthValue));
 
         _pointerPosition = point;
-
-        //Debug.Log(point);
     }
 
     void ExitScanner(InputEventContext context)
@@ -136,7 +143,9 @@ public class ScannerController : MonoBehaviour
     {
         if(context != InputEventContext.SCANNER) return;
 
-        Ray ray = new Ray(_scannerArm.transform.position, _pointerDirection);
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         Debug.DrawRay(_scannerArm.transform.position, _pointerDirection, Color.red);
 
@@ -144,23 +153,24 @@ public class ScannerController : MonoBehaviour
         {
             if(_lastScannedObject == null || _lastScannedObject != hit.collider.gameObject)
             {
-                _lastScannedObject = hit.collider.gameObject;
-                _hitObject = false;
+                RestartScanner(ScannerManager.instance.ScannerMode);
+                _lastScannedObject = hit.collider.gameObject;  
             }
                 
             if(!_hitObject)
             {
                 GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject, ScannerManager.instance.ScannerMode);
                 _hitObject = true;
-            }
-
-            if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = true;
+            }           
         }
+        
         else if (_hitObject)
         {
-            _hitObject = false;
-            ScannerOff(InputEventContext.SCANNER);
+            RestartScanner(ScannerManager.instance.ScannerMode);
         }
+
+        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && !_xrayDecal.enabled) _xrayDecal.enabled = true;
+        
     }
 
     void ScannerOff(InputEventContext context)

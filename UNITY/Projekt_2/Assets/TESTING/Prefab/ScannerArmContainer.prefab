@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1945962454522240736}
   - component: {fileID: 5293087729278926684}
   - component: {fileID: 8945157526321883290}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 1744811597192169972}
   - component: {fileID: 4598781801275587902}
   - component: {fileID: 7274718125812074603}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3902718727651725157}
   - component: {fileID: 6501050773400731813}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 3525772952383274630}
   - component: {fileID: 4810538299236899335}
   - component: {fileID: 5205418295736783827}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 8403404794341978722}
   - component: {fileID: 6803828175111222013}
   - component: {fileID: 5868255647306301765}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
