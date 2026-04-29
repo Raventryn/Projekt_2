@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ScannerCone : MonoBehaviour
 {
+    [SerializeField] Color _scanColor;
+    [SerializeField] Color _xrayColor;
+
     Renderer _renderer;
     bool _coneVisible = false;
 
@@ -43,10 +46,10 @@ public class ScannerCone : MonoBehaviour
         switch (mode)
         {
             case ScannerMode.SCAN:
-                _renderer.material.color = Color.red;
+                _renderer.material.color = _scanColor;
                 break;
             case ScannerMode.XRAY:
-                _renderer.material.color = Color.blue;
+                _renderer.material.color = _xrayColor;
                 break;
         }
     }

@@ -15,6 +15,7 @@ public class ScannerController : MonoBehaviour
     [SerializeField]CinemachineCamera _camera;
     GameObject _scannerArm;
     GameObject _lastScannedObject;
+    Decal _xrayDecal;
     Vector3 _pointerPosition;
     Vector3 _pointerDirection;
     bool _scanning = false;
@@ -58,10 +59,12 @@ public class ScannerController : MonoBehaviour
         {
             case ScannerMode.SCAN:
                 ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                if(_xrayDecal != null) _xrayDecal.enabled = false;
                 //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
             case ScannerMode.XRAY:
                 ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                
                 //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
         }
@@ -84,6 +87,9 @@ public class ScannerController : MonoBehaviour
         _scanning = true;
 
         _scannerArm = Instantiate(_scannerPrefab, camera.transform);
+
+        _xrayDecal = _scannerArm.GetComponentInChildren<Decal>();
+        if(_xrayDecal != null) _xrayDecal.enabled = false;
 
         _scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
     }
@@ -146,7 +152,9 @@ public class ScannerController : MonoBehaviour
             {
                 GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject, ScannerManager.instance.ScannerMode);
                 _hitObject = true;
-            } 
+            }
+
+            if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = true;
         }
         else if (_hitObject)
         {
@@ -160,6 +168,7 @@ public class ScannerController : MonoBehaviour
         if(context != InputEventContext.SCANNER) return;
         _hitObject = false;
         GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
+        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
     }
 
     IEnumerator UnlockScanner()
