@@ -59,4 +59,12 @@ public class InteractionEvents
     {
         onChangedScannerMode?.Invoke(mode);
     }
+
+    public event Action<ScannableObjectType> onUpdateObjectScannedState;
+    
+    public void UpdateObjectScannedState(ScannableObjectType type)
+    {
+        onUpdateObjectScannedState(type);
+    }
+        
 }

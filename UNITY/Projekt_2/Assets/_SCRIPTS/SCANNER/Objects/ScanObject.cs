@@ -27,6 +27,7 @@ public class ScanObject : MonoBehaviour
     {
         GameEventsManager.instance.interactionEvents.onScanObjectOn += ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff += ObjectScanOff;
+        GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState += UpdateScannedState;
 
         if(ObjectKind == ScannableObjectKind.SPECIAL)
         {
@@ -38,6 +39,7 @@ public class ScanObject : MonoBehaviour
     {
         GameEventsManager.instance.interactionEvents.onScanObjectOn -= ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff -= ObjectScanOff;
+        GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState -= UpdateScannedState;
 
         if(ObjectKind == ScannableObjectKind.SPECIAL)
         {
@@ -69,6 +71,15 @@ public class ScanObject : MonoBehaviour
         }
     }
 
+    void UpdateScannedState(ScannableObjectType type)
+    {
+        if(type != ObjectType) return;
+
+        _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
+        Debug.Log(_objectScanned + " / " + ScannerManager.instance.ScannedObjects[ObjectType]);
+    }
+
+    //Is called once, when Scanner Raycast hits Object
     void ObjectScanOn(GameObject gameObject, ScannerMode mode)
     {
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN) return;
@@ -91,6 +102,7 @@ public class ScanObject : MonoBehaviour
 
     }
 
+    //Is called when Player Raycast leaves object, or is interrupted
     void ObjectScanOff(GameObject gameObject, ScannerMode mode)
     {
         if(gameObject != this.gameObject /*|| mode != ScannerMode.SCAN*/) return;
@@ -109,6 +121,7 @@ public class ScanObject : MonoBehaviour
         HideInformationCanvas();
     }
 
+    //Is called when ScanTimer is 0 for the first time
     void FirstTimeScan()
     {
         switch (ObjectKind)
@@ -124,6 +137,7 @@ public class ScanObject : MonoBehaviour
         }
     }
 
+    //Is called in Update when Object is being scanned
     void ScanTimer()
     {
         if(_scanTimer > 0)
@@ -133,8 +147,8 @@ public class ScanObject : MonoBehaviour
         }
         else if(_scanTimer <= 0)
         {
-            _objectScanned = true;
             ScannerManager.instance.ScannedObjects[ObjectType] = true;
+            _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
             _fillBarImage.enabled = false;
             FirstTimeScan();
         }
@@ -176,10 +190,19 @@ public class ScanObject : MonoBehaviour
 
         GameObject replacerObject = Instantiate(gameObject, this.gameObject.transform.position, this.gameObject.transform.rotation, this.gameObject.transform.parent);
         replacerObject.transform.localScale = this.gameObject.transform.localScale;
-        //ScanObject replacerScanObject = replacerObject.GetComponent<ScanObject>();
-        //ScannerManager.instance.ScannedObjects.Add(replacerScanObject.ObjectType, true);
-        //Destroy(gameObject);
-        this.gameObject.SetActive(false);
+
+        ScanObject newScanObject = replacerObject.GetComponent<ScanObject>();
+
+        if(!ScannerManager.instance.ScannedObjects.ContainsKey(newScanObject.ObjectType))
+            ScannerManager.instance.ScannedObjects.Add(newScanObject.ObjectType, true);
+
+        else if(ScannerManager.instance.ScannedObjects.ContainsKey(newScanObject.ObjectType))
+            ScannerManager.instance.ScannedObjects[newScanObject.ObjectType] = true;
+
+        GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(newScanObject.ObjectType);
+
+        Destroy(this.gameObject);
+        //this.gameObject.SetActive(false);
     }
 
     public void SendReplaceEvent(string objectName)

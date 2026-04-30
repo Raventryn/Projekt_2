@@ -122,18 +122,15 @@ public class InterpretationButtons : MonoBehaviour
             {
                 case 0:
                     GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceZERO.gameObject);
-                    if(!ScannerManager.instance.ScannedObjects.ContainsKey(_choiceZERO.ObjectType))
-                        ScannerManager.instance.ScannedObjects.Add(_choiceZERO.ObjectType, true);
+                    
                     break;
                 case 1:
                     GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceONE.gameObject);
-                    if(!ScannerManager.instance.ScannedObjects.ContainsKey(_choiceONE.ObjectType))
-                        ScannerManager.instance.ScannedObjects.Add(_choiceONE.ObjectType, true);
+
                     break;
                 case 2:
                     GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceTWO.gameObject);
-                    if(!ScannerManager.instance.ScannedObjects.ContainsKey(_choiceTWO.ObjectType))
-                        ScannerManager.instance.ScannedObjects.Add(_choiceTWO.ObjectType, true);
+
                     break;
             }
 
