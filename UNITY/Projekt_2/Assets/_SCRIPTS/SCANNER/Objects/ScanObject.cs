@@ -135,6 +135,8 @@ public class ScanObject : MonoBehaviour
             case ScannableObjectKind.QUEST:
                 break;
         }
+
+        GameEventsManager.instance.questEvents.ObjectScanned();
     }
 
     //Is called in Update when Object is being scanned

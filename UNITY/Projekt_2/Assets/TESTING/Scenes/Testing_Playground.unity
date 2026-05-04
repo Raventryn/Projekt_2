@@ -1965,6 +1965,7 @@ Transform:
   m_Children:
   - {fileID: 61481152}
   - {fileID: 1051844318}
+  - {fileID: 1380198486}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &504925322
@@ -5520,7 +5521,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb82a07a28eed34c8a8c116006aa6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  inkJson: {fileID: 4900000, guid: d416a55f14edde648a8389061f0b43b9, type: 3}
+  inkJson: {fileID: 4900000, guid: 3eff6c40691e3774eaee1f9bddf1ab9a, type: 3}
+--- !u!1 &1380198485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1380198486}
+  - component: {fileID: 1380198487}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1380198486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380198485}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 482737804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1380198487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380198485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60193f97ef9a41b40b348211839f9274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestManager
 --- !u!1001 &1414346268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6861,6 +6906,7 @@ GameObject:
   - component: {fileID: 1810439795}
   - component: {fileID: 1810439794}
   - component: {fileID: 1810439799}
+  - component: {fileID: 1810439800}
   m_Layer: 6
   m_Name: DialogueTest
   m_TagString: Dialogue_Object
@@ -6880,7 +6926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e484363402998c7428c4273abf3fb41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnterDialogue
-  dialogueKnotName: SphereTest
+  dialogueKnotName: DummyQuestStart
   _dialogueCamera: {fileID: 316044014}
   _contentParent: {fileID: 930063901}
   _dialogueText: {fileID: 1482916758}
@@ -6998,6 +7044,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SphereColourChanger
   _renderer: {fileID: 1810439796}
+--- !u!114 &1810439800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810439793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ac9c0216ef87b4fb3a4b58883062f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestPoint
+  QuestInfoForPoint: {fileID: 11400000, guid: 35d95401e5868a4468a22a72ab3ed97f, type: 2}
+  startPoint: 1
+  finishPoint: 1
 --- !u!1 &1831651984
 GameObject:
   m_ObjectHideFlags: 0
