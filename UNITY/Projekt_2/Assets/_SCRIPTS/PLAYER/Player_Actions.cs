@@ -67,7 +67,7 @@ public class Player_Actions : MonoBehaviour
     void Inventory(InputAction.CallbackContext context)
     {
         if(!context.performed) return;
-
+        
         GameEventsManager.instance.inputEvents.PressedInventory();
     }
 

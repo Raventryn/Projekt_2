@@ -73,8 +73,8 @@ public class ScannerController : MonoBehaviour
 
     void ShowScanner(CinemachineCamera camera)
     {
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
         GameEventsManager.instance.inputEvents.ShowCursor(true);
@@ -124,8 +124,8 @@ public class ScannerController : MonoBehaviour
 
         Destroy(_scannerArm);
 
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
 
         GameEventsManager.instance.inputEvents.ShowCursor(false);

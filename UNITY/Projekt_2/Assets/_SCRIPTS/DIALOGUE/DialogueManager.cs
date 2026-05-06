@@ -114,9 +114,9 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.dialogueEvents.DialogueStarted();
 
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
 
         inkDialogueVariables.SyncVariablesAndStartListening(_story);
 

@@ -5,7 +5,7 @@ public class PlayerEvents
 {
     public event Action<bool> onLockPlayerMovement;
 
-    public void LockPlayerMovement(bool toggle)
+    public void TogglePlayerMovement(bool toggle)
     {
         if(onLockPlayerMovement != null)
         {
@@ -15,7 +15,7 @@ public class PlayerEvents
 
     public event Action<bool> onLockPlayerCamera;
 
-    public void LockPlayerCamera(bool toggle)
+    public void TogglePlayerCamera(bool toggle)
     {
         if(onLockPlayerCamera != null)
         {

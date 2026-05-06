@@ -33,6 +33,7 @@ public class InventorySystem : MonoBehaviour
 
     public void Add(InventoryItemData referenceData)
     {
+        //If item is already present in inventory, increase stack, else add new item to inventory and dictionary
         if(m_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
         {
             value.AddToStack();
@@ -56,6 +57,7 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    //Remove item from stack, if stack size is 0, remove item from inventory
     public void Remove(InventoryItemData referenceData)
     {
         if(m_itemDictionary.TryGetValue(referenceData, out InventoryItem value))

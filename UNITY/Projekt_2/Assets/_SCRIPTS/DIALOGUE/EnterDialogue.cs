@@ -64,8 +64,8 @@ public class EnterDialogue : MonoBehaviour
         if(gameObject != this.gameObject) return;
         
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(false);
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
         GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons);
@@ -91,8 +91,8 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.ClearDialogueUIPanel();
 
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
-        GameEventsManager.instance.playerEvents.LockPlayerMovement(true);
-        GameEventsManager.instance.playerEvents.LockPlayerCamera(true);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
     }
 

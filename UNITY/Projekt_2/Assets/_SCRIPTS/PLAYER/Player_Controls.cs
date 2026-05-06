@@ -244,10 +244,10 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""77030aa9-e5ed-4a6b-aff1-7e0b966f0428"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
+                    ""groups"": "";Keyboard&Mouse;PC"",
                     ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
