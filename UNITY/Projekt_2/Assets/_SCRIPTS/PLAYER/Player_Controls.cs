@@ -172,6 +172,15 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipScanner"",
+                    ""type"": ""Value"",
+                    ""id"": ""d517bcba-643d-48b6-ace9-4b91e8f7457a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -416,6 +425,28 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
                     ""action"": ""AltInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""549865b9-e3c7-42a8-9182-1ece18241eeb"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PC"",
+                    ""action"": ""EquipScanner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcff6e08-a089-4aa6-85cf-0818a7578d15"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""EquipScanner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -461,6 +492,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         m_Land_Look = m_Land.FindAction("Look", throwIfNotFound: true);
         m_Land_Escape = m_Land.FindAction("Escape", throwIfNotFound: true);
         m_Land_AltInteract = m_Land.FindAction("AltInteract", throwIfNotFound: true);
+        m_Land_EquipScanner = m_Land.FindAction("EquipScanner", throwIfNotFound: true);
     }
 
     ~@Player_Controls()
@@ -550,6 +582,7 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Land_Look;
     private readonly InputAction m_Land_Escape;
     private readonly InputAction m_Land_AltInteract;
+    private readonly InputAction m_Land_EquipScanner;
     /// <summary>
     /// Provides access to input actions defined in input action map "Land".
     /// </summary>
@@ -597,6 +630,10 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Land/AltInteract".
         /// </summary>
         public InputAction @AltInteract => m_Wrapper.m_Land_AltInteract;
+        /// <summary>
+        /// Provides access to the underlying input action "Land/EquipScanner".
+        /// </summary>
+        public InputAction @EquipScanner => m_Wrapper.m_Land_EquipScanner;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -650,6 +687,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @AltInteract.started += instance.OnAltInteract;
             @AltInteract.performed += instance.OnAltInteract;
             @AltInteract.canceled += instance.OnAltInteract;
+            @EquipScanner.started += instance.OnEquipScanner;
+            @EquipScanner.performed += instance.OnEquipScanner;
+            @EquipScanner.canceled += instance.OnEquipScanner;
         }
 
         /// <summary>
@@ -688,6 +728,9 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
             @AltInteract.started -= instance.OnAltInteract;
             @AltInteract.performed -= instance.OnAltInteract;
             @AltInteract.canceled -= instance.OnAltInteract;
+            @EquipScanner.started -= instance.OnEquipScanner;
+            @EquipScanner.performed -= instance.OnEquipScanner;
+            @EquipScanner.canceled -= instance.OnEquipScanner;
         }
 
         /// <summary>
@@ -817,5 +860,12 @@ public partial class @Player_Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAltInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "EquipScanner" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEquipScanner(InputAction.CallbackContext context);
     }
 }

@@ -33,9 +33,9 @@ public class InteractionManager : MonoBehaviour
             case InteractionType.DIALOGUE:
                 GameEventsManager.instance.interactionEvents.DialogueInteraction(gameObject);
                 break;
-            case InteractionType.SCANNER:
+            /*case InteractionType.SCANNER:
                 GameEventsManager.instance.interactionEvents.ScannerInteraction(gameObject);
-                break;
+                break;*/
         }
     }
 }

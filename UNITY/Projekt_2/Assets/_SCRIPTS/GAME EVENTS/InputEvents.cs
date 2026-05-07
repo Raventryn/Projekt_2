@@ -117,4 +117,11 @@ public class InputEvents
     {
         onWalkDown?.Invoke(Context);
     }
+
+    public event Action<InputEventContext, float> onEquipScanner;
+
+    public void EquipScanner(float value)
+    {
+        onEquipScanner?.Invoke(Context, value);
+    }
 }

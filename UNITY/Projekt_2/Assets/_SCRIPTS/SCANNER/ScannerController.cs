@@ -13,8 +13,8 @@ public class ScannerController : MonoBehaviour
     [SerializeField] float _scannerRange = 5;
     [SerializeField] LayerMask _scannerRaycastLayer;
     [SerializeField] LayerMask _pointerLayers;
-    [SerializeField]CinemachineCamera _camera;
-    GameObject _scannerArm;
+    [SerializeField] CinemachineCamera _camera;
+    [SerializeField] GameObject _scannerArm;
     GameObject _lastScannedObject;
     Decal _xrayDecal;
     Vector3 _pointerPosition;
@@ -23,20 +23,24 @@ public class ScannerController : MonoBehaviour
     bool _hitObject = false;
     bool _scannerLocked = true;
 
+    Animator _scannerAnimator;
+
     void OnEnable()
     {
-        GameEventsManager.instance.interactionEvents.onEnterScanView += ShowScanner;
-        GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanner;
+        GameEventsManager.instance.interactionEvents.onEnterScanView += EnterScanView;
+        GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract += ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract += ScannerRaycast;
 
         GameEventsManager.instance.interactionEvents.onChangedScannerMode += RestartScanner;
+
+        GameEventsManager.instance.inputEvents.onEquipScanner += ShowScanner;
     }
 
     void OnDisable()
     {
-        GameEventsManager.instance.interactionEvents.onEnterScanView -= ShowScanner;
-        GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanner;
+        GameEventsManager.instance.interactionEvents.onEnterScanView -= EnterScanView;
+        GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract -= ScannerRaycast;
 
@@ -59,19 +63,61 @@ public class ScannerController : MonoBehaviour
         switch (mode)
         {
             case ScannerMode.SCAN:
-                ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                //ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                _hitObject = false;
+                GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
+                if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
+
                 if(_xrayDecal != null) _xrayDecal.enabled = false;
                 //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
             case ScannerMode.XRAY:
-                ScannerOff(GameEventsManager.instance.inputEvents.Context);
+                //ScannerOff(GameEventsManager.instance.inputEvents.Context);
+
+                _hitObject = false;
+                GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
+                if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
                 
                 //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
         }
     }
 
-    void ShowScanner(CinemachineCamera camera)
+    void ShowScanner(InputEventContext context, float value)
+    {
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER) return;
+
+        switch (value)
+        {
+            case 1f:
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+
+                //_scannerArm = Instantiate(_scannerPrefab, Camera.main.transform);
+                _scannerArm.SetActive(true);
+
+                _scannerAnimator = _scannerArm.GetComponent<Animator>();
+
+                _xrayDecal = _scannerArm.GetComponentInChildren<Decal>();
+                if(_xrayDecal != null) _xrayDecal.enabled = false;
+
+                //_scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
+                break;
+            case -1f:
+                _scannerArm.SetActive(false);
+                //Destroy(_scannerArm);
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+                break;
+        }
+
+        
+    }
+
+    void ToggleScanner(bool toggle)
+    {
+        _scanning = toggle;
+    }
+
+    void EnterScanView(CinemachineCamera camera)
     {
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
@@ -85,14 +131,14 @@ public class ScannerController : MonoBehaviour
 
         _camera.Priority = 1;
 
-        _scanning = true;
+        /*_scanning = true;
 
         _scannerArm = Instantiate(_scannerPrefab, camera.transform);
 
         _xrayDecal = _scannerArm.GetComponentInChildren<Decal>();
         if(_xrayDecal != null) _xrayDecal.enabled = false;
 
-        _scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
+        _scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);*/
     }
 
     void ScreenToWorldPoint()
@@ -112,9 +158,11 @@ public class ScannerController : MonoBehaviour
         _pointerPosition = point;
     }
 
-    void ExitScanner(InputEventContext context)
+    void ExitScanView(InputEventContext context)
     {
         if(context != InputEventContext.SCANNER) return;
+
+        GameEventsManager.instance.inputEvents.ShowCursor(false);
 
         _scanning = false;
 
@@ -128,8 +176,6 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
 
-        GameEventsManager.instance.inputEvents.ShowCursor(false);
-
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
     }
 
@@ -142,6 +188,16 @@ public class ScannerController : MonoBehaviour
     void ScannerRaycast(InputEventContext context)
     {
         if(context != InputEventContext.SCANNER) return;
+
+        if (!_scanning)
+        {
+            GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
+            GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
+            GameEventsManager.instance.inputEvents.ShowCursor(true);
+            _scanning = true;
+
+            _scannerAnimator.SetBool("IsScanning", true);
+        }
 
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
@@ -177,8 +233,17 @@ public class ScannerController : MonoBehaviour
     {
         if(context != InputEventContext.SCANNER) return;
         _hitObject = false;
+
+        _scannerAnimator.SetBool("IsScanning", false);
+
         GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
         if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
+
+        GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
+        GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+
+        GameEventsManager.instance.inputEvents.ShowCursor(false);
+        _scanning = false;
     }
 
     IEnumerator UnlockScanner()

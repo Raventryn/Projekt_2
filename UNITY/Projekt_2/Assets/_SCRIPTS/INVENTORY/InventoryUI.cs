@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
@@ -22,6 +24,9 @@ public class InventoryUI : MonoBehaviour
 
     bool _moveItemsLeft;
     bool _moveItemsRight;
+
+    bool _itemsOnLeftSide = true;
+
 
     void OnEnable()
     {
@@ -72,9 +77,9 @@ public class InventoryUI : MonoBehaviour
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
             UpdateInventory();
-            InstantiateInventoryItems(GetInventoryItemIndex(_currentlyDisplayedItem));
+            InstantiateInventoryItems(GetInventoryItems(_currentlyDisplayedItem));
 
-            Debug.Log("Current: " + _currentItem.name);
+            //Debug.Log("Current: " + _currentItem.name);
         }
         else
         {
@@ -92,9 +97,37 @@ public class InventoryUI : MonoBehaviour
         _inventoryLength = _inventorySystem.inventory.Count;
     }
 
-    GameObject[] GetInventoryItemIndex(int displayedItem)
+
+    //Returns index for previous and next items, based on current position in inventory
+    int[] GetInventoryIndexes(int displayedItem)
     {
-        GameObject[] displayedItems = new GameObject[3];
+        int[] indexes = new int[2];
+
+        //If current item is first in inventory list, previous item will be last in list
+        if(displayedItem == 0)
+        {
+            indexes[0] = _inventoryLength - 1;
+            indexes[1] = displayedItem + 1;
+        }
+        //If current item is last in inventory list, next item will be first in list
+        else if(displayedItem == _inventoryLength - 1)
+        {
+            indexes[0] = displayedItem - 1;
+            indexes[1] = 0;
+        }
+        else
+        {
+            indexes[0] = displayedItem - 1;
+            indexes[1] = displayedItem + 1;
+        }
+
+        return indexes;
+    }
+
+    //Returns List of items to instantiate
+    List<InventoryItemData> GetInventoryItems(int displayedItem)
+    {
+        List<InventoryItemData> displayedItems = new List<InventoryItemData>();
 
         if(displayedItem < 0)
         {
@@ -105,40 +138,59 @@ public class InventoryUI : MonoBehaviour
             displayedItem = 0;
         }
 
-        //Index 0 is always currently viewed object, 1 is previous object, 2 is next object
-        if(displayedItem == 0)
+        for(int i = 0; i < _inventoryLength; i++)
         {
-            displayedItems[0] = _inventorySystem.inventory[displayedItem].Data.ItemPrefab;
-            displayedItems[1] = _inventorySystem.inventory[_inventoryLength - 1].Data.ItemPrefab;
-            displayedItems[2] = _inventorySystem.inventory[displayedItem + 1].Data.ItemPrefab;
+            switch(i)
+            {
+                case 0:
+                    displayedItems.Add(_inventorySystem.inventory[displayedItem].Data);
+                    break;
+                case 1:
+                    displayedItems.Add(_inventorySystem.inventory[GetInventoryIndexes(displayedItem)[0]].Data);
+                    break;
+                case 2:
+                    displayedItems.Add(_inventorySystem.inventory[GetInventoryIndexes(displayedItem)[1]].Data);
+                    break;
+            }
         }
-        else if(displayedItem == _inventoryLength - 1)
-        {
-            displayedItems[0] = _inventorySystem.inventory[displayedItem].Data.ItemPrefab;
-            displayedItems[1] = _inventorySystem.inventory[displayedItem - 1].Data.ItemPrefab;
-            displayedItems[2]= _inventorySystem.inventory[0].Data.ItemPrefab;
-        }
-        else
-        {
-            displayedItems[0] = _inventorySystem.inventory[displayedItem].Data.ItemPrefab;
-            displayedItems[1] = _inventorySystem.inventory[displayedItem- 1].Data.ItemPrefab;
-            displayedItems[2] = _inventorySystem.inventory[displayedItem + 1].Data.ItemPrefab;
-        }
-
+    
         _currentlyDisplayedItem = displayedItem;
 
         return displayedItems;
     }
 
-    void InstantiateInventoryItems(GameObject[]inventoryItems)
+    void InstantiateInventoryItems(List<InventoryItemData>inventoryItems)
     {
-        _currentItem = Instantiate(inventoryItems[0],ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
-        _previousItem = Instantiate(inventoryItems[1], ItemPosition("left"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
-        _nextItem = Instantiate(inventoryItems[2], ItemPosition("right"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+        if(inventoryItems.Count == 0)
+        {
+            //Display some notification or similar that inventory is empty
+            return; 
+        }
 
-        _currentItem.layer = 5;
-        _previousItem.layer = 5;
-        _nextItem.layer = 5;
+        if(inventoryItems.Count == 1)
+        {
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
+            _currentItem.layer = 5;
+        }
+        else if(inventoryItems.Count == 2)
+        {
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
+            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _nextItem = _previousItem;
+
+            _currentItem.layer = 5;
+            _previousItem.layer = 5;
+        }
+        else
+        {
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
+            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _nextItem = Instantiate(inventoryItems[2].ItemPrefab, ItemPosition("right"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+
+            _currentItem.layer = 5;
+            _previousItem.layer = 5;
+            _nextItem.layer = 5;  
+        }   
     }
 
     void SetSlotPositions()
@@ -200,22 +252,36 @@ public class InventoryUI : MonoBehaviour
 
     public void ScrollNextItem(InputEventContext context)
     {
-        if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight) return;
+        if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight || _inventoryLength <= 1) return;
 
-        GameObject[] newItems = GetInventoryItemIndex(_currentlyDisplayedItem + 1);
-        _newItem = Instantiate(newItems[2], _slotPositions[4], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
-        _newItem.layer = 5;
+        List<InventoryItemData> newItems;
 
+        _currentlyDisplayedItem += 1;
+
+        if(_inventoryLength >= 3)
+        {
+            newItems = GetInventoryItems(_currentlyDisplayedItem);
+            _newItem = Instantiate(newItems[2].ItemPrefab, _slotPositions[4], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _newItem.layer = 5;
+        }
+        
         _moveItemsLeft = true;
     }
 
     public void ScrollPreviousItem(InputEventContext context )
     {
-        if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight) return;
+        if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight || _inventoryLength <= 1) return;
 
-        GameObject[] newItems = GetInventoryItemIndex(_currentlyDisplayedItem - 1);
-        _newItem = Instantiate(newItems[1], _slotPositions[0], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
-        _newItem.layer = 5;
+        List<InventoryItemData> newItems;
+
+        _currentlyDisplayedItem -= 1;
+
+        if(_inventoryLength >= 3)
+        {
+            newItems = GetInventoryItems(_currentlyDisplayedItem);
+            _newItem = Instantiate(newItems[1].ItemPrefab, _slotPositions[0], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _newItem.layer = 5;
+        }
 
         _moveItemsRight = true;
     }
@@ -230,8 +296,67 @@ public class InventoryUI : MonoBehaviour
 
         float adjustedScrollSpeed;
 
-        switch (direction)
+        if(_inventoryLength <= 2)
         {
+
+            switch (_itemsOnLeftSide)
+            {
+                case true:
+                    currentItemDirection = _slotPositions[3] - _currentItem.transform.position;
+                    adjustedScrollSpeed = _scrollSpeed + 0.75f / currentItemDirection.magnitude;
+                    _currentItem.transform.Translate(currentItemDirection * adjustedScrollSpeed * Time.deltaTime);
+
+                    previousItemDirection = _slotPositions[2] - _previousItem.transform.position;
+                    _previousItem.transform.Translate(previousItemDirection * adjustedScrollSpeed * Time.deltaTime);
+
+                    if(currentItemDirection.magnitude <= 0.01f)
+                    {
+                    _currentItem.transform.position = _slotPositions[3];
+                    _previousItem.transform.position = _slotPositions[2];
+
+                    GameObject placeholder = _currentItem;
+                    _currentItem = _previousItem;
+                    _previousItem = placeholder;
+                    
+                    _moveItemsLeft = false;
+                    _moveItemsRight = false;
+                    }
+                    break;
+
+                case false:
+                    currentItemDirection = _slotPositions[1] - _currentItem.transform.position;
+                    adjustedScrollSpeed = _scrollSpeed + 0.75f / currentItemDirection.magnitude;
+                    _currentItem.transform.Translate(currentItemDirection * adjustedScrollSpeed * Time.deltaTime);
+
+                    previousItemDirection = _slotPositions[2] - _previousItem.transform.position;
+                    _previousItem.transform.Translate(previousItemDirection * adjustedScrollSpeed * Time.deltaTime);
+
+
+                    if(currentItemDirection.magnitude <= 0.01f)
+                    {
+                    _currentItem.transform.position = _slotPositions[1];
+                    _previousItem.transform.position = _slotPositions[2];
+
+                    GameObject placeholder = _currentItem;
+                    _currentItem = _previousItem;
+                    _previousItem = placeholder;
+                
+                    
+                    _moveItemsRight = false;
+                    _moveItemsLeft = false;
+                    }
+                    break;
+            }
+
+            if(!_moveItemsLeft && !_moveItemsRight)
+            {
+                _itemsOnLeftSide = !_itemsOnLeftSide;
+            }
+        }
+        else
+        {
+            switch (direction)
+            {
             case "next":
                 currentItemDirection = _slotPositions[1] - _currentItem.transform.position;
                 adjustedScrollSpeed = _scrollSpeed + 0.75f / currentItemDirection.magnitude;
@@ -288,7 +413,9 @@ public class InventoryUI : MonoBehaviour
                     _moveItemsRight = false;
                 }
                 break;
-        }    
+            }
+        }
+           
     }
 
     void UpdateItemVariables(string direction)

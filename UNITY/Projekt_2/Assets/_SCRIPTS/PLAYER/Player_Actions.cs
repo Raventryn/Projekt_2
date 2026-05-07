@@ -9,7 +9,8 @@ public class Player_Actions : MonoBehaviour
     InputAction _inventoryAction;
     InputAction _escapeAction;
     InputAction _altInteractAction;
-    InputAction _walk;
+    InputAction _walkAction;
+    InputAction _equipScannerAction;
 
     void Awake()
     {
@@ -17,7 +18,8 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction = _playerInput.actions["Inventory"];
         _escapeAction = _playerInput.actions["Escape"];
         _altInteractAction = _playerInput.actions["AltInteract"];
-        _walk = _playerInput.actions["Move"];
+        _walkAction = _playerInput.actions["Move"];
+        _equipScannerAction = _playerInput.actions["EquipScanner"];
     }
 
     void OnEnable()
@@ -27,7 +29,8 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction.performed += Inventory;
         _escapeAction.performed += Escape;
         _altInteractAction.performed += AltInteract;
-        _walk.performed += Walk;
+        _walkAction.performed += Walk;
+        _equipScannerAction.performed += EquipScanner;
     }
     void OnDisable()
     {
@@ -36,7 +39,8 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction.performed -= Inventory;
         _escapeAction.performed -= Escape;
         _altInteractAction.performed -= AltInteract;
-        _walk.performed -= Walk;
+        _walkAction.performed -= Walk;
+        _equipScannerAction.performed -= EquipScanner;
     }
 
     void Update()
@@ -86,7 +90,7 @@ public class Player_Actions : MonoBehaviour
     {
         if(!context.performed) return;
 
-        Vector2 walkDirection = _walk.ReadValue<Vector2>();
+        Vector2 walkDirection = _walkAction.ReadValue<Vector2>();
 
         Debug.Log(walkDirection);
 
@@ -107,5 +111,12 @@ public class Player_Actions : MonoBehaviour
         {
             GameEventsManager.instance.inputEvents.WalkDown();
         }
+    }
+
+    void EquipScanner(InputAction.CallbackContext context)
+    {
+        if(!context.performed) return;
+
+        GameEventsManager.instance.inputEvents.EquipScanner(_equipScannerAction.ReadValue<float>());
     }
 }
