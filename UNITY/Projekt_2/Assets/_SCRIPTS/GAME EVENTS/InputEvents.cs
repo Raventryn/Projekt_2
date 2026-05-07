@@ -89,4 +89,32 @@ public class InputEvents
     {
         onShowCursor?.Invoke(toggle);
     }
+
+    public event Action<InputEventContext> onWalkLeft;
+
+    public void WalkLeft()
+    {
+        onWalkLeft?.Invoke(Context);
+    }
+
+    public event Action<InputEventContext> onWalkRight;
+
+    public void WalkRight()
+    {
+        onWalkRight?.Invoke(Context);
+    }
+
+    public event Action<InputEventContext> onWalkUp;
+
+    public void WalkUp()
+    {
+        onWalkUp?.Invoke(Context);
+    }
+
+    public event Action<InputEventContext> onWalkDown;
+
+    public void WalkDown()
+    {
+        onWalkDown?.Invoke(Context);
+    }
 }

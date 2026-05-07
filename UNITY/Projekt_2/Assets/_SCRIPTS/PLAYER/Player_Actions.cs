@@ -9,6 +9,7 @@ public class Player_Actions : MonoBehaviour
     InputAction _inventoryAction;
     InputAction _escapeAction;
     InputAction _altInteractAction;
+    InputAction _walk;
 
     void Awake()
     {
@@ -16,6 +17,7 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction = _playerInput.actions["Inventory"];
         _escapeAction = _playerInput.actions["Escape"];
         _altInteractAction = _playerInput.actions["AltInteract"];
+        _walk = _playerInput.actions["Move"];
     }
 
     void OnEnable()
@@ -25,6 +27,7 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction.performed += Inventory;
         _escapeAction.performed += Escape;
         _altInteractAction.performed += AltInteract;
+        _walk.performed += Walk;
     }
     void OnDisable()
     {
@@ -33,6 +36,7 @@ public class Player_Actions : MonoBehaviour
         _inventoryAction.performed -= Inventory;
         _escapeAction.performed -= Escape;
         _altInteractAction.performed -= AltInteract;
+        _walk.performed -= Walk;
     }
 
     void Update()
@@ -76,5 +80,32 @@ public class Player_Actions : MonoBehaviour
         if(!context.performed) return;
 
         GameEventsManager.instance.inputEvents.PressedEscape();
+    }
+
+    void Walk(InputAction.CallbackContext context)
+    {
+        if(!context.performed) return;
+
+        Vector2 walkDirection = _walk.ReadValue<Vector2>();
+
+        Debug.Log(walkDirection);
+
+        if(walkDirection.x > 0)
+        {
+            GameEventsManager.instance.inputEvents.WalkRight();
+        }
+        if(walkDirection.x < 0)
+        {
+            GameEventsManager.instance.inputEvents.WalkLeft();
+        }
+
+        if(walkDirection.y > 0)
+        {
+            GameEventsManager.instance.inputEvents.WalkUp();
+        }
+        if(walkDirection.y < 0)
+        {
+            GameEventsManager.instance.inputEvents.WalkDown();
+        }
     }
 }
