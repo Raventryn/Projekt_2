@@ -15,3 +15,4 @@ MonoBehaviour:
   ItemId: INVENTORY:ITEM#1
   ItemName: Cube
   ItemPrefab: {fileID: 4307884809137408605, guid: 9776ea94f3c113a4aa537f117a79e2b1, type: 3}
+  ItemInfo: A boring cube

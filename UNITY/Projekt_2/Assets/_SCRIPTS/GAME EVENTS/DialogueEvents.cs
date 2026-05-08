@@ -98,4 +98,11 @@ public class DialogueEvents
             onClearDialogueUIPanel();
         }
     }
+
+    public event Action onEarlyExitDialogue;
+
+    public void EarlyExitDialogue()
+    {
+        onEarlyExitDialogue?.Invoke();
+    }
 }

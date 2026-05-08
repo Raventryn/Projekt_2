@@ -6,6 +6,8 @@ public class ScannerManager : MonoBehaviour
 {
     public static ScannerManager instance;
 
+    public ScannerController Controller;
+
     public Dictionary<ScannableObjectType,bool> ScannedObjects;
 
     public ScannerMode ScannerMode = ScannerMode.SCAN;
@@ -54,7 +56,7 @@ public class ScannerManager : MonoBehaviour
 
     public void ChangeScannerMode(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER) return;
+        if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || !Controller.ScannerArm.activeSelf) return;
 
         switch (_scannerMode)
         {

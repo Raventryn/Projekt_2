@@ -149,6 +149,10 @@ public class InterpretationButtons : MonoBehaviour
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_BUTTONS);
 
                 yield return new WaitForSeconds(0.15f);
+
+                GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
+                GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
+                GameEventsManager.instance.inputEvents.ShowCursor(true);
          
                 break;
 
@@ -160,6 +164,10 @@ public class InterpretationButtons : MonoBehaviour
                 _canvasContainer.SetActive(toggle);
 
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+
+                GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
+                GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+                GameEventsManager.instance.inputEvents.ShowCursor(false);
                 
                 break;
         }

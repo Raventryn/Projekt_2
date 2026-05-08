@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class PlayerRaycast : MonoBehaviour
@@ -5,6 +6,9 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] float _interactionDistance;
 
     [SerializeField] LayerMask _interactionLayer;
+
+    bool _IsWidgetHidden;
+    bool _IsRaycastHit;
 
     void OnEnable()
     {
@@ -16,14 +20,26 @@ public class PlayerRaycast : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedInteract -= Raycast;
     }
 
+    void Update()
+    {
+        WidgetRaycast();
+    }
+
     void Raycast(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER) return;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 
         if(Physics.Raycast(ray, out RaycastHit hit, _interactionDistance, _interactionLayer))
         {
+            if(context == InputEventContext.SCANNER && hit.collider.tag == "Scanner_Object")
+            {
+                GameEventsManager.instance.inputEvents.Interaction(InteractionType.SCANNER, hit.collider.gameObject);
+                return;
+            }
+            else if(context == InputEventContext.SCANNER) return;
+
             switch (hit.collider.tag)
             {
                 case "Untagged":
@@ -40,6 +56,50 @@ public class PlayerRaycast : MonoBehaviour
                     break;
             }
             
+        }
+    }
+
+    void WidgetRaycast()
+    {
+        if(GameEventsManager.instance.inputEvents.Context != InputEventContext.DEFAULT && GameEventsManager.instance.inputEvents.Context != InputEventContext.SCANNER) return;
+
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+
+        if(Physics.Raycast(ray, out RaycastHit hit, _interactionDistance, _interactionLayer))
+        {
+            if (!_IsRaycastHit)
+            {
+                if(GameEventsManager.instance.inputEvents.Context == InputEventContext.SCANNER && hit.collider.tag == "Scanner_Object")
+                {
+                    _IsWidgetHidden = false;
+                    _IsRaycastHit = true;
+                    GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.SCANNER);
+                    return;
+                }
+                else if(GameEventsManager.instance.inputEvents.Context == InputEventContext.SCANNER) return;
+
+                _IsWidgetHidden = false;
+                _IsRaycastHit = true;
+
+                switch (hit.collider.tag)
+                {
+                    case "PickUp_Object":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.PICKUP);
+                        break;
+                    case "Dialogue_Object":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.DIALOGUE);
+                        break;
+                    case "Scanner_Object":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.SCANNER);
+                        break;
+                }
+            }  
+        }
+        else if (!_IsWidgetHidden)
+        {
+            GameEventsManager.instance.uiEvents.HideInteractionWidget();
+            _IsWidgetHidden = true;
+            _IsRaycastHit = false;
         }
     }
 }

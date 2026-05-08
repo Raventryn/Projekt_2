@@ -79,7 +79,7 @@ public class EnterDialogue : MonoBehaviour
     {
         if(context != InputEventContext.DIALOGUE) return;
 
-        ExitDialogue();
+        GameEventsManager.instance.dialogueEvents.EarlyExitDialogue();
     }
 
     void ExitDialogue()

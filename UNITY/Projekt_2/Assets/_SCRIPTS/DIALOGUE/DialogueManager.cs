@@ -42,6 +42,8 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton += PressedButton;
         GameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable += UpdateInkDialogueVariable;
         GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
+
+        GameEventsManager.instance.dialogueEvents.onEarlyExitDialogue += ExitDialogue;
     }
 
     private void OnDisable()
@@ -52,6 +54,8 @@ public class DialogueManager : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onPressedChoiceButton -= PressedButton;
         GameEventsManager.instance.dialogueEvents.onUpdateInkDialogueVariable -= UpdateInkDialogueVariable;
         GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
+
+        GameEventsManager.instance.dialogueEvents.onEarlyExitDialogue -= ExitDialogue;
     }
 
     private void QuestStateChange(Quest quest)

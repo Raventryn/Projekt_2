@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: TestItem03
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
   ItemId: INVENTORY:ITEM#3
-  ItemName: Capsule
+  ItemName: TicTac
   ItemPrefab: {fileID: 4754775546955526079, guid: 00203e17bdd64134f918fe4490ced61c, type: 3}
+  ItemInfo: A tictac

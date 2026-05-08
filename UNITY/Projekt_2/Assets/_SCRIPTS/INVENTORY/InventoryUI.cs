@@ -1,13 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Febucci.TextAnimatorForUnity;
+using TMPro;
+using UnityEditor.EditorTools;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] InventorySystem _inventorySystem;
     [SerializeField] GameObject _UIContentParent;
     [SerializeField] float _scrollSpeed = 2;
+
+    [Tooltip("GameObject with TMP_Text and Typewriter component for Item Name")]
+    [SerializeField] GameObject _itemName;
+    [Tooltip("GameObject with TMP_Text and Typewriter component for Item Info")]
+    [SerializeField] GameObject _itemInfo;
+
+    TMP_Text _itemNameText;
+    TypewriterComponent _itemNameTypewriter;
+    TMP_Text _itemInfoText;
+    TypewriterComponent _itemInfoTypewriter;
+    [SerializeField] Button _leftScrollButton;
+    [SerializeField] Button _rightScrollbutton;
+
 
     GameObject _currentItem;
     GameObject _previousItem;
@@ -45,6 +62,17 @@ public class InventoryUI : MonoBehaviour
     void Start()
     {
         SetSlotPositions();
+
+        _itemNameText = _itemName.GetComponent<TMP_Text>();
+        _itemNameTypewriter = _itemName.GetComponent<TypewriterComponent>();
+        _itemInfoText = _itemInfo.GetComponent<TMP_Text>();
+        _itemInfoTypewriter = _itemInfo.GetComponent<TypewriterComponent>();
+
+        _leftScrollButton.interactable = false;
+        _rightScrollbutton.interactable = false;
+
+        _UIContentParent.SetActive(false);
+        ClearItemTexts();
     }
 
     void Update()
@@ -59,10 +87,25 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    void SetItemTexts(InventoryItemData data)
+    {
+        _itemNameTypewriter.ShowText(data.ItemName);
+        _itemInfoTypewriter.ShowText(data.ItemInfo);
+
+        _itemNameTypewriter.StartShowingText();
+        _itemInfoTypewriter.StartShowingText();
+    }
+
+    void ClearItemTexts()
+    {
+        _itemNameText.text = "";
+        _itemInfoText.text = "";
+    }
+
     void ToggleUI(InputEventContext context)
     {
         if(context != InputEventContext.DEFAULT && context != InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight) return;
-        Debug.Log("Entered");
+        
         _isUIenabled = !_isUIenabled;
 
         _UIContentParent.SetActive(_isUIenabled);
@@ -76,19 +119,34 @@ public class InventoryUI : MonoBehaviour
             GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
+            GameEventsManager.instance.inputEvents.ShowCursor(true);
+
             UpdateInventory();
-            InstantiateInventoryItems(GetInventoryItems(_currentlyDisplayedItem));
+            if(_inventoryLength > 1)
+            {
+                _leftScrollButton.interactable = true;
+                _rightScrollbutton.interactable = true;
+            }    
+            else if( _inventoryLength <= 1)
+            {
+                _leftScrollButton.interactable = false;
+                _rightScrollbutton.interactable = false;
+            }
+            if(_inventoryLength > 0) InstantiateInventoryItems(GetInventoryItems(_currentlyDisplayedItem));
 
             //Debug.Log("Current: " + _currentItem.name);
         }
         else
         {
             DestroyInventoryItems();
+            ClearItemTexts();
 
             GameEventsManager.instance.inputEvents.ChangeInputContext(_previousContext);
 
             GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+
+            GameEventsManager.instance.inputEvents.ShowCursor(false);
         }      
     }
 
@@ -156,6 +214,8 @@ public class InventoryUI : MonoBehaviour
     
         _currentlyDisplayedItem = displayedItem;
 
+        SetItemTexts(displayedItems[0]);
+
         return displayedItems;
     }
 
@@ -190,7 +250,7 @@ public class InventoryUI : MonoBehaviour
             _currentItem.layer = 5;
             _previousItem.layer = 5;
             _nextItem.layer = 5;  
-        }   
+        }  
     }
 
     void SetSlotPositions()
@@ -250,17 +310,35 @@ public class InventoryUI : MonoBehaviour
         Destroy(_nextItem);
     }
 
+    public void ScrollButton(string direction)
+    {
+        switch (direction)
+        {
+            case "left":
+                ScrollPreviousItem(InputEventContext.INVENTORY);
+                break;
+            case "right":
+                ScrollNextItem(InputEventContext.INVENTORY);
+                break;
+        }
+    }
+
     public void ScrollNextItem(InputEventContext context)
     {
         if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight || _inventoryLength <= 1) return;
+
+        ClearItemTexts();
 
         List<InventoryItemData> newItems;
 
         _currentlyDisplayedItem += 1;
 
+        newItems = GetInventoryItems(_currentlyDisplayedItem);
+
+        SetItemTexts(newItems[0]);
+
         if(_inventoryLength >= 3)
         {
-            newItems = GetInventoryItems(_currentlyDisplayedItem);
             _newItem = Instantiate(newItems[2].ItemPrefab, _slotPositions[4], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
             _newItem.layer = 5;
         }
@@ -272,13 +350,19 @@ public class InventoryUI : MonoBehaviour
     {
         if(context !=  InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight || _inventoryLength <= 1) return;
 
+        ClearItemTexts();
+
         List<InventoryItemData> newItems;
 
         _currentlyDisplayedItem -= 1;
 
+        newItems = GetInventoryItems(_currentlyDisplayedItem);
+
+        SetItemTexts(newItems[0]);
+
         if(_inventoryLength >= 3)
         {
-            newItems = GetInventoryItems(_currentlyDisplayedItem);
+            //newItems = GetInventoryItems(_currentlyDisplayedItem);
             _newItem = Instantiate(newItems[1].ItemPrefab, _slotPositions[0], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
             _newItem.layer = 5;
         }

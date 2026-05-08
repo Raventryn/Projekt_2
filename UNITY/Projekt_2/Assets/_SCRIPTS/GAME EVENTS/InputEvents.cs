@@ -11,6 +11,7 @@ public enum InputEventContext
     DIALOGUE,
     DIALOGUE_PLAYING,
     SCANNER,
+    SCANNER_VIEW,
     SCANNER_BUTTONS
 }
 public class InputEvents

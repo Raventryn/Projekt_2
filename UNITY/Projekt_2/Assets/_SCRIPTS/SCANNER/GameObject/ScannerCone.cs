@@ -33,7 +33,7 @@ public class ScannerCone : MonoBehaviour
 
     void ToggleVisibility(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER) return;
+        if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW) return;
 
         _coneVisible = !_coneVisible;
         _renderer.enabled = _coneVisible;
@@ -41,8 +41,6 @@ public class ScannerCone : MonoBehaviour
 
     void ChangeConeColour(ScannerMode mode)
     {
-        Debug.Log(_renderer.material.color);
-
         switch (mode)
         {
             case ScannerMode.SCAN:

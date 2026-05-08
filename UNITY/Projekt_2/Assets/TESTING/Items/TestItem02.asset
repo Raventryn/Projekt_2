@@ -15,3 +15,4 @@ MonoBehaviour:
   ItemId: INVENTORY:ITEM#2
   ItemName: Cylinder
   ItemPrefab: {fileID: 8038225190872087650, guid: 3cb408625acf1a242b199ba6ce4e8b86, type: 3}
+  ItemInfo: An interesting cylinder

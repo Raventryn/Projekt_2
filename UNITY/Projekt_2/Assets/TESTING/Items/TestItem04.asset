@@ -15,3 +15,4 @@ MonoBehaviour:
   ItemId: INVENTORY:ITEM#4
   ItemName: Sphere
   ItemPrefab: {fileID: 9041345127564983341, guid: 72e173bb3b0685c4494aecb6b98eeab9, type: 3}
+  ItemInfo: A handsome sphere

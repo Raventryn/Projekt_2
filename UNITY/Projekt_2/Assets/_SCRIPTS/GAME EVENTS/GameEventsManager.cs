@@ -10,6 +10,7 @@ public class GameEventsManager : MonoBehaviour
     public DialogueEvents dialogueEvents;
     public QuestEvents questEvents;
     public InteractionEvents interactionEvents;
+    public UIEvents uiEvents;
 
     void Awake()
     {
@@ -27,5 +28,6 @@ public class GameEventsManager : MonoBehaviour
         dialogueEvents = new DialogueEvents();
         questEvents = new QuestEvents();
         interactionEvents = new InteractionEvents();
+        uiEvents = new UIEvents();
     }
 }
