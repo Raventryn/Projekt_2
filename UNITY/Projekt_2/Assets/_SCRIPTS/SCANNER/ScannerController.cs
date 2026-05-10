@@ -22,7 +22,7 @@ public class ScannerController : MonoBehaviour
     Vector3 _pointerDirection;
     bool _scanning = false;
     bool _hitObject = false;
-    bool _scannerLocked = true;
+    bool _scannerCoroutinePlaying;
     bool _resetArmRotation = false;
 
     Animator _scannerAnimator;
@@ -53,7 +53,7 @@ public class ScannerController : MonoBehaviour
 
     void Start()
     {
-        ShowScanner(InputEventContext.SCANNER, -1);
+        ScannerArm.SetActive(false);
     }
 
     void Update()
@@ -77,36 +77,29 @@ public class ScannerController : MonoBehaviour
         switch (mode)
         {
             case ScannerMode.SCAN:
-                //ScannerOff(GameEventsManager.instance.inputEvents.Context);
                 _hitObject = false;
                 GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
                 if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
 
                 if(_xrayDecal != null) _xrayDecal.enabled = false;
-                //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
             case ScannerMode.XRAY:
-                //ScannerOff(GameEventsManager.instance.inputEvents.Context);
-
                 _hitObject = false;
                 GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
                 if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
-                
-                //ScannerRaycast(GameEventsManager.instance.inputEvents.Context);
                 break;
         }
     }
 
     void ShowScanner(InputEventContext context, float value)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || _scannerCoroutinePlaying) return;
 
         switch (value)
         {
             case 1f:
                 if(context == InputEventContext.DEFAULT) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
 
-                //_scannerArm = Instantiate(_scannerPrefab, Camera.main.transform);
                 ScannerArm.SetActive(true);
 
                 _scannerAnimator = ScannerArm.GetComponent<Animator>();
@@ -114,12 +107,12 @@ public class ScannerController : MonoBehaviour
                 _xrayDecal = ScannerArm.GetComponentInChildren<Decal>();
                 if(_xrayDecal != null) _xrayDecal.enabled = false;
 
-                //_scannerArm.transform.position += new Vector3(0.372f, -0.226f, 0.209f);
+                StartCoroutine(UnlockScannerOnEquip(true));
                 break;
             case -1f:
                 if(context == InputEventContext.SCANNER) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
-
-                ScannerArm.SetActive(false);
+                
+                StartCoroutine(UnlockScannerOnEquip(false));
                 break;
         }
     }
@@ -261,6 +254,29 @@ public class ScannerController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
+    }
+
+    IEnumerator UnlockScannerOnEquip(bool equipScanner)
+    {
+        _scannerCoroutinePlaying = true;
+
+        switch (equipScanner)
+        {
+            case true:
+                _scannerAnimator.SetBool("IsEquipped", true);
+                
+                yield return new WaitForSeconds(0.2f);
+                break;
+            case false:
+                _scannerAnimator.SetBool("IsEquipped", false);
+                
+                yield return new WaitForSeconds(0.2f);
+
+                ScannerArm.SetActive(false);
+                break;
+        }
+
+        _scannerCoroutinePlaying = false;
     }
 
 }
