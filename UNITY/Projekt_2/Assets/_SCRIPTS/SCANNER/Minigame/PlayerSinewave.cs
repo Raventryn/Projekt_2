@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class Sinewave : MonoBehaviour
+public class PlayerSinewave : MonoBehaviour
 {
     public LineRenderer _lineRenderer;
     [SerializeField] int _points;
@@ -16,20 +15,23 @@ public class Sinewave : MonoBehaviour
 
     public float WaveSpeed = 1;
 
+    void OnEnable()
+    {
+        GameEventsManager.instance.inputEvents.onLook += ManipulateWave;
+    }
+
+    void OnDisable()
+    {
+        GameEventsManager.instance.inputEvents.onLook -= ManipulateWave;
+    }
+
     void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
-
-        InvokeRepeating("RandomizeWave", 0, 8);
     }
 
     void Update()
     {
-        if (_IsMoveWaveValues  && WaveSpeed != 0)
-        {
-            MoveToRandomValues();
-        }
-
         Draw();
     }
 
@@ -50,24 +52,11 @@ public class Sinewave : MonoBehaviour
         }
     }
 
-    void RandomizeWave()
+    void ManipulateWave(InputEventContext context, Vector2 value)
     {
+        if(/*context != InputEventContext.SCANNER_MINIGAME && */ WaveSpeed == 0) return;
 
-        _newFrequency = Random.Range(0.33f, 1.25f);
-
-        _newAmplitude = Random.Range(0.33f, 1.5f);
-
-        _IsMoveWaveValues = true;
-    }
-
-    void MoveToRandomValues()
-    {
-        Frequency = Mathf.MoveTowards(Frequency, _newFrequency, 0.15f * Time.deltaTime);
-        Amplitude = Mathf.MoveTowards(Amplitude, _newAmplitude, 0.15f * Time.deltaTime);
-
-        if(Frequency == _newFrequency && Amplitude == _newAmplitude)
-        {
-            _IsMoveWaveValues = false;
-        }
+        Frequency = Mathf.Clamp(Frequency += -value.x * 0.001f, 0.33f, 1.25f);
+        Amplitude = Mathf.Clamp(Amplitude += value.y * 0.001f, 0.33f, 1.5f);
     }
 }
