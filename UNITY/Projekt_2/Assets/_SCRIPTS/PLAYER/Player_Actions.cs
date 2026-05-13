@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class Player_Actions : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Player_Actions : MonoBehaviour
     InputAction _altInteractAction;
     InputAction _walkAction;
     InputAction _equipScannerAction;
+    InputAction _lookAction;
 
     void Awake()
     {
@@ -20,6 +22,7 @@ public class Player_Actions : MonoBehaviour
         _altInteractAction = _playerInput.actions["AltInteract"];
         _walkAction = _playerInput.actions["Move"];
         _equipScannerAction = _playerInput.actions["EquipScanner"];
+        _lookAction = _playerInput.actions["Look"];
     }
 
     void OnEnable()
@@ -31,6 +34,7 @@ public class Player_Actions : MonoBehaviour
         _altInteractAction.performed += AltInteract;
         _walkAction.performed += Walk;
         _equipScannerAction.performed += EquipScanner;
+        _lookAction.performed += Look;
     }
     void OnDisable()
     {
@@ -41,6 +45,7 @@ public class Player_Actions : MonoBehaviour
         _altInteractAction.performed -= AltInteract;
         _walkAction.performed -= Walk;
         _equipScannerAction.performed -= EquipScanner;
+        _lookAction.performed -= Look;
     }
 
     void Update()
@@ -118,5 +123,12 @@ public class Player_Actions : MonoBehaviour
         if(!context.performed) return;
 
         GameEventsManager.instance.inputEvents.EquipScanner(_equipScannerAction.ReadValue<float>());
+    }
+
+    void Look(InputAction.CallbackContext context)
+    {
+        if(!context.performed) return;
+
+        GameEventsManager.instance.inputEvents.Look(_lookAction.ReadValue<Vector2>());
     }
 }

@@ -12,7 +12,8 @@ public enum InputEventContext
     DIALOGUE_PLAYING,
     SCANNER,
     SCANNER_VIEW,
-    SCANNER_BUTTONS
+    SCANNER_BUTTONS,
+    SCANNER_MINIGAME
 }
 public class InputEvents
 {
@@ -124,5 +125,12 @@ public class InputEvents
     public void EquipScanner(float value)
     {
         onEquipScanner?.Invoke(Context, value);
+    }
+
+    public event Action<InputEventContext, Vector2> onLook;
+
+    public void Look(Vector2 value)
+    {
+        onLook?.Invoke(Context, value);
     }
 }
