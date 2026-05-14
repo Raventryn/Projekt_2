@@ -1,4 +1,7 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 enum LineColors
 {
@@ -10,22 +13,55 @@ enum LineColors
 
 public class CompareWaves : MonoBehaviour
 {
+    [SerializeField] GameObject minigameUIContentParent;
+    [SerializeField] Animator contentParentAnimator;
+
     [SerializeField] PlayerSinewave _playerWave;
     [SerializeField] Sinewave _targetWave;
     [SerializeField] LineRenderer _progressGraph;
     [SerializeField] LineRenderer _transferSpeedBar;
     [SerializeField] LineRenderer _progressBar;
 
+    [SerializeField] TMP_Text _transferSpeedText;
+
+    [SerializeField] Button startMinigameButton;
+
     [SerializeField] Vector2 _progressGraphLimits = new Vector2(0, 10);
 
     [SerializeField] Color[] lineColors;
     LineColors previousColor;
-    LineColors lineColor;
+    
+    Vector3 _playerLinePosition;
 
     float timer = 15;
     float transferSpeed = 1;
 
     bool runComparison = true;
+
+    void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onStartScanMinigame += ShowMinigameUI;
+    }
+    void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onStartScanMinigame -= ShowMinigameUI;
+    }
+
+
+    void Start()
+    {
+        _playerLinePosition = _playerWave._lineRenderer.transform.localPosition;
+
+        runComparison = false;
+
+        _playerWave.WaveSpeed = 0;
+        _targetWave.WaveSpeed = 0;
+
+        minigameUIContentParent.SetActive(false);
+
+        //Remove when event is implemented
+        //ShowMinigameUI(true);
+    }
 
     void Update()
     {
@@ -36,6 +72,73 @@ public class CompareWaves : MonoBehaviour
         } 
     }
 
+    void ShowMinigameUI(bool toggle)
+    {
+        StartCoroutine(ToggleContentParent(toggle));
+    }
+
+    public void StartMinigame()
+    {
+        startMinigameButton.gameObject.SetActive(false);
+
+        runComparison = true;
+
+        _playerWave.WaveSpeed = 10;
+        _targetWave.WaveSpeed = 10;
+
+        _playerWave.Amplitude = _targetWave.Amplitude;
+        _playerWave.Frequency = _targetWave.Frequency;
+
+        GameEventsManager.instance.inputEvents.ShowCursor(false);
+
+        InvokeRepeating("SimplifyProgressGraph", 2, 2);
+    }
+
+    public void ResetMinigame()
+    {
+        _progressGraph.positionCount = 0;
+        _progressGraph.SetPositions(new Vector3[0]);
+        timer = 15;
+        transferSpeed = 1;
+
+        startMinigameButton.gameObject.SetActive(true);
+    }
+
+    IEnumerator ToggleContentParent(bool isActive)
+    {
+        switch (isActive)
+        {
+            case true:
+                minigameUIContentParent.SetActive(true);
+                contentParentAnimator.SetBool("IsActive", true);
+
+                yield return new WaitForSeconds(0.15f);
+
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_MINIGAME);
+
+                GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
+                GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
+                GameEventsManager.instance.inputEvents.ShowCursor(true);
+
+                startMinigameButton.gameObject.SetActive(true);
+                break;
+            case false:
+                contentParentAnimator.SetBool("IsActive", false);
+                startMinigameButton.gameObject.SetActive(false);
+
+                yield return new WaitForSeconds(0.15f);
+
+                minigameUIContentParent.SetActive(false);
+
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+
+                GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
+                GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+                GameEventsManager.instance.inputEvents.ShowCursor(false);
+                break;
+        }
+    }
+
     void CompareWaveValues()
     {
         float amplitudeDifference = Mathf.Sqrt(Mathf.Pow(_targetWave.Amplitude - _playerWave.Amplitude, 2));
@@ -43,7 +146,7 @@ public class CompareWaves : MonoBehaviour
 
         float totalDifference = amplitudeDifference + frequencyDifference;
 
-        Debug.Log(transferSpeed);
+        //Debug.Log(transferSpeed);
 
         for(int i = 0; i < 2; i++)
         {
@@ -52,7 +155,7 @@ public class CompareWaves : MonoBehaviour
             _transferSpeedBar.SetPosition(i, newPosition);
         }
 
-        if(totalDifference <= 0.08f)
+        if(totalDifference <= 0.1f)
         {
 
             timer -= 1 * transferSpeed * Time.deltaTime;
@@ -68,7 +171,7 @@ public class CompareWaves : MonoBehaviour
                 ResetWavePositition();
             }
         }
-        else if(totalDifference <= 0.15f)
+        else if(totalDifference <= 0.17f)
         {
             timer -= 1 * transferSpeed * Time.deltaTime;
 
@@ -108,6 +211,10 @@ public class CompareWaves : MonoBehaviour
                 _targetWave.WaveSpeed = 0;
 
                 Debug.Log("Failed!");
+
+                GameEventsManager.instance.inputEvents.ShowCursor(true);
+                //restartMinigameButton.gameObject.SetActive(true);
+                ResetMinigame();
                 return;
             } 
         }
@@ -119,6 +226,8 @@ public class CompareWaves : MonoBehaviour
             _progressBar.SetPosition(i, newPosition);
         }
 
+        _transferSpeedText.text = "Transfer speed: " + Mathf.CeilToInt(transferSpeed * 15000f) * 0.001f +" Tbps";
+
         if(timer <= 0)
         {
             runComparison = false;
@@ -127,6 +236,9 @@ public class CompareWaves : MonoBehaviour
             _targetWave.WaveSpeed = 0;
             
             Debug.Log("Succeeded!");
+
+            ShowMinigameUI(false);
+            //Send Event that minigame is finished
         }
     } 
 
@@ -139,6 +251,11 @@ public class CompareWaves : MonoBehaviour
         Vector3 position = new Vector3((1 - (timer / 15f)) * _progressGraphLimits.y, transferSpeed * 5, 0);
         
         _progressGraph.SetPosition(lastPosition, position);
+    }
+
+    void SimplifyProgressGraph()
+    {
+        _progressGraph.Simplify(0.025f);
     }
 
     void ChangeWaveColor(LineColors newColor)
@@ -176,13 +293,13 @@ public class CompareWaves : MonoBehaviour
         float positionY = shakeStrength * Mathf.Sin(x * Tau * totalDifference);
         float positionX = shakeStrength * Mathf.Cos(x * Tau * totalDifference);
 
-        Vector3 newPosition = new Vector3(positionX, positionY, 0);
+        Vector3 newPosition = new Vector3(_playerLinePosition.x + positionX, _playerLinePosition.y + positionY, 0);
 
         _playerWave._lineRenderer.transform.localPosition = newPosition;
     }
 
     void ResetWavePositition()
     {
-        _playerWave._lineRenderer.transform.localPosition = Vector3.zero;
+        _playerWave._lineRenderer.transform.localPosition = _playerLinePosition;
     }
 }

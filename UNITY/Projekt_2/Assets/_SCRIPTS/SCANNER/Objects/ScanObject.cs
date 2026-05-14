@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class ScanObject : MonoBehaviour
 {
+    ShowCanvas _showCanvas;
+    InterpretObject _interpretObject;
+    TriggerMinigame _triggerMinigame;
+
+
     public ScannableObjectKind ObjectKind;
     public ScannableObjectType ObjectType;
     float _scanTimer = 3;
@@ -28,11 +33,6 @@ public class ScanObject : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn += ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff += ObjectScanOff;
         GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState += UpdateScannedState;
-
-        if(ObjectKind == ScannableObjectKind.SPECIAL)
-        {
-            GameEventsManager.instance.questEvents.onReplaceInterpretableObjects += ReplaceGameObject;
-        }
     }
 
     void OnDisable()
@@ -40,11 +40,6 @@ public class ScanObject : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn -= ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff -= ObjectScanOff;
         GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState -= UpdateScannedState;
-
-        if(ObjectKind == ScannableObjectKind.SPECIAL)
-        {
-            GameEventsManager.instance.questEvents.onReplaceInterpretableObjects -= ReplaceGameObject;
-        }
     }
 
     void Start()
@@ -61,6 +56,8 @@ public class ScanObject : MonoBehaviour
         if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
             _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
         _InfoCanvasContainer.SetActive(false);
+
+        InstantiateClasses();
     }
 
     void Update()
@@ -69,6 +66,28 @@ public class ScanObject : MonoBehaviour
         {
             ScanTimer();
         }
+    }
+
+    void InstantiateClasses()
+    {
+        switch (ObjectKind)
+        {
+            case ScannableObjectKind.SPECIAL:
+                _interpretObject = gameObject.AddComponent<InterpretObject>();
+                _interpretObject.ObjectType = ObjectType;
+                break;
+            case ScannableObjectKind.QUEST:
+                _triggerMinigame = gameObject.AddComponent<TriggerMinigame>();
+                break;
+        }
+
+        _showCanvas = gameObject.AddComponent<ShowCanvas>();
+        
+        _showCanvas.TmpText = _tmpText;
+        _showCanvas.Typewriter = _typewriter;
+        _showCanvas.InfoCanvasContainer = _InfoCanvasContainer;
+        _showCanvas.InfoCanvasAnimator = _InfoCanvasAnimator;
+        _showCanvas.DescriptionText = _descriptionText;
     }
 
     void UpdateScannedState(ScannableObjectType type)
@@ -97,7 +116,7 @@ public class ScanObject : MonoBehaviour
         }
         else if (_objectScanned)
         {
-            ShowInformationCanvas(false);
+            _showCanvas.ShowInformationCanvas(false);
         }
 
     }
@@ -118,7 +137,7 @@ public class ScanObject : MonoBehaviour
             _scanTimer = 3;
         }
 
-        HideInformationCanvas();
+        _showCanvas.HideInformationCanvas();
     }
 
     //Is called when ScanTimer is 0 for the first time
@@ -127,12 +146,15 @@ public class ScanObject : MonoBehaviour
         switch (ObjectKind)
         {
             case ScannableObjectKind.GENERIC:
-                ShowInformationCanvas(true);
+                _showCanvas.ShowInformationCanvas(true);
                 break;
             case ScannableObjectKind.SPECIAL:
-                ShowButtonCanvas(true);
+                _interpretObject.ShowButtonCanvas(true);
                 break;
             case ScannableObjectKind.QUEST:
+                _triggerMinigame.OpenMinigame(true);
+                GameEventsManager.instance.inputEvents.ReleaseInteract();
+                GameEventsManager.instance.inputEvents.EquipScanner(-1);
                 break;
         }
 
@@ -154,86 +176,5 @@ public class ScanObject : MonoBehaviour
             _fillBarImage.enabled = false;
             FirstTimeScan();
         }
-    }
-
-    void ShowInformationCanvas(bool firstTimeShowing)
-    {
-        StopAllCoroutines();
-        StartCoroutine(InfoTextAnimation(true));
-
-        if (firstTimeShowing)
-        {
-            _typewriter.ShowText(_descriptionText);
-
-            _typewriter.StartShowingText();
-        }    
-    }
-
-    void HideInformationCanvas()
-    {
-        StopAllCoroutines();
-        StartCoroutine(InfoTextAnimation(false));
-
-        if(_tmpText.text != _descriptionText)
-        {
-            _tmpText.text = "";
-        }
-    }
-
-    void ShowButtonCanvas(bool toggle)
-    {
-        GameEventsManager.instance.inputEvents.ReleaseInteract();
-        GameEventsManager.instance.questEvents.ShowButtonCanvas(toggle, ObjectType);
-    }
-
-    void ReplaceGameObject(ScannableObjectType type, GameObject gameObject)
-    {
-        if(type != ObjectType) return;
-
-        GameObject replacerObject = Instantiate(gameObject, this.gameObject.transform.position, this.gameObject.transform.rotation, this.gameObject.transform.parent);
-        replacerObject.transform.localScale = this.gameObject.transform.localScale;
-
-        ScanObject newScanObject = replacerObject.GetComponent<ScanObject>();
-
-        if(!ScannerManager.instance.ScannedObjects.ContainsKey(newScanObject.ObjectType))
-            ScannerManager.instance.ScannedObjects.Add(newScanObject.ObjectType, true);
-
-        else if(ScannerManager.instance.ScannedObjects.ContainsKey(newScanObject.ObjectType))
-            ScannerManager.instance.ScannedObjects[newScanObject.ObjectType] = true;
-
-        GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(newScanObject.ObjectType);
-
-        Destroy(this.gameObject);
-        //this.gameObject.SetActive(false);
-    }
-
-    public void SendReplaceEvent(string objectName)
-    {
-        GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(ObjectType, ScannerManager.instance.ScannableObjects[objectName]);
-    }
-
-    IEnumerator InfoTextAnimation(bool toggle)
-    {
-        switch (toggle)
-        {
-            case true:
-                _InfoCanvasContainer.SetActive(toggle);
-
-                _InfoCanvasAnimator.SetBool("showText", toggle);
-
-                yield return new WaitForSeconds(0.15f);
-         
-                break;
-
-            case false:
-                _InfoCanvasAnimator.SetBool("showText", toggle);
-
-                yield return new WaitForSeconds(0.15f);
-
-                _InfoCanvasContainer.SetActive(toggle);
-                
-                break;
-        }
-        
-    }
+    }   
 }

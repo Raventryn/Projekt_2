@@ -68,4 +68,11 @@ public class QuestEvents
     {
         onInterpretedObject?.Invoke();
     }
+
+    public event Action<bool> onStartScanMinigame;
+
+    public void StartScanMinigame(bool toggle)
+    {
+        onStartScanMinigame?.Invoke(toggle);
+    }
 }

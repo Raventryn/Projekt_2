@@ -53,9 +53,9 @@ public class Sinewave : MonoBehaviour
     void RandomizeWave()
     {
 
-        _newFrequency = Random.Range(0.33f, 1.25f);
+        _newFrequency = Random.Range(0.33f, 1.1f);
 
-        _newAmplitude = Random.Range(0.33f, 1.5f);
+        _newAmplitude = Random.Range(0.55f, 2.9f);
 
         _IsMoveWaveValues = true;
     }

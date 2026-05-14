@@ -56,7 +56,7 @@ public class PlayerSinewave : MonoBehaviour
     {
         if(/*context != InputEventContext.SCANNER_MINIGAME && */ WaveSpeed == 0) return;
 
-        Frequency = Mathf.Clamp(Frequency += -value.x * 0.001f, 0.33f, 1.25f);
-        Amplitude = Mathf.Clamp(Amplitude += value.y * 0.001f, 0.33f, 1.5f);
+        Frequency = Mathf.Clamp(Frequency += -value.x * 0.001f, 0.33f, 1.1f);
+        Amplitude = Mathf.Clamp(Amplitude += value.y * 0.001f, 0.55f, 2.9f);
     }
 }
