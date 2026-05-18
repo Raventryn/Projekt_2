@@ -239,6 +239,7 @@ public class CompareWaves : MonoBehaviour
 
             ShowMinigameUI(false);
             //Send Event that minigame is finished
+            //If object is to be picked up, change tag and layer of object
         }
     } 
 
