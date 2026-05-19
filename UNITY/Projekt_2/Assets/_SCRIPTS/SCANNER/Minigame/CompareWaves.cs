@@ -33,6 +33,11 @@ public class CompareWaves : MonoBehaviour
     
     Vector3 _playerLinePosition;
 
+
+//Only for testing, remove if not needed anymore
+    [SerializeField] float _frequencyDifference;
+    [SerializeField] float _amplitudeDifference;
+
     float timer = 15;
     float transferSpeed = 1;
 
@@ -56,6 +61,8 @@ public class CompareWaves : MonoBehaviour
 
         _playerWave.WaveSpeed = 0;
         _targetWave.WaveSpeed = 0;
+
+        ChangeWaveColor(LineColors.GREEN);
 
         minigameUIContentParent.SetActive(false);
 
@@ -144,6 +151,9 @@ public class CompareWaves : MonoBehaviour
         float amplitudeDifference = Mathf.Sqrt(Mathf.Pow(_targetWave.Amplitude - _playerWave.Amplitude, 2));
         float frequencyDifference = Mathf.Sqrt(Mathf.Pow(_targetWave.Frequency - _playerWave.Frequency, 2));
 
+        _frequencyDifference = frequencyDifference;
+        _amplitudeDifference = amplitudeDifference;
+
         float totalDifference = amplitudeDifference + frequencyDifference;
 
         //Debug.Log(transferSpeed);
@@ -155,7 +165,7 @@ public class CompareWaves : MonoBehaviour
             _transferSpeedBar.SetPosition(i, newPosition);
         }
 
-        if(totalDifference <= 0.1f)
+        if(amplitudeDifference <= 0.17f && frequencyDifference <= 0.017f)
         {
 
             timer -= 1 * transferSpeed * Time.deltaTime;
@@ -171,7 +181,7 @@ public class CompareWaves : MonoBehaviour
                 ResetWavePositition();
             }
         }
-        else if(totalDifference <= 0.17f)
+        else if(amplitudeDifference <= 0.25f && frequencyDifference <= 0.025f)
         {
             timer -= 1 * transferSpeed * Time.deltaTime;
 

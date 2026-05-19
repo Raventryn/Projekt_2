@@ -62,8 +62,8 @@ public class Sinewave : MonoBehaviour
 
     void MoveToRandomValues()
     {
-        Frequency = Mathf.MoveTowards(Frequency, _newFrequency, 0.15f * Time.deltaTime);
-        Amplitude = Mathf.MoveTowards(Amplitude, _newAmplitude, 0.15f * Time.deltaTime);
+        Frequency = Mathf.MoveTowards(Frequency, _newFrequency, 0.07f * Time.deltaTime);
+        Amplitude = Mathf.MoveTowards(Amplitude, _newAmplitude, 0.07f * Time.deltaTime);
 
         if(Frequency == _newFrequency && Amplitude == _newAmplitude)
         {

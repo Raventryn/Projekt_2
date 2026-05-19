@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class HUDCodeLines : MonoBehaviour
 {
     [SerializeField] TMP_Text Textfield;
