@@ -18,11 +18,13 @@ public class CalibrationGameManager : MonoBehaviour
     [SerializeField] GameObject _uiContentParent;
     [SerializeField] Image _matchFillBar;
     [SerializeField] Image _sensitivityBar;
+    [SerializeField] GameObject[] _panels;
 
 
     GameObject _target;
     GameObject _playerArm;
     GameObject _targetArm;
+    GameObject _lastUsedPanel;
 
     Animator _playerArmAnimator;
     Animator _targetAnimator;
@@ -41,17 +43,20 @@ public class CalibrationGameManager : MonoBehaviour
     bool _allowEquipMethod;
     bool _IsArmEquipped;
     bool _minigameRunning;
+    bool _moveArm;
 
     void OnEnable()
     {
         GameEventsManager.instance.inputEvents.onEquipScanner += EquipArm;
         GameEventsManager.instance.inputEvents.onEquipScanner += ChangeMouseSensitivity;
+        GameEventsManager.instance.inputEvents.onEquipScanner += HideHintPanel;
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.inputEvents.onEquipScanner -= EquipArm;
         GameEventsManager.instance.inputEvents.onEquipScanner -= ChangeMouseSensitivity;
+        GameEventsManager.instance.inputEvents.onEquipScanner -= HideHintPanel;
     }
 
     void Start()
@@ -59,6 +64,11 @@ public class CalibrationGameManager : MonoBehaviour
         _matchFillBar.fillAmount = 0;
         _sensitivityBar.fillAmount = 0;
         _uiContentParent.SetActive(false);
+
+        foreach(GameObject panel in _panels)
+        {
+            panel.SetActive(false);
+        }
 
         StartMinigame();
     }
@@ -71,12 +81,15 @@ public class CalibrationGameManager : MonoBehaviour
             MoveTargetInCircle();
         }
 
+        if (_moveArm)
+        {
+            ScreenToWorldPoint();
+            RotateArms();
+        }
+
         if (_minigameRunning)
         {
             _targetPosition = _target.transform.position;
-
-            ScreenToWorldPoint();
-            RotateArms();
 
             ComparePointerPosition();
         }
@@ -89,9 +102,6 @@ public class CalibrationGameManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
         _target = Instantiate(_targetPrefab, Camera.main.transform);
         _target.transform.localPosition = new Vector3(0, 0, 2);
 
@@ -100,6 +110,8 @@ public class CalibrationGameManager : MonoBehaviour
         _allowEquipMethod = true;
 
         _uiContentParent.SetActive(true);
+
+        ShowHintPanels(_panels[0], true);
     }
 
     void EndMinigame()
@@ -107,10 +119,15 @@ public class CalibrationGameManager : MonoBehaviour
         _moveTarget = false;
         _minigameRunning = false;
 
+        _matchFillBar.gameObject.SetActive(false);
+        _sensitivityBar.gameObject.SetActive(false);
+
         Destroy(_target);
         Destroy(_targetArm);
 
         _allowEquipMethod = true;
+
+        ShowHintPanels(_panels[2], true);
     }
 
     void ComparePointerPosition()
@@ -119,7 +136,7 @@ public class CalibrationGameManager : MonoBehaviour
 
         if(difference.magnitude <= 0.2f)
         {
-            _positionMatch = Mathf.Clamp(_positionMatch += 25f * Time.deltaTime, 0, 100);
+            _positionMatch = Mathf.Clamp(_positionMatch += 17f * Time.deltaTime, 0, 100);
 
             if(_currentMaterial != MaterialType.GREEN)
             {
@@ -128,7 +145,7 @@ public class CalibrationGameManager : MonoBehaviour
         }
         else
         {
-            _positionMatch = Mathf.Clamp(_positionMatch -= 15f * Time.deltaTime, 0, 100);
+            _positionMatch = Mathf.Clamp(_positionMatch -= 12f * Time.deltaTime, 0, 100);
 
             if(_currentMaterial != MaterialType.RED)
             {
@@ -166,7 +183,9 @@ public class CalibrationGameManager : MonoBehaviour
 
                 ChangeTargetArmMaterial(MaterialType.RED);
 
-                _playerArmAnimator = _targetArm.GetComponent<Animator>();
+                _playerArmAnimator = _playerArm.GetComponent<Animator>();
+
+                GameEventsManager.instance.inputEvents.ShowCursor(true);
 
                 StartCoroutine(EquipArmAnim(true));
 
@@ -179,6 +198,8 @@ public class CalibrationGameManager : MonoBehaviour
                 _IsArmEquipped = false;
 
                 _allowEquipMethod = false;
+
+                GameEventsManager.instance.inputEvents.ShowCursor(false);
 
                 StartCoroutine(EquipArmAnim(false));
                 break;
@@ -203,6 +224,8 @@ public class CalibrationGameManager : MonoBehaviour
                 break;
             case 4:
                 _targetAnimator.SetInteger("Stage", 4);
+                Destroy(_targetAnimator);
+                _target.transform.localPosition = new Vector3(0,0,2);
                 _positionMatch = 0;
                 _moveTarget = true;
                 break; 
@@ -215,10 +238,14 @@ public class CalibrationGameManager : MonoBehaviour
 
     void MoveTargetInCircle()
     {
-        _angle += Time.deltaTime;
+        _angle += 2 * Time.deltaTime;
 
-        _targetPosition.x = 0.75f * Mathf.Cos(-_angle);
-        _targetPosition.y = 0.75f * Mathf.Sin(-_angle);
+        float xPosition = 0.6f * Mathf.Cos(-_angle);
+        float yPosition = 0.6f * Mathf.Sin(-_angle);
+
+        Debug.Log(xPosition);
+
+        _target.transform.localPosition = new Vector3(xPosition, yPosition, 2);
     }
 
     void ScreenToWorldPoint()
@@ -234,7 +261,8 @@ public class CalibrationGameManager : MonoBehaviour
     void RotateArms()
     {
         _playerArm.transform.LookAt(_pointerPosition);
-        _targetArm.transform.LookAt(_targetPosition);
+        if(_targetArm != null)
+            _targetArm.transform.LookAt(_targetPosition);
     }
 
     void ChangeMouseSensitivity(InputEventContext context, float value)
@@ -261,6 +289,17 @@ public class CalibrationGameManager : MonoBehaviour
         }
     }
 
+    void HideHintPanel(InputEventContext context, float value)
+    {
+        ShowHintPanels(_lastUsedPanel, false);
+    }
+
+    void ShowHintPanels(GameObject panel, bool toggle)
+    {
+        panel.SetActive(toggle);
+        _lastUsedPanel = panel;
+    }
+
     IEnumerator EquipArmAnim(bool toggle)
     {
         switch (toggle)
@@ -271,21 +310,22 @@ public class CalibrationGameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.15f);
 
                 _minigameRunning = true;
+                _moveArm = true;
 
                 ChangeTargetState(1);
 
                 ChangeMouseSensitivity(InputEventContext.CALIBRATING, 0);
                 _minigameStage = 1;
 
+                ShowHintPanels(_panels[1], true);
                 break;
             case false:
                 _minigameRunning = false;
+                _moveArm = false;
 
                 _playerArmAnimator.SetBool("IsEquipped", false);
 
                 yield return new WaitForSeconds(0.15f);
-
-                _playerArmAnimator = null;
 
                 Destroy(_playerArm);
 

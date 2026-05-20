@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,6 +11,8 @@ public class CursorController : MonoBehaviour
     public GameObject Cursor;
 
     public RectTransform ScreenSpaceCanvas;
+
+    Image _cursorImage;
 
     InputAction _lookAction;
 
@@ -44,11 +45,15 @@ public class CursorController : MonoBehaviour
         _lookAction = _playerController.LookAction;
 
         Debug.Log("Screen size:" + -Screen.width/2 + " x " + Screen.height);
+
+        _cursorImage = Cursor.GetComponent<Image>();
+
+        ShowCursor(false);
     }
 
     void Update()
     {
-        if (Cursor.activeSelf && !_IsCursorLocked)
+        if (_cursorImage.enabled && !_IsCursorLocked)
         {
             MoveCursor();
         }
@@ -72,27 +77,11 @@ public class CursorController : MonoBehaviour
 
     void ShowCursor(bool toggle)
     {
-        switch (toggle)
-        {
-            case true:
-                Cursor.SetActive(true);
-                break;
-            case false:
-                Cursor.SetActive(false);
-                break;
-        }
+        _cursorImage.enabled = toggle;
     }
 
     void LockCursor(bool toggle)
     {
-        switch (toggle)
-        {
-            case true:
-                _IsCursorLocked = true;
-                break;
-            case false:
-                _IsCursorLocked = false;
-                break;
-        }
+        _IsCursorLocked = toggle;
     }
 }

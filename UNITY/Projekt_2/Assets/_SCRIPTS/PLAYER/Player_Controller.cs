@@ -106,6 +106,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Start()
     {
+        SetLookSensitivity(LookSensitivity);
         SetMoveSpeed(false, false);
         _defaultHeight = _characterController.height;
         ShowCursor(false);
