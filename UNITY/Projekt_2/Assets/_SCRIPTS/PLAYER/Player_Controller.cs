@@ -18,7 +18,7 @@ public class Player_Controller : MonoBehaviour
     private InputAction _jumpAction;
     private InputAction _sprintAction;
     private InputAction _crouchAction;
-    private InputAction _lookAction;
+    public InputAction LookAction;
 
     //Properties of Player
     [Header("Player")]
@@ -40,8 +40,8 @@ public class Player_Controller : MonoBehaviour
     public float TopClamp;
     public float BottomClamp;
 
-    [Range(0.5f, 6.0f)]
-    public float LookSensitivity = 1;
+    [Range(2f, 10.0f)]
+    public float LookSensitivity = 6;
 
     private float CameraPitch;
 
@@ -69,7 +69,7 @@ public class Player_Controller : MonoBehaviour
         _jumpAction = _playerInput.actions["Jump"];
         _sprintAction = _playerInput.actions["Sprint"];
         _crouchAction = _playerInput.actions["Crouch"];
-        _lookAction = _playerInput.actions["Look"];
+        LookAction = _playerInput.actions["Look"];
     }
 
     private void OnEnable()
@@ -85,7 +85,7 @@ public class Player_Controller : MonoBehaviour
         GameEventsManager.instance.playerEvents.onLockPlayerMovement += LockMovement;
         GameEventsManager.instance.playerEvents.onLockPlayerCamera += LockCamera;
         GameEventsManager.instance.playerEvents.onShowPlayerCharacter += ShowPlayer;
-        GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
+        //GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
     }
 
     private void OnDisable()
@@ -101,7 +101,7 @@ public class Player_Controller : MonoBehaviour
         GameEventsManager.instance.playerEvents.onLockPlayerMovement -= LockMovement;
         GameEventsManager.instance.playerEvents.onLockPlayerCamera -= LockCamera;
         GameEventsManager.instance.playerEvents.onShowPlayerCharacter -= ShowPlayer;
-        GameEventsManager.instance.inputEvents.onShowCursor -= ShowCursor;
+        //GameEventsManager.instance.inputEvents.onShowCursor -= ShowCursor;
     }
 
     private void Start()
@@ -143,18 +143,18 @@ public class Player_Controller : MonoBehaviour
     {
         if(!_allowLook) return;
 
-        Vector2 lookInput = _lookAction.ReadValue<Vector2>();
+        Vector2 lookInput = LookAction.ReadValue<Vector2>();
 
         //Debug.Log(lookInput);
 
         CameraRotation(lookInput);
 
-        transform.Rotate(Vector3.up * lookInput.x * LookSensitivity * Time.deltaTime);
+        transform.Rotate(Vector3.up * lookInput.x * /*LookSensitivity */ Time.deltaTime);
     }
 
     private void CameraRotation(Vector2 lookInput)
     {
-        CameraPitch -= lookInput.y * LookSensitivity * Time.deltaTime;
+        CameraPitch -= lookInput.y * /*LookSensitivity */ Time.deltaTime;
         CameraPitch = Mathf.Clamp(CameraPitch, BottomClamp,TopClamp);
 
         CameraFollowTarget.transform.localRotation = Quaternion.Euler(CameraPitch, 0, 0);
@@ -321,5 +321,21 @@ public class Player_Controller : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public void AddLookSensitivity(float value)
+    {
+        LookSensitivity = Mathf.Clamp(LookSensitivity += value * 0.1f, 2f, 10f);
+
+        LookAction.ApplyParameterOverride("scaleVector2:x", LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:y", LookSensitivity);
+    }
+
+    public void SetLookSensitivity(float value)
+    {
+        LookSensitivity = Mathf.Clamp(value, 2f, 10f);
+
+        LookAction.ApplyParameterOverride("scaleVector2:x", LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:y", LookSensitivity);
     }
 }

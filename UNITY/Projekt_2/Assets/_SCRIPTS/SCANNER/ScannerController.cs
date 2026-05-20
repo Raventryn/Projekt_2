@@ -132,7 +132,8 @@ public class ScannerController : MonoBehaviour
 
     void ScreenToWorldPoint()
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        //Mouse.current.position.ReadValue();
+        Vector2 mousePosition = CursorController.instance.Cursor.transform.position;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(Screen.width / mousePosition.x, Screen.height / mousePosition.y));
 

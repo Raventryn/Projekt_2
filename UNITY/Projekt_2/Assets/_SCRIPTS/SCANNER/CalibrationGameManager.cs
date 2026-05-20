@@ -119,11 +119,16 @@ public class CalibrationGameManager : MonoBehaviour
 
         if(difference.magnitude <= 0.2f)
         {
-            _positionMatch = Mathf.Clamp(_positionMatch += 10f * Time.deltaTime, 0, 100);
+            _positionMatch = Mathf.Clamp(_positionMatch += 25f * Time.deltaTime, 0, 100);
+
+            if(_currentMaterial != MaterialType.GREEN)
+            {
+                ChangeTargetArmMaterial(MaterialType.GREEN);
+            }
         }
         else
         {
-            _positionMatch = Mathf.Clamp(_positionMatch -= 10f * Time.deltaTime, 0, 100);
+            _positionMatch = Mathf.Clamp(_positionMatch -= 15f * Time.deltaTime, 0, 100);
 
             if(_currentMaterial != MaterialType.RED)
             {
@@ -218,9 +223,10 @@ public class CalibrationGameManager : MonoBehaviour
 
     void ScreenToWorldPoint()
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        //Mouse.current.position.ReadValue();
+        Vector2 cursorPosition = CursorController.instance.Cursor.transform.position;
 
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 2));
+        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, 2));
 
         _pointerPosition = point;
     }
@@ -235,9 +241,9 @@ public class CalibrationGameManager : MonoBehaviour
     {
         if(context != InputEventContext.CALIBRATING || !_minigameRunning) return;
 
-        _playerController.LookSensitivity = Mathf.Clamp( _playerController.LookSensitivity += value * 0.1f, 0.5f, 6.0f);
+        _playerController.AddLookSensitivity(value);
 
-        _sensitivityBar.fillAmount = _playerController.LookSensitivity / 6f;
+        _sensitivityBar.fillAmount = _playerController.LookSensitivity / 10f;
     }
 
     void ChangeTargetArmMaterial(MaterialType type)
@@ -253,8 +259,6 @@ public class CalibrationGameManager : MonoBehaviour
                 _currentMaterial = MaterialType.RED;
                 break;
         }
-
-        
     }
 
     IEnumerator EquipArmAnim(bool toggle)
