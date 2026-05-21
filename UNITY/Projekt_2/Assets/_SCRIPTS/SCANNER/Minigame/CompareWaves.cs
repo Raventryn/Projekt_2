@@ -128,6 +128,10 @@ public class CompareWaves : MonoBehaviour
                 GameEventsManager.instance.inputEvents.ShowCursor(true);
 
                 startMinigameButton.gameObject.SetActive(true);
+
+
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 break;
             case false:
                 contentParentAnimator.SetBool("IsActive", false);

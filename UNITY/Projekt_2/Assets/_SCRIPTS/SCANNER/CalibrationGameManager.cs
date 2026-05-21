@@ -70,7 +70,7 @@ public class CalibrationGameManager : MonoBehaviour
             panel.SetActive(false);
         }
 
-        StartMinigame();
+        //StartMinigame();
     }
 
     // Update is called once per frame
@@ -291,6 +291,8 @@ public class CalibrationGameManager : MonoBehaviour
 
     void HideHintPanel(InputEventContext context, float value)
     {
+        if(context != InputEventContext.CALIBRATING) return;
+
         ShowHintPanels(_lastUsedPanel, false);
     }
 
