@@ -16,6 +16,8 @@ public class ScannerController : MonoBehaviour
     [SerializeField] LayerMask _scannerRaycastLayer;
     [SerializeField] LayerMask _pointerLayers;
     [SerializeField] CinemachineCamera _camera;
+
+    GameObject _InteractionCallerObject;
     
     GameObject _lastScannedObject;
     Decal _xrayDecal;
@@ -118,7 +120,7 @@ public class ScannerController : MonoBehaviour
         }
     }
 
-    void EnterScanView(CinemachineCamera camera)
+    void EnterScanView(CinemachineCamera camera, GameObject gameObject)
     {
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
@@ -129,6 +131,8 @@ public class ScannerController : MonoBehaviour
         _camera = camera;
 
         _camera.Priority = 1;
+
+        _InteractionCallerObject = gameObject;
     }
 
     void ScreenToWorldPoint()
@@ -158,6 +162,8 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
+
+        GameEventsManager.instance.interactionEvents.EndScannerInteraction(_InteractionCallerObject);
 
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
     }

@@ -32,11 +32,18 @@ public class InteractionEvents
         onScannerInteraction?.Invoke(gameObject);
     }
 
-    public event Action<CinemachineCamera> onEnterScanView;
+    public event Action<CinemachineCamera, GameObject> onEnterScanView;
 
-    public void EnterScanView(CinemachineCamera camera)
+    public void EnterScanView(CinemachineCamera camera, GameObject gameObject)
     {
-        onEnterScanView?.Invoke(camera);
+        onEnterScanView?.Invoke(camera, gameObject);
+    }
+
+    public event Action<GameObject> onEndScannerInteraction;
+
+    public void EndScannerInteraction(GameObject gameObject)
+    {
+        onEndScannerInteraction?.Invoke(gameObject);
     }
 
     public event Action<GameObject, ScannerMode> onScanObjectOn;
@@ -65,6 +72,13 @@ public class InteractionEvents
     public void UpdateObjectScannedState(ScannableObjectType type)
     {
         onUpdateObjectScannedState(type);
+    }
+
+    public event Action<GameObject, bool> onOpenFurniture;
+
+    public void OpenFurniture(GameObject gameObject, bool toggle)
+    {
+        onOpenFurniture?.Invoke(gameObject, toggle);
     }
         
 }
