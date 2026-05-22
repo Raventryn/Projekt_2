@@ -251,7 +251,7 @@ public class CalibrationGameManager : MonoBehaviour
     void ScreenToWorldPoint()
     {
         //Mouse.current.position.ReadValue();
-        Vector2 cursorPosition = CursorController.instance.Cursor.transform.position;
+        Vector2 cursorPosition = VirtualMouseCursor.instance.CursorScreenPosition;
 
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, 2));
 
@@ -291,7 +291,7 @@ public class CalibrationGameManager : MonoBehaviour
 
     void HideHintPanel(InputEventContext context, float value)
     {
-        if(context != InputEventContext.CALIBRATING) return;
+        if(context != InputEventContext.CALIBRATING) return;    
 
         ShowHintPanels(_lastUsedPanel, false);
     }
@@ -333,8 +333,6 @@ public class CalibrationGameManager : MonoBehaviour
 
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
-
-                Cursor.lockState = CursorLockMode.Locked;
 
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
                 break;

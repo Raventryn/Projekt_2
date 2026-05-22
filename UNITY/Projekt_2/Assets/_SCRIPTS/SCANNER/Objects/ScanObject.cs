@@ -135,6 +135,7 @@ public class ScanObject : MonoBehaviour
         if (!_objectScanned)
         {
             _scanTimer = 3;
+            _fillBarImage.fillAmount = 1 - _scanTimer / 3f;
         }
 
         _showCanvas.HideInformationCanvas();

@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 
 public class ScannerController : MonoBehaviour
@@ -133,7 +134,7 @@ public class ScannerController : MonoBehaviour
     void ScreenToWorldPoint()
     {
         //Mouse.current.position.ReadValue();
-        Vector2 mousePosition = CursorController.instance.Cursor.transform.position;
+        Vector2 mousePosition = VirtualMouseCursor.instance.CursorScreenPosition;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(Screen.width / mousePosition.x, Screen.height / mousePosition.y));
 
@@ -185,7 +186,7 @@ public class ScannerController : MonoBehaviour
             _scannerAnimator.SetBool("IsScanning", true);
         }
 
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Vector2 mousePosition = VirtualMouseCursor.instance.CursorScreenPosition;
 
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 

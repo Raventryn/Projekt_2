@@ -57,19 +57,29 @@ public class VirtualMouseCursor : MonoBehaviour
         }
 
         InputSystem.onAfterUpdate += UpdateMotion;
+
+        GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
     }
 
     private void OnDisable()
     {
+        /*if(virtualMouse != null && virtualMouse.added)
+        {
+            
+        }*/
+        _playerInput.user.UnpairDevice(virtualMouse);
         InputSystem.RemoveDevice(virtualMouse);
+        
         InputSystem.onAfterUpdate -= UpdateMotion;
+
+        GameEventsManager.instance.inputEvents.onShowCursor -= ShowCursor;
     }
 
     void UpdateMotion()
     {
         if(virtualMouse == null) return;
 
-        Vector2 deltaValue = Mouse.current.delta.ReadValue();
+        Vector2 deltaValue = Mouse.current.delta.ReadValue();//Gamepad.current.leftStick.ReadValue();
         deltaValue *= _playerController.LookSensitivity * _pointerSpeedMultiplier * Time.unscaledDeltaTime;
 
         Vector2 currentPosition = virtualMouse.position.ReadValue();
@@ -81,7 +91,7 @@ public class VirtualMouseCursor : MonoBehaviour
         InputState.Change(virtualMouse.position, newPosition);
         InputState.Change(virtualMouse.delta, deltaValue);
 
-        CursorScreenPosition = newPosition;
+        CursorScreenPosition = virtualMouse.position.ReadValue();
 
         /*Vector2 moveDirection = Mouse.current.delta.ReadValue();
 
@@ -96,7 +106,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
         _cursorTransform.localPosition = new Vector3 (clampedScreenPositionX, clampedScreenPositionY, _cursorTransform.localPosition.z);*/
 
-        bool leftButtonisPressed = Mouse.current.leftButton.IsPressed();
+        bool leftButtonisPressed = Mouse.current.leftButton.IsPressed();//Gamepad.current.aButton.IsPressed();
         if(_previousMouseState != leftButtonisPressed)
         {
             virtualMouse.CopyState<MouseState>(out var mouseState);
@@ -115,5 +125,20 @@ public class VirtualMouseCursor : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvasTransform, position, _canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : _canvasCamera, out anchoredPosition);
 
         _cursorTransform.anchoredPosition = anchoredPosition;
+    }
+
+    void ShowCursor(bool toggle)
+    {
+        switch (toggle)
+        {
+            case true:
+                _cursorTransform.gameObject.SetActive(true);
+                Cursor.lockState = CursorLockMode.Confined;
+                break;
+            case false:
+            _cursorTransform.gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                break;
+        }
     }
 }
