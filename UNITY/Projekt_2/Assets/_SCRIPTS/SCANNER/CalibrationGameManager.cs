@@ -127,6 +127,11 @@ public class CalibrationGameManager : MonoBehaviour
 
         _allowEquipMethod = true;
 
+        if (_lastUsedPanel.activeSelf)
+        {
+            HideHintPanel(InputEventContext.CALIBRATING, -1);
+        }
+
         ShowHintPanels(_panels[2], true);
     }
 
@@ -240,8 +245,8 @@ public class CalibrationGameManager : MonoBehaviour
     {
         _angle += 2 * Time.deltaTime;
 
-        float xPosition = 0.6f * Mathf.Cos(-_angle);
-        float yPosition = 0.6f * Mathf.Sin(-_angle);
+        float xPosition = (0.7f * Mathf.Cos(-_angle)) - 0.15f; 
+        float yPosition = (0.66f * Mathf.Sin(-_angle)) + 0.05f;
 
         Debug.Log(xPosition);
 

@@ -31,6 +31,8 @@ public class InteractionIconManager : MonoBehaviour
 
             i++;
         }
+
+        _image.enabled = false;
     }
 
     void ShowInteractionWidget(InteractionType type)
