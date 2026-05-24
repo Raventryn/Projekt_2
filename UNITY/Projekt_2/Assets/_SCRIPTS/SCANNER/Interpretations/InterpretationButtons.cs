@@ -163,7 +163,15 @@ public class InterpretationButtons : MonoBehaviour
 
                 _canvasContainer.SetActive(toggle);
 
-                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+                if (!ScannerController.instance.IsInScanView)
+                {
+                    GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+                }
+                else
+                {
+                    GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
+                }
+                
 
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);

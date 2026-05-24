@@ -11,6 +11,8 @@ public class MoveOrRotateObject : MonoBehaviour
     Vector3 _originRotation;
     Vector3 _originPosition;
     Vector3 _targetPosition;
+
+    bool _IsDoorOpen;
     
 
     void Start()
@@ -36,6 +38,8 @@ public class MoveOrRotateObject : MonoBehaviour
         _originRotation = transform.localEulerAngles;
 
         IsObjectMoving = true;
+
+        _IsDoorOpen = !_IsDoorOpen;
     }
 
     void MoveObject(Vector3 targetPosition)
@@ -57,10 +61,22 @@ public class MoveOrRotateObject : MonoBehaviour
                 Vector3 directionR = targetPosition - _originRotation;
                 transform.Rotate(directionR * 5f * Time.deltaTime);
 
-                if((targetPosition - transform.localEulerAngles).magnitude <= 0.05f)
+                switch (_IsDoorOpen)
                 {
-                    transform.localEulerAngles = targetPosition;
-                    IsObjectMoving = false;
+                    case true:
+                        if(Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) >= -0.01f)
+                        {
+                            transform.localEulerAngles = targetPosition;
+                            IsObjectMoving = false;
+                        }
+                        break;
+                    case false:
+                        if(Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) <= 0.01f)
+                        {
+                            transform.localEulerAngles = targetPosition;
+                            IsObjectMoving = false;
+                        }
+                        break;
                 }
                 break;
         }

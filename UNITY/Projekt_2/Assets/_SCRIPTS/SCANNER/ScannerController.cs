@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class ScannerController : MonoBehaviour
 {
+    public static ScannerController instance;
+
 
     public GameObject ScannerArm;
     [Range (0f, 10f)]
@@ -28,7 +30,22 @@ public class ScannerController : MonoBehaviour
     bool _scannerCoroutinePlaying;
     bool _resetArmRotation = false;
 
+    public bool IsInScanView;
+
     Animator _scannerAnimator;
+
+    void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogError("More than one Scanner Controller is active!");
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     void OnEnable()
     {
@@ -133,6 +150,8 @@ public class ScannerController : MonoBehaviour
         _camera.Priority = 1;
 
         _InteractionCallerObject = gameObject;
+
+        IsInScanView = true;
     }
 
     void ScreenToWorldPoint()
@@ -165,7 +184,16 @@ public class ScannerController : MonoBehaviour
 
         GameEventsManager.instance.interactionEvents.EndScannerInteraction(_InteractionCallerObject);
 
-        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+        if (ScannerArm.activeSelf)
+        {
+            GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+        }
+        else
+        {
+            GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+        }
+        
+        IsInScanView = false;
     }
 
     void RotateArm()

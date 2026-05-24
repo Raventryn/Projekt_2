@@ -137,7 +137,15 @@ public class CompareWaves : MonoBehaviour
 
                 minigameUIContentParent.SetActive(false);
 
-                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+                if (!ScannerController.instance.IsInScanView)
+                {
+                    GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+                }
+                else
+                {
+                    GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
+                }
+                
 
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);

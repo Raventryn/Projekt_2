@@ -144,6 +144,8 @@ public class ScanObject : MonoBehaviour
     //Is called when ScanTimer is 0 for the first time
     void FirstTimeScan()
     {
+        GameEventsManager.instance.questEvents.ObjectScanned();
+
         switch (ObjectKind)
         {
             case ScannableObjectKind.GENERIC:
@@ -156,10 +158,9 @@ public class ScanObject : MonoBehaviour
                 _triggerMinigame.OpenMinigame(true);
                 GameEventsManager.instance.inputEvents.ReleaseInteract();
                 GameEventsManager.instance.inputEvents.EquipScanner(-1);
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.CALIBRATING);
                 break;
         }
-
-        GameEventsManager.instance.questEvents.ObjectScanned();
     }
 
     //Is called in Update when Object is being scanned
