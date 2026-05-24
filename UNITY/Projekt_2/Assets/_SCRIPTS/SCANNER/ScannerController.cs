@@ -11,6 +11,8 @@ public class ScannerController : MonoBehaviour
 
 
     public GameObject ScannerArm;
+    public GameObject XRAY_Decal;
+
     [Range (0f, 10f)]
     [SerializeField] float _depthValue;
     [Range (3f, 15f)]
@@ -222,7 +224,11 @@ public class ScannerController : MonoBehaviour
 
         Vector2 mousePosition = VirtualMouseCursor.instance.CursorScreenPosition;
 
+        //Vector3 hitPosition;
+
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+        Ray debugRay = new Ray(ScannerArm.transform.position, _pointerDirection);
 
         Debug.DrawRay(ScannerArm.transform.position, _pointerDirection, Color.red);
 
@@ -238,7 +244,13 @@ public class ScannerController : MonoBehaviour
             {
                 GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject, ScannerManager.instance.ScannerMode);
                 _hitObject = true;
-            }           
+            }  
+
+            if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && _xrayDecal.enabled)
+            {
+                if(Physics.Raycast(debugRay, out RaycastHit hitObject, _scannerRange, _scannerRaycastLayer))
+                PositionXRAYObject();
+            }     
         }
         
         else if (_hitObject)
@@ -246,7 +258,10 @@ public class ScannerController : MonoBehaviour
             RestartScanner(ScannerManager.instance.ScannerMode);
         }
 
-        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && !_xrayDecal.enabled) _xrayDecal.enabled = true;
+        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && !_xrayDecal.enabled)
+        {
+            _xrayDecal.enabled = true;
+        } 
         
     }
 
@@ -283,6 +298,13 @@ public class ScannerController : MonoBehaviour
             ScannerArm.transform.localRotation = Quaternion.Euler(Vector3.zero);
             _resetArmRotation = false;
         } 
+    }
+
+    void PositionXRAYObject()
+    {
+        XRAY_Decal.transform.localPosition = new Vector3(XRAY_Decal.transform.localPosition.x, XRAY_Decal.transform.localPosition.y, _depthValue);
+        //XRAY_Decal.transform.localRotation = Quaternion.Euler(_pointerDirection);
+        XRAY_Decal.transform.localScale = _depthValue * Vector3.one;
     }
 
     IEnumerator UnlockScanner()
