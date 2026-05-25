@@ -11,17 +11,11 @@ public class ScannerCone : MonoBehaviour
 
     void OnEnable()
     {
-        GameEventsManager.instance.inputEvents.onPressedInteract += ToggleVisibility;
-        GameEventsManager.instance.inputEvents.onReleaseInteract += ToggleVisibility;
-
         GameEventsManager.instance.interactionEvents.onChangedScannerMode += ChangeConeColour;
     }
 
     void OnDisable()
     {
-        GameEventsManager.instance.inputEvents.onPressedInteract -= ToggleVisibility;
-        GameEventsManager.instance.inputEvents.onReleaseInteract -= ToggleVisibility;
-
         GameEventsManager.instance.interactionEvents.onChangedScannerMode -= ChangeConeColour;
     }
 
@@ -31,12 +25,12 @@ public class ScannerCone : MonoBehaviour
         _renderer.enabled = false;
     }
 
-    void ToggleVisibility(InputEventContext context)
+    public void ToggleVisibility(bool toggle)
     {
-        if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW) return;
+        //if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW) return;
 
-        _coneVisible = !_coneVisible;
-        _renderer.enabled = _coneVisible;
+        _coneVisible = toggle;
+        _renderer.enabled = toggle;
     }
 
     void ChangeConeColour(ScannerMode mode)

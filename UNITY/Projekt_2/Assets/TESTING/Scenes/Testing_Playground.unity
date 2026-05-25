@@ -3209,6 +3209,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 155
   _camera: {fileID: 0}
+  _scanViewArmTransforms:
+  - {x: 0.1189, y: -0.0689, z: 0.086}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.25, y: 0.25, z: 0.25}
   IsInScanView: 0
 --- !u!114 &448848206
 MonoBehaviour:
@@ -3302,6 +3306,112 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9109346041710599992}
   m_LocalEulerAnglesHint: {x: 55, y: 180, z: 0}
+--- !u!1001 &451520780
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1188234545}
+    m_Modifications:
+    - target: {fileID: 68310975076372004, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 924946837005458440, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1189
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0689
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.086
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010407668402188878, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181911974522514836, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7373237284756987872, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_Name
+      value: ScannerArmContainer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080825648912312307, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080825648912312307, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080825648912312307, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+--- !u!4 &451520781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+  m_PrefabInstance: {fileID: 451520780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &458494036
 GameObject:
   m_ObjectHideFlags: 0
@@ -8286,6 +8396,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1285886611}
+  - {fileID: 451520781}
   m_Father: {fileID: 1932808472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1188234546
@@ -9114,6 +9225,10 @@ PrefabInstance:
     - target: {fileID: 5727221203043073011, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010407668402188878, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6181911974522514836, guid: 8d44c33998803f343adf0f56c28148a0, type: 3}
       propertyPath: m_Layer
@@ -11142,9 +11257,7 @@ MonoBehaviour:
   ObjectKind: 0
   ObjectType: 0
   _InfoCanvasContainer: {fileID: 1687335413}
-  _ButtonsCanvasContainer: {fileID: 356400272}
   _InfoCanvasAnimator: {fileID: 1748747664}
-  _fillBarImage: {fileID: 8053649330170707052}
 --- !u!95 &1748747664
 Animator:
   serializedVersion: 7

@@ -18,9 +18,9 @@ public class ScanObject : MonoBehaviour
     bool _objectScanned;
     bool _scanningObject;
     [SerializeField] GameObject _InfoCanvasContainer;
-    [SerializeField] GameObject _ButtonsCanvasContainer;
     [SerializeField] Animator _InfoCanvasAnimator;
-    [SerializeField] Image _fillBarImage;
+    GameObject _ButtonsCanvasContainer;
+    Image _fillBarImage;
     TMP_Text _tmpText;
     TypewriterComponent _typewriter;
     MeshFilter _meshFilter;
@@ -62,9 +62,13 @@ public class ScanObject : MonoBehaviour
 
     void Update()
     {
-        if(_scanningObject && !_objectScanned)
+        if(_scanningObject && !_objectScanned && ScannerController.instance.IsScanning)
         {
             ScanTimer();
+        }
+        else if(_scanningObject && !_objectScanned && !ScannerController.instance.IsScanning)
+        {
+            ObjectScanOff(this.gameObject, ScannerManager.instance.ScannerMode);
         }
     }
 
