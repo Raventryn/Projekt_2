@@ -9,8 +9,12 @@ public class RoachScanBehaviour : MonoBehaviour
     Animator _animator;
     ParticleSystem _particleSystem;
 
-    bool _IsBeingScanned;
-    float _cookedState = 0;
+    RoachNPCBehaviour _npcBehaviour;
+
+    float _particlesEmissionAmount = 12f;
+
+    public bool IsBeingScanned;
+    public float cookedState = 0;
 
     void OnEnable()
     {
@@ -29,18 +33,22 @@ public class RoachScanBehaviour : MonoBehaviour
         _roachMaterial = GetComponent<Renderer>().material;
         _animator = GetComponent<Animator>();
         _particleSystem = GetComponentInChildren<ParticleSystem>();
+        _npcBehaviour = GetComponent<RoachNPCBehaviour>();
     }
 
     void Update()
     {
-        if (_IsBeingScanned)
+        if (IsBeingScanned)
         {
-            _cookedState += 0.3f * Time.deltaTime;
-            BlendMaterial(_cookedState);
+            cookedState += 0.5f * Time.deltaTime;
+            BlendMaterial(cookedState);
 
-            if(_cookedState >= 1f)
+            var emission = _particleSystem.emission;
+            emission.rateOverTime = _particlesEmissionAmount * cookedState;
+
+            if(cookedState >= 1f)
             {
-                _IsBeingScanned = false;
+                IsBeingScanned = false;
                 StopCooking();
             }
         }
@@ -50,14 +58,14 @@ public class RoachScanBehaviour : MonoBehaviour
     {
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN) return;
 
-        _IsBeingScanned = true;
+        IsBeingScanned = true;
     }
 
     void StopScanning(GameObject gameObject, ScannerMode mode)
     {
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN) return;
         
-        _IsBeingScanned = false;
+        IsBeingScanned = false;
     }
 
     void BlendMaterial(float value)
@@ -68,6 +76,7 @@ public class RoachScanBehaviour : MonoBehaviour
     void StopCooking()
     {
         _animator.SetTrigger("IsCooked");
-        //Stop Roach Movement
+        _npcBehaviour.StopBehaviour();
+        //Notify that roach is cooked
     }
 }

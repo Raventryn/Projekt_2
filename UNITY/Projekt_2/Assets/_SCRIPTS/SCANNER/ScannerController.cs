@@ -33,6 +33,8 @@ public class ScannerController : MonoBehaviour
     Decal _xrayDecal;
     Vector3 _pointerPosition;
     Vector3 _pointerDirection;
+    Vector3 _cameraDefaultPosition;
+    float _offsetClampValue;
     bool _hitObject = false;
     bool _scannerCoroutinePlaying;
     bool _resetArmRotation = false;
@@ -103,6 +105,11 @@ public class ScannerController : MonoBehaviour
         if (_resetArmRotation)
         {
             ResetScannerRotation();
+        }
+
+        if (IsInScanView && VirtualMouseCursor.instance.IsCursorVisible)
+        {
+            OffsetScanViewCamera();
         }
     }
 
@@ -176,11 +183,31 @@ public class ScannerController : MonoBehaviour
 
         _camera.Priority = 1;
 
+        _cameraDefaultPosition = _camera.transform.localPosition;
+
         _InteractionCallerObject = gameObject;
+
+        _offsetClampValue = (_InteractionCallerObject.transform.position - _camera.transform.position).magnitude;
+
+        Debug.Log(_offsetClampValue);
 
         SetScannerArmTransforms(_scanViewArmTransforms);
 
         IsInScanView = true;
+    }
+
+    void OffsetScanViewCamera()
+    {
+        Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
+
+        Debug.Log(screenUV);
+
+        float xPos = _cameraDefaultPosition.x - (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
+        float zPos = _cameraDefaultPosition.z - (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
+
+        Vector3 newPosition = new Vector3(xPos, _cameraDefaultPosition.y, zPos);
+
+        _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);
     }
 
     void ScreenToWorldPoint()
@@ -212,6 +239,8 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.interactionEvents.EndScannerInteraction(_InteractionCallerObject);
 
         _camera.Priority = -1;
+
+        _camera.transform.localPosition = _cameraDefaultPosition;
 
         if (ScannerArm.activeSelf)
         {

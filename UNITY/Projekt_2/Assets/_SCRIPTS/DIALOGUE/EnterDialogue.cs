@@ -22,10 +22,15 @@ public class EnterDialogue : MonoBehaviour
 
     [SerializeField] DialogueChoiceButton[] _choiceButtons;
 
+    Vector3 _cameraDefaultPosition;
+    float _offsetClampValue;
+    bool IsInDialogue;
+
     void Awake()
     {
         ResetPanel();
         _contentParent.SetActive(false);
+        _cameraDefaultPosition = _dialogueCamera.transform.localPosition;
     }
 
     void OnEnable()
@@ -44,6 +49,14 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= ExitDialogue;
 
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= SendFinishedEvent;
+    }
+
+    void Update()
+    {
+        if (IsInDialogue && VirtualMouseCursor.instance.IsCursorVisible)
+        {
+            OffsetScanViewCamera();
+        }
     }
 
     public void SendDialogueEvent()
@@ -72,7 +85,26 @@ public class EnterDialogue : MonoBehaviour
 
         _dialogueCamera.Priority = 1;
 
+        _offsetClampValue = (this.gameObject.transform.position - _dialogueCamera.transform.position).magnitude;
+        Debug.Log(_offsetClampValue);
+
+        IsInDialogue = true;
+
         SendDialogueEvent();
+    }
+
+    void OffsetScanViewCamera()
+    {
+        Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
+
+        Debug.Log(screenUV);
+
+        float xPos = _cameraDefaultPosition.z + (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
+        float yPos = _cameraDefaultPosition.y + (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
+
+        Vector3 newPosition = new Vector3(_cameraDefaultPosition.x, yPos, xPos);
+
+        _dialogueCamera.transform.localPosition = Vector3.MoveTowards(_dialogueCamera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);
     }
 
     void EarlyExit(InputEventContext context)
@@ -84,6 +116,8 @@ public class EnterDialogue : MonoBehaviour
 
     void ExitDialogue()
     {
+        IsInDialogue = false;
+
         _dialogueCamera.Priority = -1;
 
         _dialogueCamera.LookAt = null;
