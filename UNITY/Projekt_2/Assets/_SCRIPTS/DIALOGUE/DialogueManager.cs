@@ -105,6 +105,8 @@ public class DialogueManager : MonoBehaviour
 
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
 
+        GameEventsManager.instance.inputEvents.ShowCursor(true);
+
         if (!knotName.Equals(""))
         {
             _story.ChoosePathString(knotName);
@@ -176,8 +178,7 @@ public class DialogueManager : MonoBehaviour
 
         //GameEventsManager.instance.uiEvents.SendIteractionSprite(UI_Widget.TALK);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        GameEventsManager.instance.inputEvents.ShowCursor(false);
     }
 
     private bool IsLineBlank(string dialogueLine)

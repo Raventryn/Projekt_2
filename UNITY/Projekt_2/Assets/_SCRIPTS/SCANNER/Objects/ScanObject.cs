@@ -18,9 +18,9 @@ public class ScanObject : MonoBehaviour
     bool _objectScanned;
     bool _scanningObject;
     [SerializeField] GameObject _InfoCanvasContainer;
-    [SerializeField] GameObject _ButtonsCanvasContainer;
     [SerializeField] Animator _InfoCanvasAnimator;
-    [SerializeField] Image _fillBarImage;
+    GameObject _ButtonsCanvasContainer;
+    Image _fillBarImage;
     TMP_Text _tmpText;
     TypewriterComponent _typewriter;
     MeshFilter _meshFilter;
@@ -62,9 +62,13 @@ public class ScanObject : MonoBehaviour
 
     void Update()
     {
-        if(_scanningObject && !_objectScanned)
+        if(_scanningObject && !_objectScanned && ScannerController.instance.IsScanning)
         {
             ScanTimer();
+        }
+        else if(_scanningObject && !_objectScanned && !ScannerController.instance.IsScanning)
+        {
+            ObjectScanOff(this.gameObject, ScannerManager.instance.ScannerMode);
         }
     }
 
@@ -144,6 +148,8 @@ public class ScanObject : MonoBehaviour
     //Is called when ScanTimer is 0 for the first time
     void FirstTimeScan()
     {
+        GameEventsManager.instance.questEvents.ObjectScanned();
+
         switch (ObjectKind)
         {
             case ScannableObjectKind.GENERIC:
@@ -156,10 +162,9 @@ public class ScanObject : MonoBehaviour
                 _triggerMinigame.OpenMinigame(true);
                 GameEventsManager.instance.inputEvents.ReleaseInteract();
                 GameEventsManager.instance.inputEvents.EquipScanner(-1);
+                GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.CALIBRATING);
                 break;
         }
-
-        GameEventsManager.instance.questEvents.ObjectScanned();
     }
 
     //Is called in Update when Object is being scanned

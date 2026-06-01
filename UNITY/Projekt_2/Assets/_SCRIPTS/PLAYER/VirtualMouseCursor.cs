@@ -3,11 +3,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Users;
 
+//https://www.youtube.com/watch?v=Y3WNwl1ObC8
 public class VirtualMouseCursor : MonoBehaviour
 {
     public static VirtualMouseCursor instance;
 
     public Vector3 CursorScreenPosition;
+
+    public bool IsCursorVisible;
 
     [SerializeField] Player_Controller _playerController;
     [SerializeField] PlayerInput _playerInput;
@@ -67,7 +70,7 @@ public class VirtualMouseCursor : MonoBehaviour
         {
             
         }*/
-        _playerInput.user.UnpairDevice(virtualMouse);
+        //_playerInput.user.UnpairDevice(virtualMouse);
         InputSystem.RemoveDevice(virtualMouse);
         
         InputSystem.onAfterUpdate -= UpdateMotion;
@@ -115,6 +118,7 @@ public class VirtualMouseCursor : MonoBehaviour
             _previousMouseState = leftButtonisPressed;
         } 
         
+        if(IsCursorVisible)
         AnchorCursor(newPosition);
     }
 
@@ -132,12 +136,15 @@ public class VirtualMouseCursor : MonoBehaviour
         switch (toggle)
         {
             case true:
+                IsCursorVisible = true;
                 _cursorTransform.gameObject.SetActive(true);
                 Cursor.lockState = CursorLockMode.Confined;
                 break;
             case false:
-            _cursorTransform.gameObject.SetActive(false);
+                IsCursorVisible = false;
+                _cursorTransform.gameObject.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
                 break;
         }
     }

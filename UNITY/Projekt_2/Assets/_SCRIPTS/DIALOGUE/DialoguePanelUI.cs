@@ -113,8 +113,7 @@ public class DialoguePanelUI : MonoBehaviour
             choiceButtonIndex--;
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        GameEventsManager.instance.inputEvents.ShowCursor(true);
     }
     
 

@@ -7,8 +7,13 @@ using UnityEngine.UIElements;
 
 public class ScannerController : MonoBehaviour
 {
+    public static ScannerController instance;
+
 
     public GameObject ScannerArm;
+    public GameObject XRAY_Decal;
+    public bool IsScanning = false;
+
     [Range (0f, 10f)]
     [SerializeField] float _depthValue;
     [Range (3f, 15f)]
@@ -16,17 +21,41 @@ public class ScannerController : MonoBehaviour
     [SerializeField] LayerMask _scannerRaycastLayer;
     [SerializeField] LayerMask _pointerLayers;
     [SerializeField] CinemachineCamera _camera;
+
+    [SerializeField] Vector3[] _scanViewArmTransforms = new Vector3[3];
+    Vector3[] _ArmDefaultTransforms = new Vector3[3];
+
+    GameObject _InteractionCallerObject;
+
+    ScannerCone _scannerCone;
     
     GameObject _lastScannedObject;
     Decal _xrayDecal;
     Vector3 _pointerPosition;
     Vector3 _pointerDirection;
-    bool _scanning = false;
+    Vector3 _cameraDefaultPosition;
+    float _offsetClampValue;
     bool _hitObject = false;
     bool _scannerCoroutinePlaying;
     bool _resetArmRotation = false;
+    bool _blockRC;
+
+    public bool IsInScanView;
 
     Animator _scannerAnimator;
+
+    void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogError("More than one Scanner Controller is active!");
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     void OnEnable()
     {
@@ -54,6 +83,12 @@ public class ScannerController : MonoBehaviour
 
     void Start()
     {
+        _ArmDefaultTransforms[0] = ScannerArm.transform.localPosition;
+        _ArmDefaultTransforms[1] = ScannerArm.transform.localEulerAngles;
+        _ArmDefaultTransforms[2] = ScannerArm.transform.localScale;
+
+        _scannerCone = ScannerArm.GetComponentInChildren<ScannerCone>();
+
         ScannerArm.SetActive(false);
     }
 
@@ -61,7 +96,7 @@ public class ScannerController : MonoBehaviour
     {
         if(GameEventsManager.instance.inputEvents.Context != InputEventContext.SCANNER && GameEventsManager.instance.inputEvents.Context != InputEventContext.SCANNER_VIEW) return;
 
-        if (_scanning)
+        if (IsScanning)
         {
             ScreenToWorldPoint();
             RotateArm();
@@ -70,6 +105,11 @@ public class ScannerController : MonoBehaviour
         if (_resetArmRotation)
         {
             ResetScannerRotation();
+        }
+
+        if (IsInScanView && VirtualMouseCursor.instance.IsCursorVisible)
+        {
+            OffsetScanViewCamera();
         }
     }
 
@@ -101,6 +141,8 @@ public class ScannerController : MonoBehaviour
             case 1f:
                 if(context == InputEventContext.DEFAULT) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
 
+                _blockRC = false;
+
                 ScannerArm.SetActive(true);
 
                 _scannerAnimator = ScannerArm.GetComponent<Animator>();
@@ -109,26 +151,63 @@ public class ScannerController : MonoBehaviour
                 if(_xrayDecal != null) _xrayDecal.enabled = false;
 
                 StartCoroutine(UnlockScannerOnEquip(true));
+                if (IsScanning)
+                {
+                    _scannerCone.ToggleVisibility(true);
+                }
                 break;
             case -1f:
+                ScannerOff(GameEventsManager.instance.inputEvents.Context);
                 if(context == InputEventContext.SCANNER) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
                 
+                _blockRC = true;
                 StartCoroutine(UnlockScannerOnEquip(false));
+                
+                _scannerCone.ToggleVisibility(false);
                 break;
         }
     }
 
-    void EnterScanView(CinemachineCamera camera)
+    void EnterScanView(CinemachineCamera camera, GameObject gameObject)
     {
+        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
+
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
-        StartCoroutine(UnlockScanner());
+        if(ScannerArm.activeSelf)
+        StartCoroutine(HideScannerOnTransition());
 
         _camera = camera;
 
         _camera.Priority = 1;
+
+        _cameraDefaultPosition = _camera.transform.localPosition;
+
+        _InteractionCallerObject = gameObject;
+
+        _offsetClampValue = (_InteractionCallerObject.transform.position - _camera.transform.position).magnitude;
+
+        Debug.Log(_offsetClampValue);
+
+        SetScannerArmTransforms(_scanViewArmTransforms);
+
+        IsInScanView = true;
+    }
+
+    void OffsetScanViewCamera()
+    {
+        Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
+
+        Debug.Log(screenUV);
+
+        float xPos = _cameraDefaultPosition.x - (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
+        float zPos = _cameraDefaultPosition.z - (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
+
+        Vector3 newPosition = new Vector3(xPos, _cameraDefaultPosition.y, zPos);
+
+        _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);
     }
 
     void ScreenToWorldPoint()
@@ -153,13 +232,29 @@ public class ScannerController : MonoBehaviour
     {
         if(context != InputEventContext.SCANNER_VIEW) return;
 
-        _camera.Priority = -1;
-
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
 
-        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
+        GameEventsManager.instance.interactionEvents.EndScannerInteraction(_InteractionCallerObject);
+
+        _camera.Priority = -1;
+
+        _camera.transform.localPosition = _cameraDefaultPosition;
+
+        if (ScannerArm.activeSelf)
+        {
+            StartCoroutine(HideScannerOnTransition());
+            GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);  
+        }
+        else
+        {
+            GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
+        }
+
+        SetScannerArmTransforms(_ArmDefaultTransforms);
+        
+        IsInScanView = false;
     }
 
     void RotateArm()
@@ -170,25 +265,32 @@ public class ScannerController : MonoBehaviour
 
     void ScannerRaycast(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || !ScannerArm.activeSelf) return;
+        if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || !ScannerArm.activeSelf || _blockRC) return;
 
-        if (!_scanning)
+        if (!IsScanning)
         {
             if(context == InputEventContext.SCANNER)
             {
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
             }
+
             GameEventsManager.instance.inputEvents.ShowCursor(true);
-            _scanning = true;
+            IsScanning = true;
             _resetArmRotation = false;
+
+            _scannerCone.ToggleVisibility(true);
 
             _scannerAnimator.SetBool("IsScanning", true);
         }
 
         Vector2 mousePosition = VirtualMouseCursor.instance.CursorScreenPosition;
 
+        //Vector3 hitPosition;
+
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+        Ray debugRay = new Ray(ScannerArm.transform.position, _pointerDirection);
 
         Debug.DrawRay(ScannerArm.transform.position, _pointerDirection, Color.red);
 
@@ -204,7 +306,13 @@ public class ScannerController : MonoBehaviour
             {
                 GameEventsManager.instance.interactionEvents.ScanObjectOn(hit.collider.gameObject, ScannerManager.instance.ScannerMode);
                 _hitObject = true;
-            }           
+            }  
+
+            /*if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && _xrayDecal.enabled)
+            {
+                if(Physics.Raycast(debugRay, out RaycastHit hitObject, _scannerRange, _scannerRaycastLayer))
+                PositionXRAYObject();
+            }*/    
         }
         
         else if (_hitObject)
@@ -212,7 +320,10 @@ public class ScannerController : MonoBehaviour
             RestartScanner(ScannerManager.instance.ScannerMode);
         }
 
-        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && !_xrayDecal.enabled) _xrayDecal.enabled = true;
+        if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY && !_xrayDecal.enabled)
+        {
+            _xrayDecal.enabled = true;
+        } 
         
     }
 
@@ -221,12 +332,14 @@ public class ScannerController : MonoBehaviour
         if(context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || !ScannerArm.activeSelf) return;
         _hitObject = false;
 
-        _scanning = false;
+        IsScanning = false;
 
         _resetArmRotation = true;
         GameEventsManager.instance.inputEvents.ShowCursor(false);
 
         _scannerAnimator.SetBool("IsScanning", false);
+
+        _scannerCone.ToggleVisibility(false);
 
         GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
         if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
@@ -251,11 +364,29 @@ public class ScannerController : MonoBehaviour
         } 
     }
 
-    IEnumerator UnlockScanner()
+    void PositionXRAYObject()
     {
-        yield return new WaitForSeconds(0.2f);
+        XRAY_Decal.transform.localPosition = new Vector3(XRAY_Decal.transform.localPosition.x, XRAY_Decal.transform.localPosition.y, _depthValue);
+        //XRAY_Decal.transform.localRotation = Quaternion.Euler(_pointerDirection);
+        XRAY_Decal.transform.localScale = _depthValue * Vector3.one;
+    }
 
-        GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
+    void SetScannerArmTransforms(Vector3[] transforms)
+    {
+        ScannerArm.transform.localPosition = transforms[0];
+        ScannerArm.transform.localEulerAngles = transforms[1];
+        ScannerArm.transform.localScale = transforms[2];
+    }
+
+    IEnumerator HideScannerOnTransition()
+    {
+        ScannerOff(GameEventsManager.instance.inputEvents.Context);
+        ShowScanner(InputEventContext.SCANNER_VIEW, -1);
+
+        yield return new WaitForSeconds(0.25f);
+
+        ShowScanner(InputEventContext.SCANNER_VIEW, 1);
+        RestartScanner(ScannerManager.instance.ScannerMode);
     }
 
     IEnumerator UnlockScannerOnEquip(bool equipScanner)
