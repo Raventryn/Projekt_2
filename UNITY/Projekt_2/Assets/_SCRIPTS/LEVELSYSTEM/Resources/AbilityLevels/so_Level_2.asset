@@ -10,8 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55351690111b51a40abd35701b0fe7db, type: 3}
-  m_Name: so_Abilities_1_1
-  m_EditorClassIdentifier: Assembly-CSharp::AbilityButtonLevels_SO
-  MoneyRequirement: 25
-  LevelRequirement: {fileID: 11400000, guid: dc93c8e6e28803d4fb88e19bd9d6a5a9, type: 2}
-  IsLevelUnlocked: 0
+  m_Name: so_Level_2
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLevelAbilitiesSO
+  moneyRequirements: 32000000320000004b0000004b0000006400000064000000
+  types: 010000000200000003000000000000000100000000000000
+  values:
+  - 5
+  - 0.2
+  - 30
+  - 0.3
+  - 2
+  - 0.2

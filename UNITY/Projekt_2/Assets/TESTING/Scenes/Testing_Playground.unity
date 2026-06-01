@@ -1567,7 +1567,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd75a75d3c9fee418adfbeeed0c3f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EXP_UI
-  _levels: []
+  _buttons:
+  - {fileID: 1398025688}
+  - {fileID: 1001897740}
+  - {fileID: 1441659691}
+  - {fileID: 1644523783}
+  - {fileID: 1515244753}
+  - {fileID: 1125296748}
+  _buttonInfoTypewriter: {fileID: 1324099831}
 --- !u!1001 &247970636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17782,8 +17789,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 0
   value: 0.2
-  levelSO: {fileID: 11400000, guid: 44d131ca905a6af4fa8c55f377edee8e, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1001897737}
 --- !u!1 &1004849425
 GameObject:
   m_ObjectHideFlags: 0
@@ -18784,8 +18791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 2
   value: 0.3
-  levelSO: {fileID: 11400000, guid: 04db38971299d384dad27f098ac5627b, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1125296745}
 --- !u!1 &1128714492
 GameObject:
   m_ObjectHideFlags: 0
@@ -20674,6 +20681,8 @@ GameObject:
   - component: {fileID: 1324099828}
   - component: {fileID: 1324099830}
   - component: {fileID: 1324099829}
+  - component: {fileID: 1324099832}
+  - component: {fileID: 1324099831}
   m_Layer: 5
   m_Name: ButtonsDescriptor
   m_TagString: Untagged
@@ -20688,12 +20697,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324099827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1535290566}
+  m_Father: {fileID: 1688171224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20800,6 +20809,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324099827}
   m_CullTransparentMesh: 1
+--- !u!114 &1324099831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324099827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6b0a2b8ddbab342ad54b5409ccffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Febucci.TextAnimatorForUnity.Runtime::Febucci.TextAnimatorForUnity.TypewriterComponent
+  timingsScriptableBase: {fileID: 11400000, guid: 6807122ae5e33f34d892ba959aa853f5, type: 2}
+  actionsDatabase: {fileID: 0}
+  localSettings:
+    useTypeWriter: 1
+    startTypewriterMode: -1
+    hideAppearancesOnSkip: 0
+    hideDisappearancesOnSkip: 0
+    triggerEventsOnSkip: 0
+    resetTypingSpeedAtStartup: 1
+    disappearanceOrientation: 0
+    triggerShowedAfterEffectsEnd: 0
+    triggerDisappearedAfterEffectsEnd: 0
+  sharedSettings: {fileID: 0}
+  onTextShowed:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypewriterStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTextDisappeared:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterVisible:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterWaitStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterWaitFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  onMessage:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1324099832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324099827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Febucci.TextAnimatorForUnity.TMP.Runtime::Febucci.TextAnimatorForUnity.TextMeshPro.TextAnimator_TMP
+  localSettings:
+    isResettingTimeOnNewText: 1
+    defaultEffectsMode: 1
+    timeScale: 0
+    defaultBehaviorTags: []
+    defaultAppearanceTags: []
+    defaultDisappearanceTags: []
+    isAnimatingBehaviors: 1
+    isAnimatingAppearances: 1
+    isAnimatingDisappearances: 1
+    useDynamicScaling: 1
+    referenceFontSize: 12
+  sharedSettings: {fileID: 0}
+  animationLoop: 0
+  databaseEffects: {fileID: 0}
+  styleSheet: {fileID: 0}
 --- !u!1 &1327862754
 GameObject:
   m_ObjectHideFlags: 0
@@ -21101,8 +21184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 1
   value: 2
-  levelSO: {fileID: 11400000, guid: 44d131ca905a6af4fa8c55f377edee8e, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1398025685}
 --- !u!1001 &1414346268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21441,8 +21524,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 2
   value: 0.3
-  levelSO: {fileID: 11400000, guid: cb6cd4d580949444b892191437e17286, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1441659688}
 --- !u!1 &1467699668
 GameObject:
   m_ObjectHideFlags: 0
@@ -21873,8 +21956,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 1
   value: 5
-  levelSO: {fileID: 11400000, guid: 04db38971299d384dad27f098ac5627b, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1515244750}
 --- !u!1 &1527537198
 GameObject:
   m_ObjectHideFlags: 0
@@ -21921,43 +22004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceManager
   _moneyText: {fileID: 1173132989}
   Levels: []
---- !u!1 &1535290565
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1535290566}
-  m_Layer: 5
-  m_Name: Level_1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1535290566
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535290565}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1565229037}
-  - {fileID: 1324099828}
-  m_Father: {fileID: 1688171224}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1539612944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22257,7 +22303,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565229036}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22268,7 +22314,7 @@ RectTransform:
   - {fileID: 1644523779}
   - {fileID: 1515244749}
   - {fileID: 1125296744}
-  m_Father: {fileID: 1535290566}
+  m_Father: {fileID: 1688171224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -27856,8 +27902,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityButton
   abilityType: 3
   value: 20
-  levelSO: {fileID: 11400000, guid: cb6cd4d580949444b892191437e17286, type: 2}
-  buttonComponent: {fileID: 0}
+  moneyRequirement: 0
+  buttonComponent: {fileID: 1644523780}
 --- !u!1 &1685519323
 GameObject:
   m_ObjectHideFlags: 0
@@ -28030,7 +28076,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1535290566}
+  - {fileID: 1565229037}
+  - {fileID: 1324099828}
   m_Father: {fileID: 374858019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

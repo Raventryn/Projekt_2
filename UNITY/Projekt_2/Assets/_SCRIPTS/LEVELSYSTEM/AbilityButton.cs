@@ -1,12 +1,14 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbilityButton : MonoBehaviour
+public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] AbilityType abilityType;
-    [SerializeField] float value;
+    public AbilityType abilityType;
+    public float value;
+    public int moneyRequirement;
 
-    public AbilityButtonLevels_SO levelSO;
+    //public AbilityButtonLevels_SO levelSO;
 
     public Button buttonComponent;
 
@@ -15,23 +17,21 @@ public class AbilityButton : MonoBehaviour
         buttonComponent = GetComponent<Button>();
 
         buttonComponent.onClick.AddListener(() => UnlockAbility());
-
-        UpdateButtonState();
     }
 
-    void OnEnable()
+    public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        ExperienceManager.instance.onUpdateAbilityButtons += UpdateButtonState;
+        ShowButtonText(true);
     }
 
-    void OnDisable()
+    public void OnPointerExit(PointerEventData pointerEventData)
     {
-        ExperienceManager.instance.onUpdateAbilityButtons -= UpdateButtonState;
+        ShowButtonText(false);
     }
 
     void UnlockAbility()
     {
-        if(levelSO.IsLevelUnlocked || ExperienceManager.instance.CurrentMoney < levelSO.MoneyRequirement) return;
+        //if(levelSO.IsLevelUnlocked || ExperienceManager.instance.CurrentMoney < levelSO.MoneyRequirement) return;
 
         switch (abilityType)
         {
@@ -49,21 +49,18 @@ public class AbilityButton : MonoBehaviour
                 break;
         }
 
-        levelSO.IsLevelUnlocked = true;
+        //levelSO.IsLevelUnlocked = true;
 
-        ExperienceManager.instance.UpdateAbilityButtons();
+        ExperienceManager.instance.ButtonInteraction();
     }
 
-    void UpdateButtonState()
+    void ShowButtonText(bool toggle)
     {
-        //Ability button is interactable if current money is equal or more than required and no other ability on this level was unlocked and if the previous level is unlocked
-        if(levelSO.MoneyRequirement <= ExperienceManager.instance.CurrentMoney && !levelSO.IsLevelUnlocked && levelSO.LevelRequirement.IsLevelUnlocked)
-        {
-            buttonComponent.interactable = true;
-        }
-        else
-        {
-            buttonComponent.interactable = false;
-        }
+        ExperienceManager.instance.ShowButtonText(this, toggle);
+    }
+
+    public void UnlockButton(bool toggle)
+    {
+        buttonComponent.interactable = toggle;
     }
 }

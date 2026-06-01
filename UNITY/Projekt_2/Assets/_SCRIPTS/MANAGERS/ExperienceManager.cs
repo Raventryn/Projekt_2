@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Rendering;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public enum AbilityType{
@@ -17,12 +18,16 @@ public class ExperienceManager : MonoBehaviour
 {
     public static ExperienceManager instance;
 
+    public event Action onButtoninteraction;
+    public event Action<AbilityButton, bool> onShowButtonText;
     public event Action onUpdateAbilityButtons;
+
 
     [SerializeField] TMP_Text _moneyText;
 
     public int CurrentMoney {get; private set;} = 50;
     int _addedMoney = 0;
+    int _displayedMoney = 0;
 
     public int CurrentPlayerLevel{get; private set;} = 1;
 
@@ -30,7 +35,7 @@ public class ExperienceManager : MonoBehaviour
     float _percentageModifier = 0;
     float _modifierChance = 0;
 
-    public List<AbilityButtonLevels_SO> Levels = new List<AbilityButtonLevels_SO>(); 
+    public List<PlayerLevelAbilitiesSO> Levels = new List<PlayerLevelAbilitiesSO>(); 
     
     void Awake()
     {
@@ -49,7 +54,8 @@ public class ExperienceManager : MonoBehaviour
 
     void LoadLevelsSO()
     {
-        Levels.AddRange(Resources.LoadAll<AbilityButtonLevels_SO>("AbilityLevels"));
+        Levels.AddRange(Resources.LoadAll<PlayerLevelAbilitiesSO>("AbilityLevels"));
+        Debug.Log("Added " + Levels.Count + " Levels!");
     }
 
     public void AddPlayerLevel()
@@ -65,11 +71,17 @@ public class ExperienceManager : MonoBehaviour
 
         int modifiedAmount = Mathf.FloorToInt(rawAmount * _percentageModifier / 10) + _straightModifier;
 
-        int chancedModifierAmount = (float)UnityEngine.Random.Range(0f, 100f) /10f <= _modifierChance ? modifiedAmount : 0;
+        int chancedModifierAmount = (float)UnityEngine.Random.Range(0f, 100f) /10f <= _modifierChance ? rawAmount : 0;
 
         //_moneyText.text = $"{_currentMoney}" + <color = #E5BF2B>" +" + $"{rawAmount}</color>" + "<color = #E53D2A> +" + $"{modifiedAmount} </color>";
 
         _addedMoney = rawAmount + modifiedAmount + chancedModifierAmount;
+
+        CurrentMoney += _addedMoney;
+
+        Debug.Log(CurrentMoney);
+
+        UpdateAbilityButtons();
 
         InvokeRepeating("CountUpMoney", 0, 0.05f);
     }
@@ -78,7 +90,13 @@ public class ExperienceManager : MonoBehaviour
     {
         _moneyText.gameObject.SetActive(true);
         _addedMoney = amount;
+        CurrentMoney += _addedMoney;
         InvokeRepeating("CountUpMoney", 0, 0.05f);
+    }
+
+    public void ButtonInteraction()
+    {
+        onButtoninteraction?.Invoke();
     }
 
     public void UpdateAbilityButtons()
@@ -86,11 +104,16 @@ public class ExperienceManager : MonoBehaviour
         onUpdateAbilityButtons?.Invoke();
     }
 
+    public void ShowButtonText(AbilityButton button, bool toggle)
+    {
+        onShowButtonText?.Invoke(button, toggle);
+    }
+
     void CountUpMoney()
     {
-        CurrentMoney ++;
+        _displayedMoney ++;
 
-        _moneyText.text = $"{CurrentMoney}";
+        _moneyText.text = $"{_displayedMoney}";
 
         _addedMoney --;
 
@@ -98,6 +121,8 @@ public class ExperienceManager : MonoBehaviour
         {
             CancelInvoke();
             StartCoroutine(DelayHideText());
+
+            _displayedMoney = CurrentMoney;
         } 
     }
 
