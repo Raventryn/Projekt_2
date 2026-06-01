@@ -256,6 +256,7 @@ public class CompareWaves : MonoBehaviour
             Debug.Log("Succeeded!");
 
             ShowMinigameUI(false);
+            ExperienceManager.instance.AddMoney(Random.Range(12, 25));
             //Send Event that minigame is finished
             //If object is to be picked up, change tag and layer of object
         }

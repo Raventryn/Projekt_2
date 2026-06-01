@@ -77,6 +77,7 @@ public class RoachScanBehaviour : MonoBehaviour
     {
         _animator.SetTrigger("IsCooked");
         _npcBehaviour.StopBehaviour();
+        ExperienceManager.instance.AddMoney(Random.Range(5, 12));
         //Notify that roach is cooked
     }
 }

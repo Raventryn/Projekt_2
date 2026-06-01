@@ -154,15 +154,18 @@ public class ScanObject : MonoBehaviour
         {
             case ScannableObjectKind.GENERIC:
                 _showCanvas.ShowInformationCanvas(true);
+                ExperienceManager.instance.AddMoney(Random.Range(3, 10));
                 break;
             case ScannableObjectKind.SPECIAL:
                 _interpretObject.ShowButtonCanvas(true);
+                //Add Money after interpreting
                 break;
             case ScannableObjectKind.QUEST:
                 _triggerMinigame.OpenMinigame(true);
                 GameEventsManager.instance.inputEvents.ReleaseInteract();
                 GameEventsManager.instance.inputEvents.EquipScanner(-1);
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.CALIBRATING);
+                //Add Money after Minigame
                 break;
         }
     }

@@ -119,22 +119,23 @@ public class InterpretationButtons : MonoBehaviour
     public void SetChoice(int i)
     {
         switch (i)
-            {
-                case 0:
-                    GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceZERO.gameObject);
+        {
+            case 0:
+                GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceZERO.gameObject);
                     
-                    break;
-                case 1:
-                    GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceONE.gameObject);
+                break;
+            case 1:
+                GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceONE.gameObject);
 
-                    break;
-                case 2:
-                    GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceTWO.gameObject);
+                break;
+            case 2:
+                GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(_type, _choiceTWO.gameObject);
 
-                    break;
-            }
+                break;
+        }
 
-            StartCoroutine(ButtonCanvasAnimation(false));
+        StartCoroutine(ButtonCanvasAnimation(false));
+        ExperienceManager.instance.AddMoney(Random.Range(6, 15));
     }
 
         IEnumerator ButtonCanvasAnimation(bool toggle)

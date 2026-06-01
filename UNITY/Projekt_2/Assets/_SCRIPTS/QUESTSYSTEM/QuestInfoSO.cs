@@ -9,10 +9,10 @@ public class QuestInfoSO : ScriptableObject
     [Header("General")]
     public string DisplayName;
 
-    [Header("Requirements")]
+    [Header("Requirements")][Tooltip("SO of Quests required to start this quest")]
     public QuestInfoSO[] QuestPrerequesites;
 
-    [Header("Steps")]
+    [Header("Steps")][Tooltip("GO Prefabs of steps in this quest")]
     public GameObject[] QuestStepPrefabs;
 
     private void OnValidate()
