@@ -31,7 +31,7 @@ public class ScannerController : MonoBehaviour
     
     GameObject _lastScannedObject;
     Decal _xrayDecal;
-    Vector3 _pointerPosition;
+    public Vector3 PointerWorldPosition;
     Vector3 _pointerDirection;
     Vector3 _cameraDefaultPosition;
     float _offsetClampValue;
@@ -225,7 +225,7 @@ public class ScannerController : MonoBehaviour
 
         Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, _depthValue));
 
-        _pointerPosition = point;
+        PointerWorldPosition = point;
     }
 
     void ExitScanView(InputEventContext context)
@@ -259,8 +259,8 @@ public class ScannerController : MonoBehaviour
 
     void RotateArm()
     {
-        ScannerArm.transform.LookAt(_pointerPosition);
-        _pointerDirection = _pointerPosition - ScannerArm.transform.position;
+        ScannerArm.transform.LookAt(PointerWorldPosition);
+        _pointerDirection = PointerWorldPosition - ScannerArm.transform.position;
     }
 
     void ScannerRaycast(InputEventContext context)
