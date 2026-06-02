@@ -18,7 +18,7 @@ public class ExperienceManager : MonoBehaviour
 {
     public static ExperienceManager instance;
 
-    public event Action onButtoninteraction;
+    public event Action<AbilityButton> onButtoninteraction;
     public event Action<AbilityButton, bool> onShowButtonText;
     public event Action onUpdateAbilityButtons;
 
@@ -94,9 +94,9 @@ public class ExperienceManager : MonoBehaviour
         InvokeRepeating("CountUpMoney", 0, 0.05f);
     }
 
-    public void ButtonInteraction()
+    public void ButtonInteraction(AbilityButton button)
     {
-        onButtoninteraction?.Invoke();
+        onButtoninteraction?.Invoke(button);
     }
 
     public void UpdateAbilityButtons()

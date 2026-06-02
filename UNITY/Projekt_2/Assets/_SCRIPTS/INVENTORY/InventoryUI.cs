@@ -10,7 +10,9 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] InventorySystem _inventorySystem;
-    [SerializeField] GameObject _UIContentParent;
+    [SerializeField] Canvas _uiCanvas;
+    [SerializeField] GameObject _InventoryContentParent;
+    [SerializeField] GameObject _LevelMenuContentParent;
     [SerializeField] float _scrollSpeed = 2;
 
     [Tooltip("GameObject with TMP_Text and Typewriter component for Item Name")]
@@ -24,6 +26,7 @@ public class InventoryUI : MonoBehaviour
     TypewriterComponent _itemInfoTypewriter;
     [SerializeField] Button _leftScrollButton;
     [SerializeField] Button _rightScrollbutton;
+    [SerializeField] Button _switchMenusButton;
 
 
     GameObject _currentItem;
@@ -71,8 +74,13 @@ public class InventoryUI : MonoBehaviour
         _leftScrollButton.interactable = false;
         _rightScrollbutton.interactable = false;
 
-        _UIContentParent.SetActive(false);
+        _switchMenusButton.onClick.AddListener(() => SwitchUIMenu());
+
+        _InventoryContentParent.SetActive(false);
+        _LevelMenuContentParent.SetActive(false);
         ClearItemTexts();
+
+        _uiCanvas.gameObject.SetActive(false);
     }
 
     void Update()
@@ -108,9 +116,7 @@ public class InventoryUI : MonoBehaviour
         
         _isUIenabled = !_isUIenabled;
 
-        _UIContentParent.SetActive(_isUIenabled);
-
-        if (_UIContentParent.activeSelf)
+        if(_isUIenabled == true)
         {
             _previousContext = context;
 
@@ -120,7 +126,29 @@ public class InventoryUI : MonoBehaviour
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
             GameEventsManager.instance.inputEvents.ShowCursor(true);
+        }
+        else
+        {
+            GameEventsManager.instance.inputEvents.ChangeInputContext(_previousContext);
 
+            GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
+            GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
+
+            GameEventsManager.instance.inputEvents.ShowCursor(false);
+        }
+
+        ToggleInventory(_isUIenabled);
+        _LevelMenuContentParent.SetActive(false);
+
+        _uiCanvas.gameObject.SetActive(_isUIenabled);
+    }
+
+    void ToggleInventory(bool toggle)
+    {
+        _InventoryContentParent.SetActive(toggle);
+
+        if (_InventoryContentParent.activeSelf)
+        {
             UpdateInventory();
             if(_inventoryLength > 1)
             {
@@ -140,14 +168,26 @@ public class InventoryUI : MonoBehaviour
         {
             DestroyInventoryItems();
             ClearItemTexts();
+        }   
+    }
 
-            GameEventsManager.instance.inputEvents.ChangeInputContext(_previousContext);
+    void ToggleLevelMenu(bool toggle)
+    {
+        _LevelMenuContentParent.SetActive(toggle);
+    }
 
-            GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
-            GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
-
-            GameEventsManager.instance.inputEvents.ShowCursor(false);
-        }      
+    void SwitchUIMenu()
+    {
+        if (_InventoryContentParent.activeSelf)
+        {
+            ToggleInventory(false);
+            ToggleLevelMenu(true);
+        }
+        else
+        {
+            ToggleInventory(true);
+            ToggleLevelMenu(false);
+        }
     }
 
     void UpdateInventory()
@@ -229,13 +269,13 @@ public class InventoryUI : MonoBehaviour
 
         if(inventoryItems.Count == 1)
         {
-            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
             _currentItem.layer = 5;
         }
         else if(inventoryItems.Count == 2)
         {
-            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
-            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
+            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
             _nextItem = _previousItem;
 
             _currentItem.layer = 5;
@@ -243,9 +283,9 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_UIContentParent.transform);
-            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
-            _nextItem = Instantiate(inventoryItems[2].ItemPrefab, ItemPosition("right"), Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
+            _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
+            _nextItem = Instantiate(inventoryItems[2].ItemPrefab, ItemPosition("right"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
 
             _currentItem.layer = 5;
             _previousItem.layer = 5;
@@ -269,11 +309,11 @@ public class InventoryUI : MonoBehaviour
             currentSlotPosition += new Vector3(3f, 0, 2.5f);
         }*/
         
-        _slotPositions[0] = _UIContentParent.transform.position + new Vector3(-10f, 0f, 3f);
-        _slotPositions[1] = _UIContentParent.transform.position + new Vector3(-3.5f, 0f, 1.5f);
-        _slotPositions[2] = _UIContentParent.transform.position + new Vector3(0f, 0f, -2f);
-        _slotPositions[3] = _UIContentParent.transform.position + new Vector3(3.5f, 0f, 1.5f);
-        _slotPositions[4] = _UIContentParent.transform.position + new Vector3(10f, 0f, 3f);
+        _slotPositions[0] = _InventoryContentParent.transform.position + new Vector3(-10f, 0f, 3f);
+        _slotPositions[1] = _InventoryContentParent.transform.position + new Vector3(-3.5f, 0f, 1.5f);
+        _slotPositions[2] = _InventoryContentParent.transform.position + new Vector3(0f, 0f, -2f);
+        _slotPositions[3] = _InventoryContentParent.transform.position + new Vector3(3.5f, 0f, 1.5f);
+        _slotPositions[4] = _InventoryContentParent.transform.position + new Vector3(10f, 0f, 3f);
     }
 
     Vector3 ItemPosition(string position)
@@ -339,7 +379,7 @@ public class InventoryUI : MonoBehaviour
 
         if(_inventoryLength >= 3)
         {
-            _newItem = Instantiate(newItems[2].ItemPrefab, _slotPositions[4], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _newItem = Instantiate(newItems[2].ItemPrefab, _slotPositions[4], Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
             _newItem.layer = 5;
         }
         
@@ -363,7 +403,7 @@ public class InventoryUI : MonoBehaviour
         if(_inventoryLength >= 3)
         {
             //newItems = GetInventoryItems(_currentlyDisplayedItem);
-            _newItem = Instantiate(newItems[1].ItemPrefab, _slotPositions[0], Quaternion.Euler(Vector3.zero), _UIContentParent.transform);
+            _newItem = Instantiate(newItems[1].ItemPrefab, _slotPositions[0], Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
             _newItem.layer = 5;
         }
 

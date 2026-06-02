@@ -10,6 +10,13 @@ public class EXP_UI : MonoBehaviour
 {
     [SerializeField] List<AbilityButton> _buttons;
     [SerializeField] TypewriterComponent _buttonInfoTypewriter;
+    [SerializeField] LineRenderer _lineRenderer;
+    [SerializeField] Image _levelImageLeft;
+    [SerializeField] Image _levelImageRight;
+
+    TMP_Text _lvlLeftText;
+    TMP_Text _lvlRightText;
+
     AbilityButton[] _subLevelOneButtons = new AbilityButton[2];
     AbilityButton[] _subLevelTwoButtons = new AbilityButton[2];
     AbilityButton[] _subLevelThreeButtons = new AbilityButton[2];
@@ -24,8 +31,6 @@ public class EXP_UI : MonoBehaviour
        ExperienceManager.instance.onButtoninteraction += ButtonInteraction; 
        ExperienceManager.instance.onShowButtonText += ShowButtonText;
        ExperienceManager.instance.onUpdateAbilityButtons += UpdateAbilityButtons;
-
-       GameEventsManager.instance.inputEvents.onPressedInventory += PlaceholderShowUI;
     }
 
     void OnDisable()
@@ -33,23 +38,21 @@ public class EXP_UI : MonoBehaviour
         ExperienceManager.instance.onButtoninteraction -= ButtonInteraction; 
         ExperienceManager.instance.onShowButtonText -= ShowButtonText;
         ExperienceManager.instance.onUpdateAbilityButtons -= UpdateAbilityButtons;
-
-        GameEventsManager.instance.inputEvents.onPressedInventory -= PlaceholderShowUI;
     }
 
     void Start()
     {
+        _buttonInfoTypewriter.ShowText("");
+
+        _lvlLeftText = _levelImageLeft.gameObject.GetComponentInChildren<TMP_Text>();
+        _lvlRightText = _levelImageRight.gameObject.GetComponentInChildren<TMP_Text>();
+
+        _levelImageLeft.color = new Color(210f / 255, 186f / 255, 51f / 255);
+
+        _lvlLeftText.text = $"{ExperienceManager.instance.CurrentPlayerLevel}";
+        _lvlRightText.text = $"{ExperienceManager.instance.CurrentPlayerLevel + 1}";
+
         AssignButtons();
-    }
-
-    void PlaceholderShowUI(InputEventContext context)
-    {
-        isUIActive = !isUIActive;
-
-        if (isUIActive)
-        {
-            UpdateAbilityButtons();
-        }
     }
 
     void AssignButtons()
@@ -72,18 +75,29 @@ public class EXP_UI : MonoBehaviour
         _subLevelThreeButtons[1] = _buttons[5];
     }
 
-    void ButtonInteraction()
+    void ButtonInteraction(AbilityButton button)
     {
         _currentSubLevel++;
+
+        _lineRenderer.positionCount++;
+        _lineRenderer.SetPosition(_lineRenderer.positionCount-1, button.gameObject.transform.localPosition);
 
         if(_currentSubLevel == 4)
         {
             ExperienceManager.instance.AddPlayerLevel();
-            _currentSubLevel = 1;
-            AssignButtons();
+
+            _levelImageRight.color = new Color(210f / 255, 186f / 255, 51f / 255);
+            _lineRenderer.positionCount++;
+            _lineRenderer.SetPosition(_lineRenderer.positionCount-1, _levelImageRight.transform.localPosition);
+
+            if(ExperienceManager.instance.CurrentPlayerLevel == 10) return;
+
+            StartCoroutine(DelayTreeUpdate());
         }
 
         UpdateAbilityButtons();
+
+        
     }
 
     void UpdateAbilityButtons()
@@ -140,7 +154,7 @@ public class EXP_UI : MonoBehaviour
             text = "Every time you gain money, you get " + $"{button.value}" + "$ extra";
                 break;
             case AbilityType.CHANCE:
-            text = "Every time you gain money, you gain extra" + $"{button.value}" + " percent chance to receive twice as much";
+            text = "Every time you gain money, you gain extra " + $"{button.value}" + " percent chance to receive twice as much";
                 break;
             case AbilityType.DIRECT:
             text = "Immediately gain " + $"{button.value}" + "$";
@@ -149,6 +163,29 @@ public class EXP_UI : MonoBehaviour
 
         _buttonInfoTypewriter.ShowText(text);
         _buttonInfoTypewriter.StartShowingText();
+    }
+
+    IEnumerator DelayTreeUpdate()
+    {
+        yield return new WaitForSeconds(1);
+
+        _lvlLeftText.text = $"{ExperienceManager.instance.CurrentPlayerLevel}";
+        _lvlRightText.text = $"{ExperienceManager.instance.CurrentPlayerLevel + 1}";
+        _levelImageRight.color = new Color(72f / 255, 72f / 255, 72f / 255);
+
+        _lineRenderer.positionCount = 1;
+
+        foreach(AbilityButton button in _buttons)
+        {
+            ColorBlock buttonColors = button.buttonComponent.colors;
+            buttonColors.disabledColor = new Color(72f / 255, 72f / 255, 72f / 255);
+            button.buttonComponent.colors = buttonColors;
+        }
+
+        _currentSubLevel = 1;
+        AssignButtons();
+
+        UpdateAbilityButtons();
     }
 }
 

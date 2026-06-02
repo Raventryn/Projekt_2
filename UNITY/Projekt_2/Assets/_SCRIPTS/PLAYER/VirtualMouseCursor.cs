@@ -62,6 +62,8 @@ public class VirtualMouseCursor : MonoBehaviour
         InputSystem.onAfterUpdate += UpdateMotion;
 
         GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
+
+        AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
     }
 
     private void OnDisable()

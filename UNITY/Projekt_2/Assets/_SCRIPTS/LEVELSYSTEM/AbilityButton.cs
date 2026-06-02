@@ -49,9 +49,11 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 break;
         }
 
-        //levelSO.IsLevelUnlocked = true;
+        ColorBlock buttonColors = buttonComponent.colors;
+        buttonColors.disabledColor = new Color(210f / 255, 186f / 255, 51f / 255);
+        buttonComponent.colors = buttonColors;
 
-        ExperienceManager.instance.ButtonInteraction();
+        ExperienceManager.instance.ButtonInteraction(this);
     }
 
     void ShowButtonText(bool toggle)
