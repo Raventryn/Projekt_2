@@ -160,6 +160,8 @@ public class ScannerController : MonoBehaviour
                 ScannerOff(GameEventsManager.instance.inputEvents.Context);
                 if(context == InputEventContext.SCANNER) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
                 
+                if(_scannerAnimator == null) return;
+
                 _blockRC = true;
                 StartCoroutine(UnlockScannerOnEquip(false));
                 
@@ -200,7 +202,7 @@ public class ScannerController : MonoBehaviour
     {
         Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
 
-        Debug.Log(screenUV);
+        //Debug.Log(screenUV);
 
         float xPos = _cameraDefaultPosition.x - (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
         float zPos = _cameraDefaultPosition.z - (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
@@ -260,6 +262,7 @@ public class ScannerController : MonoBehaviour
     void RotateArm()
     {
         ScannerArm.transform.LookAt(PointerWorldPosition);
+        ScannerArm.transform.localEulerAngles = new Vector3(ScannerArm.transform.localEulerAngles.x, ScannerArm.transform.localEulerAngles.y, 0);
         _pointerDirection = PointerWorldPosition - ScannerArm.transform.position;
     }
 
