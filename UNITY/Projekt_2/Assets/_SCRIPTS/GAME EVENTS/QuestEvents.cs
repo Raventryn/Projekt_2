@@ -75,4 +75,11 @@ public class QuestEvents
     {
         onStartScanMinigame?.Invoke(toggle);
     }
+
+    public event Action<bool> onStartFishMinigame;
+
+    public void StartFishMinigame(bool toggle)
+    {
+        onStartFishMinigame?.Invoke(toggle);
+    }
 }

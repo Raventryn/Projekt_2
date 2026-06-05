@@ -191,7 +191,7 @@ public class ScannerController : MonoBehaviour
 
         _offsetClampValue = (_InteractionCallerObject.transform.position - _camera.transform.position).magnitude;
 
-        Debug.Log(_offsetClampValue);
+        //Debug.Log(_offsetClampValue);
 
         SetScannerArmTransforms(_scanViewArmTransforms);
 

@@ -1,9 +1,11 @@
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScanInteractor : MonoBehaviour
 {
     [SerializeField] CinemachineCamera _camera;
+    [SerializeField] bool _startsFishMinigame;
 
     void OnEnable()
     {
@@ -23,6 +25,11 @@ public class ScanInteractor : MonoBehaviour
 
         GameEventsManager.instance.interactionEvents.EnterScanView(_camera, gameObject);
         GameEventsManager.instance.interactionEvents.OpenFurniture(gameObject, true);
+
+        if (_startsFishMinigame)
+        {
+            GameEventsManager.instance.questEvents.StartFishMinigame(true);
+        }
     }
 
     void ExitScanView(GameObject gameObject)
@@ -30,5 +37,10 @@ public class ScanInteractor : MonoBehaviour
         if(gameObject != this.gameObject) return;
 
         GameEventsManager.instance.interactionEvents.OpenFurniture(gameObject, false);
+
+        if (_startsFishMinigame)
+        {
+            GameEventsManager.instance.questEvents.StartFishMinigame(false);
+        }
     }
 }
