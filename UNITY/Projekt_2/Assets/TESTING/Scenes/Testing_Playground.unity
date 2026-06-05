@@ -1671,23 +1671,23 @@ PrefabInstance:
       objectReference: {fileID: 458494040}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.78699
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.912
+      value: 1.74
       objectReference: {fileID: 0}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.97701
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259356149775557848, guid: 62981156daa88c640b7a5880704f70b0, type: 3}
       propertyPath: m_LocalRotation.y
@@ -17234,7 +17234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 1
+    m_Value: -1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -21879,6 +21879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   inkJson: {fileID: 4900000, guid: 3eff6c40691e3774eaee1f9bddf1ab9a, type: 3}
+  dialogueVoiceClip: {fileID: 0}
 --- !u!1 &1373923251
 GameObject:
   m_ObjectHideFlags: 0
@@ -34748,7 +34749,19 @@ MonoBehaviour:
       m_Calls: []
   onCharacterVisible:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1231234591}
+        m_TargetAssemblyTypeName: DialoguePanelUI, Assembly-CSharp
+        m_MethodName: PlayTypewriterSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onCharacterWaitStarted:
     m_PersistentCalls:
       m_Calls: []

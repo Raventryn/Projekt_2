@@ -9,6 +9,8 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using Febucci.TextAnimatorForUnity;
 using Febucci.TextAnimatorCore;
+using Febucci.TextAnimatorCore.Typing;
+using Febucci.TextAnimatorCore.Text;
 
 public class DialoguePanelUI : MonoBehaviour
 {
@@ -53,6 +55,8 @@ public class DialoguePanelUI : MonoBehaviour
         this.dialogueTypewriter = dialogueTypewriter;
         this.dialogueAnimator = dialogueAnimator;
         this.choiceButtons = choiceButtons;
+
+        dialogueTypewriter.onCharacterVisible.AddListener(PlayTypewriterSound);
     }
 
     private void ClearReferences()
@@ -133,6 +137,11 @@ public class DialoguePanelUI : MonoBehaviour
     public void StopTypewriter()
     {
         GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DIALOGUE);
+    }
+
+    void PlayTypewriterSound(CharacterData charData)
+    {
+        
     }
 
 
