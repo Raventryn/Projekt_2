@@ -22,6 +22,8 @@ public class EnterDialogue : MonoBehaviour
 
     [SerializeField] DialogueChoiceButton[] _choiceButtons;
 
+    [SerializeField] DialogueAudioInfoSO _dialogueAudioInfo;
+
     Vector3 _cameraDefaultPosition;
     float _offsetClampValue;
     bool IsInDialogue;
@@ -81,12 +83,12 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
-        GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons);
+        GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons, _dialogueAudioInfo);
 
         _dialogueCamera.Priority = 1;
 
         _offsetClampValue = (this.gameObject.transform.position - _dialogueCamera.transform.position).magnitude;
-        Debug.Log(_offsetClampValue);
+        //Debug.Log(_offsetClampValue);
 
         IsInDialogue = true;
 
@@ -97,7 +99,7 @@ public class EnterDialogue : MonoBehaviour
     {
         Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
 
-        Debug.Log(screenUV);
+        //Debug.Log(screenUV);
 
         float xPos = _cameraDefaultPosition.z + (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
         float yPos = _cameraDefaultPosition.y + (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);

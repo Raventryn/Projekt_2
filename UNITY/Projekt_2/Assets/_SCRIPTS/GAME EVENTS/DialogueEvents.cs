@@ -79,13 +79,13 @@ public class DialogueEvents
         }
     }
 
-    public event Action <GameObject, TypewriterComponent, TextAnimator_TMP, DialogueChoiceButton[]> onPassDialogueUIPanel;
+    public event Action <GameObject, TypewriterComponent, TextAnimator_TMP, DialogueChoiceButton[], DialogueAudioInfoSO> onPassDialogueUIPanel;
 
-    public void PassDialogueUIPanel(GameObject contentParent, TypewriterComponent dialogueTypewriter, TextAnimator_TMP dialogueAnimator, DialogueChoiceButton[] choiceButtons)
+    public void PassDialogueUIPanel(GameObject contentParent, TypewriterComponent dialogueTypewriter, TextAnimator_TMP dialogueAnimator, DialogueChoiceButton[] choiceButtons, DialogueAudioInfoSO dialogueAudioInfo)
     {
         if(onPassDialogueUIPanel != null)
         {
-            onPassDialogueUIPanel(contentParent, dialogueTypewriter, dialogueAnimator, choiceButtons);
+            onPassDialogueUIPanel(contentParent, dialogueTypewriter, dialogueAnimator, choiceButtons, dialogueAudioInfo);
         }
     }
 

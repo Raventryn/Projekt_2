@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827688881d9471e4ea4a307f5e2009d6, type: 3}
+  m_Name: so_defaultAudioInfo
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueAudioInfoSO
+  id: default
+  dialogueTypingSoundClips:
+  - {fileID: 8300000, guid: a16ad2f8f5daa9d4ba08e0a6441170ee, type: 3}
+  - {fileID: 8300000, guid: 44ec6fe8745eacd40a9e74d35992bd9f, type: 3}
+  - {fileID: 8300000, guid: a4a28d06546660c4285d3cc0218a94c9, type: 3}
+  - {fileID: 8300000, guid: 5dc1f46e25ddbea4e9ae8c28d361f539, type: 3}
+  - {fileID: 8300000, guid: 9b1b56326d2c49f449c995e8e90751a3, type: 3}
+  frequencyLevel: 2
+  minPitch: 1.5
+  maxPitch: 2.5
+  stopAudioSource: 0

@@ -20771,6 +20771,8 @@ MonoBehaviour:
   choiceButtons:
   - {fileID: 0}
   - {fileID: 0}
+  defaultAudioInfo: {fileID: 11400000, guid: 285037e7b44a74446a2615e83226c3c1, type: 2}
+  makePredictable: 1
 --- !u!43 &1256986957
 Mesh:
   m_ObjectHideFlags: 0
@@ -21879,7 +21881,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   inkJson: {fileID: 4900000, guid: 3eff6c40691e3774eaee1f9bddf1ab9a, type: 3}
-  dialogueVoiceClip: {fileID: 0}
 --- !u!1 &1373923251
 GameObject:
   m_ObjectHideFlags: 0
@@ -30661,6 +30662,7 @@ MonoBehaviour:
   _choiceButtons:
   - {fileID: 1468690365}
   - {fileID: 692060442}
+  _dialogueAudioInfo: {fileID: 11400000, guid: 0a17d9c4c1cf522468df96feff815329, type: 2}
 --- !u!135 &1810439795
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -34749,19 +34751,7 @@ MonoBehaviour:
       m_Calls: []
   onCharacterVisible:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1231234591}
-        m_TargetAssemblyTypeName: DialoguePanelUI, Assembly-CSharp
-        m_MethodName: PlayTypewriterSound
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onCharacterWaitStarted:
     m_PersistentCalls:
       m_Calls: []

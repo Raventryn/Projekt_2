@@ -19,10 +19,21 @@ public class DialoguePanelUI : MonoBehaviour
     [SerializeField] private TypewriterComponent dialogueTypewriter;
     [SerializeField] private TextAnimator_TMP dialogueAnimator;
     [SerializeField] private DialogueChoiceButton[] choiceButtons;
+    [SerializeField] private DialogueAudioInfoSO defaultAudioInfo;
+    [SerializeField] private bool makePredictable;
 
-    //private bool _dialoguePlaying = false;
+    private DialogueAudioInfoSO currentAudioInfo;
+    private AudioSource audioSource;
 
     private string _dialogueLine;
+
+    int _visibleCharacters = 0;
+
+    void Awake()
+    {
+        currentAudioInfo = defaultAudioInfo;
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+    }
 
 
     private void OnEnable()
@@ -49,21 +60,30 @@ public class DialoguePanelUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedInteract -= SkipDialogue;
     }
 
-    private void SetReferences(GameObject contentParent, TypewriterComponent dialogueTypewriter, TextAnimator_TMP dialogueAnimator, DialogueChoiceButton[] choiceButtons)
+    private void SetReferences(GameObject contentParent, TypewriterComponent dialogueTypewriter, TextAnimator_TMP dialogueAnimator, DialogueChoiceButton[] choiceButtons, DialogueAudioInfoSO dialogueAudioInfo)
     {
         this.contentParent = contentParent;
         this.dialogueTypewriter = dialogueTypewriter;
         this.dialogueAnimator = dialogueAnimator;
         this.choiceButtons = choiceButtons;
 
+        if(dialogueAudioInfo != null)
+        {
+            currentAudioInfo = dialogueAudioInfo;
+        }
+
         dialogueTypewriter.onCharacterVisible.AddListener(PlayTypewriterSound);
     }
 
     private void ClearReferences()
     {
+        dialogueTypewriter.onCharacterVisible.RemoveListener(PlayTypewriterSound);
+
         contentParent = null;
         dialogueTypewriter = null;
+        dialogueAnimator = null;
         choiceButtons = null;
+        currentAudioInfo = defaultAudioInfo;
     }
 
     private void DialogueStarted()
@@ -141,7 +161,66 @@ public class DialoguePanelUI : MonoBehaviour
 
     void PlayTypewriterSound(CharacterData charData)
     {
-        
+        _visibleCharacters++;
+
+        if(_visibleCharacters == dialogueAnimator.CharactersCount)
+        {
+            _visibleCharacters = 0;
+            return;
+        }
+
+        char character = charData.info.character;
+
+        AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
+        int frequencyLevel = currentAudioInfo.frequencyLevel;
+        float minPitch = currentAudioInfo.minPitch;
+        float maxPitch = currentAudioInfo.maxPitch;
+        bool stopAudioSource = currentAudioInfo.stopAudioSource;
+
+        //Debug.Log(_visibleCharacters);
+
+        if(_visibleCharacters % frequencyLevel == 0)
+        {
+            if (stopAudioSource)
+            {
+                audioSource.volume = 0;
+                audioSource.Stop();
+                audioSource.volume = 1;
+            } 
+
+            AudioClip soundClip = null;
+
+            if(makePredictable)
+            {
+                int hashCode = character.GetHashCode();
+
+                int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+                soundClip = dialogueTypingSoundClips[predictableIndex];
+
+                int minPitchInt = (int) (minPitch * 100);
+                int maxPitchInt = (int) (maxPitch * 100);
+                int pitchRangeInt = maxPitchInt - minPitchInt;
+
+                if(pitchRangeInt != 0)
+                {
+                    int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                    float predictablePitch = predictablePitchInt / 100f;
+                    audioSource.pitch = predictablePitch;
+                }
+                else
+                {
+                    audioSource.pitch = minPitch;
+                }
+            }
+            else
+            {
+                int randomIndex = Random.Range(0, dialogueTypingSoundClips.Length);
+                soundClip = dialogueTypingSoundClips[randomIndex];
+                audioSource.pitch = Random.Range(minPitch, maxPitch);
+            }
+            Debug.Log(character);
+            audioSource.PlayOneShot(soundClip);
+        }
     }
 
 
