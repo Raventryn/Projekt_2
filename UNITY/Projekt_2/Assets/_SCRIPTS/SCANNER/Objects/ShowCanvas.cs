@@ -11,6 +11,13 @@ public class ShowCanvas : MonoBehaviour
     public Animator InfoCanvasAnimator;
     public string DescriptionText;
 
+    public Vector3 canvasDefaultPosition;
+
+    void Start()
+    {
+        canvasDefaultPosition = InfoCanvasContainer.transform.position;
+    }
+
     public void ShowInformationCanvas(bool firstTimeShowing)
     {
         StopAllCoroutines();
@@ -35,11 +42,22 @@ public class ShowCanvas : MonoBehaviour
         }
     }
 
+    public Vector3 SetCanvasWorldPosition()
+    {
+        Vector2 viewportPoint = Camera.main.ViewportToScreenPoint(new Vector2(0.25f, 0.5f));
+
+        Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(viewportPoint.x, viewportPoint.y, 1f));
+
+        return newPoint;
+    }
+
     IEnumerator InfoTextAnimation(bool toggle)
     {
         switch (toggle)
         {
             case true:
+                InfoCanvasContainer.transform.position = SetCanvasWorldPosition();
+
                 InfoCanvasContainer.SetActive(toggle);
 
                 InfoCanvasAnimator.SetBool("showText", toggle);
@@ -52,6 +70,8 @@ public class ShowCanvas : MonoBehaviour
                 InfoCanvasAnimator.SetBool("showText", toggle);
 
                 yield return new WaitForSeconds(0.15f);
+
+                InfoCanvasContainer.transform.position = canvasDefaultPosition;
 
                 InfoCanvasContainer.SetActive(toggle);
                 
