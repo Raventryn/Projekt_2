@@ -33,6 +33,7 @@ public class Player_Controller : MonoBehaviour
     public bool AllowJump = true;
 
     [Header("Player Crouched")]
+    public bool AllowCrouch;
     public bool IsCrouchForced;
 
     [Header("Camera")]
@@ -117,7 +118,8 @@ public class Player_Controller : MonoBehaviour
         Move();
         Look();
         GravityAndGroundedCheck();
-        CrouchCheck();
+        if(AllowCrouch)
+            CrouchCheck();
     }
 
     private void Move()
@@ -211,6 +213,8 @@ public class Player_Controller : MonoBehaviour
     //Sets isCrouched bool and triggers MoveSpeed change, also cancels sprint if active
     private void SetCrouch(InputAction.CallbackContext context)
     {
+        if(!AllowCrouch) return;
+
         if (context.performed)
         {
             isCrouched = true;

@@ -80,7 +80,7 @@ public class InventoryUI : MonoBehaviour
         _LevelMenuContentParent.SetActive(false);
         ClearItemTexts();
 
-        _uiCanvas.gameObject.SetActive(false);
+        //_uiCanvas.gameObject.SetActive(false);
     }
 
     void Update()
@@ -126,6 +126,7 @@ public class InventoryUI : MonoBehaviour
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
             GameEventsManager.instance.inputEvents.ShowCursor(true);
+            Debug.Log(Cursor.lockState);
         }
         else
         {
@@ -140,7 +141,7 @@ public class InventoryUI : MonoBehaviour
         ToggleInventory(_isUIenabled);
         _LevelMenuContentParent.SetActive(false);
 
-        _uiCanvas.gameObject.SetActive(_isUIenabled);
+        //_uiCanvas.gameObject.SetActive(_isUIenabled);
     }
 
     void ToggleInventory(bool toggle)

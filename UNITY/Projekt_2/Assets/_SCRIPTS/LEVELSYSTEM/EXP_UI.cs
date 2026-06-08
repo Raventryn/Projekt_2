@@ -53,6 +53,7 @@ public class EXP_UI : MonoBehaviour
         _lvlRightText.text = $"{ExperienceManager.instance.CurrentPlayerLevel + 1}";
 
         AssignButtons();
+        UpdateAbilityButtons();
     }
 
     void AssignButtons()
@@ -88,16 +89,14 @@ public class EXP_UI : MonoBehaviour
 
             _levelImageRight.color = new Color(210f / 255, 186f / 255, 51f / 255);
             _lineRenderer.positionCount++;
-            _lineRenderer.SetPosition(_lineRenderer.positionCount-1, _levelImageRight.transform.localPosition);
+            _lineRenderer.SetPosition(_lineRenderer.positionCount-1, new Vector3(350, 0, 0));
 
             if(ExperienceManager.instance.CurrentPlayerLevel == 10) return;
 
             StartCoroutine(DelayTreeUpdate());
         }
 
-        UpdateAbilityButtons();
-
-        
+        UpdateAbilityButtons(); 
     }
 
     void UpdateAbilityButtons()

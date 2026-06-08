@@ -5,6 +5,7 @@ public class FishPatrolBehaviour : MonoBehaviour
     [SerializeField] BoxCollider _aquariumCollider;
     [SerializeField] GameObject _fish;
     [SerializeField] float _fishSpeed = 1;
+    public float PositionPadding = 0;
     Vector3 _currentTarget;
 
     public bool IsPatroling = true;
@@ -23,9 +24,9 @@ public class FishPatrolBehaviour : MonoBehaviour
     }
     void GenerateTargetPoint()
     {
-        float posX = Random.Range(_aquariumCollider.center.x - _aquariumCollider.size.x/2, _aquariumCollider.center.x + _aquariumCollider.size.x/2);
-        float posY = Random.Range(_aquariumCollider.center.y - _aquariumCollider.size.y/2, _aquariumCollider.center.y + _aquariumCollider.size.y/2);
-        float posZ = Random.Range(_aquariumCollider.center.z - _aquariumCollider.size.z/2, _aquariumCollider.center.z + _aquariumCollider.size.z/2);
+        float posX = Random.Range(_aquariumCollider.center.x - _aquariumCollider.size.x/2 + PositionPadding, _aquariumCollider.center.x + _aquariumCollider.size.x/2 - PositionPadding);
+        float posY = Random.Range(_aquariumCollider.center.y - _aquariumCollider.size.y/2 + PositionPadding, _aquariumCollider.center.y + _aquariumCollider.size.y/2 - PositionPadding);
+        float posZ = Random.Range(_aquariumCollider.center.z - _aquariumCollider.size.z/2 + PositionPadding, _aquariumCollider.center.z + _aquariumCollider.size.z/2 - PositionPadding);
 
         Vector3 target = new Vector3(posX, posY, posZ);
 

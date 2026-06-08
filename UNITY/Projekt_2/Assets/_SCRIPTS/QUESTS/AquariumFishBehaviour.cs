@@ -43,7 +43,7 @@ public class AquariumFishBehaviour : MonoBehaviour
     
     void Start()
     {
-        _aquariumCenter = _aquarium.transform.position;
+        _aquariumCenter = _aquarium.transform.position + new Vector3(0, _aquariumBorders.size.y / 2f, 0);
         _fullTimerValue = _timer;
 
         _fillBar.fillAmount = 0;
@@ -60,7 +60,7 @@ public class AquariumFishBehaviour : MonoBehaviour
 
             _scannerPointerPosition = ScannerController.instance.PointerWorldPosition;
             Vector3 _localPointerPosition = _aquarium.transform.InverseTransformPoint(_scannerPointerPosition);
-            _fishTargetPosition = new Vector3(_localPointerPosition.x, _fish.transform.localPosition.y, _localPointerPosition.z);
+            _fishTargetPosition = new Vector3(_localPointerPosition.x, _aquariumCenter.y, _localPointerPosition.z);
             GetPositiveAngleDelta();
             FishFollowPointer();
             CountEnergyTime();
@@ -146,12 +146,16 @@ public class AquariumFishBehaviour : MonoBehaviour
     void FishFollowPointer()
     {
         Vector3 newPosition = Vector3.MoveTowards(_fish.transform.localPosition, _currentFishTarget, _fishSpeed * Time.deltaTime);
-        newPosition.x = Mathf.Clamp(newPosition.x, - _aquariumBorders.size.x/2 + 0.25f, _aquariumBorders.size.x/2 - 0.25f);
-        newPosition.z = Mathf.Clamp(newPosition.z, - _aquariumBorders.size.z/2 + 0.23f, _aquariumBorders.size.z/2 - 0.23f);
+        newPosition.x = Mathf.Clamp(newPosition.x, - _aquariumBorders.size.x/2 + _patrolBehaviour.PositionPadding, _aquariumBorders.size.x/2 - _patrolBehaviour.PositionPadding);
+        newPosition.z = Mathf.Clamp(newPosition.z, - _aquariumBorders.size.z/2 + _patrolBehaviour.PositionPadding, _aquariumBorders.size.z/2 - _patrolBehaviour.PositionPadding);
+
         _fish.transform.localPosition = newPosition;
         
-        if((_currentFishTarget - _fish.transform.localPosition).magnitude >= 0.0005f)
-            _fish.transform.rotation = Quaternion.Slerp(_fish.transform.rotation, Quaternion.LookRotation(_currentFishTarget - _fish.transform.localPosition, Vector3.up), 20 * Time.deltaTime);
+        if((_currentFishTarget - _fish.transform.localPosition).magnitude >= Mathf.Epsilon)
+        {
+             _fish.transform.rotation = Quaternion.Slerp(_fish.transform.rotation, Quaternion.LookRotation(_currentFishTarget - _fish.transform.localPosition, Vector3.up), 20 * Time.deltaTime);
+        }
+            
         //Debug.Log(_fishSpeed);
     }
     
