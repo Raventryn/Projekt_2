@@ -244,6 +244,8 @@ public class CompareWaves : MonoBehaviour
             _progressBar.SetPosition(i, newPosition);
         }
 
+        string transferSpeedText = transferSpeed.ToString("F2");
+
         _transferSpeedText.text = "Transfer speed: " + Mathf.CeilToInt(transferSpeed * 15000f) * 0.001f +" Tbps";
 
         if(timer <= 0)

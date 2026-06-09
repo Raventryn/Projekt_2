@@ -113,7 +113,7 @@ public class ExperienceManager : MonoBehaviour
     {
         _displayedMoney ++;
 
-        _moneyText.text = $"{_displayedMoney}";
+        _moneyText.text = $"{_displayedMoney}" + "$";
 
         _addedMoney --;
 

@@ -70,7 +70,7 @@ public class CalibrationGameManager : MonoBehaviour
             panel.SetActive(false);
         }
 
-        //StartMinigame();
+        StartMinigame();
     }
 
     // Update is called once per frame
@@ -179,7 +179,7 @@ public class CalibrationGameManager : MonoBehaviour
 
                 _IsArmEquipped = true;
 
-                Vector3 armPosition = new Vector3(0.31f, -0.19f,-0.024f);
+                Vector3 armPosition = new Vector3(0f, -0.079f,0.096f);
                 _playerArm = Instantiate(_armPrefab, Camera.main.transform);
                 _targetArm = Instantiate(_armPrefab, Camera.main.transform);
                 

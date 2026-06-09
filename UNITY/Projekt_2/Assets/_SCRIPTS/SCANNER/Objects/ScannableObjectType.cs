@@ -11,5 +11,13 @@ public enum ScannableObjectType
     CAPSULE,
     SPHERE,
     CUBE,
-    CYLINDER
+    CYLINDER,
+    LAPTOP,
+    PENCILS,
+    TOILET_PAPER,
+    HAIRDRYER,
+    CD,
+    CAN,
+    BOX,
+    CLEANING_BOTTLE
 }
