@@ -25,6 +25,11 @@ public class ScanObject : MonoBehaviour
     TypewriterComponent _typewriter;
     MeshFilter _meshFilter;
     Renderer _renderer;
+    Material _defaultMaterial;
+    float _defaultScaleValue;
+    float _pulseScaleValue;
+    bool _isPulseObject;
+    bool _isObjectPulseSize;
     string _descriptionText;
 
 
@@ -53,9 +58,14 @@ public class ScanObject : MonoBehaviour
         _descriptionText = _tmpText.text;
         _tmpText.text = "";
         _fillBarImage.enabled = false;
+        _defaultMaterial = _renderer.material;
+        _defaultScaleValue = gameObject.transform.localScale.x;
+        _pulseScaleValue = _defaultScaleValue * 1.1f;
         if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
             _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
         _InfoCanvasContainer.SetActive(false);
+
+        ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
 
         InstantiateClasses();
     }
@@ -69,6 +79,11 @@ public class ScanObject : MonoBehaviour
         else if(_scanningObject && !_objectScanned && !ScannerController.instance.IsScanning)
         {
             ObjectScanOff(this.gameObject, ScannerManager.instance.ScannerMode);
+        }
+
+        if (_isPulseObject)
+        {
+            PulseObjectOnScan();
         }
     }
 
@@ -109,6 +124,10 @@ public class ScanObject : MonoBehaviour
 
         _scanningObject = true;
 
+        _isPulseObject = true;
+
+        ChangeMaterial(ScannerManager.instance.ObjectIsScannedMaterial);
+
         if (!ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
         {
             ScannerManager.instance.ScannedObjects.Add(ObjectType, false);
@@ -141,6 +160,16 @@ public class ScanObject : MonoBehaviour
             _scanTimer = 3;
             _fillBarImage.fillAmount = 1 - _scanTimer / 3f;
         }
+
+        if (_objectScanned)
+        {
+            ChangeMaterial(_defaultMaterial);
+        }
+        else
+        {
+            ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
+        }
+        
 
         _showCanvas.HideInformationCanvas();
     }
@@ -185,5 +214,36 @@ public class ScanObject : MonoBehaviour
             _fillBarImage.enabled = false;
             FirstTimeScan();
         }
-    }   
+    }
+
+    void ChangeMaterial(Material material)
+    {
+        _renderer.material = material;
+    }
+
+    void PulseObjectOnScan()
+    {
+        if(transform.localScale.x < _pulseScaleValue && !_isObjectPulseSize)
+        {
+            transform.localScale += Vector3.one * 2 * Time.deltaTime;
+
+            if(transform.localScale.x >= _pulseScaleValue)
+            {
+                _isObjectPulseSize = true;
+            }
+        }
+        else if(transform.localScale.x > _defaultScaleValue && _isObjectPulseSize)
+        {
+            transform.localScale -= Vector3.one * 2 * Time.deltaTime;
+
+            if(transform.localScale.x <= _defaultScaleValue)
+            {
+                transform.localScale = Vector3.one * _defaultScaleValue;
+                
+                _isPulseObject = false;
+                _isObjectPulseSize = false;
+            }
+        }
+        
+    }
 }

@@ -82,7 +82,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
     void UpdateMotion()
     {
-        if(virtualMouse == null) return;
+        if(virtualMouse == null || !IsCursorVisible) return;
 
         Vector2 deltaValue = Mouse.current.delta.ReadValue();//Gamepad.current.leftStick.ReadValue();
         deltaValue *= _playerController.LookSensitivity * _pointerSpeedMultiplier * Time.unscaledDeltaTime;
@@ -92,6 +92,8 @@ public class VirtualMouseCursor : MonoBehaviour
 
         newPosition.x = Mathf.Clamp(newPosition.x, 0f + _cursorTransform.rect.width, Screen.width - _cursorTransform.rect.width);
         newPosition.y = Mathf.Clamp(newPosition.y, 0f + _cursorTransform.rect.height, Screen.height - _cursorTransform.rect.height);
+
+        Debug.Log(newPosition);
 
         InputState.Change(virtualMouse.position, newPosition);
         InputState.Change(virtualMouse.delta, deltaValue);
@@ -120,7 +122,6 @@ public class VirtualMouseCursor : MonoBehaviour
             _previousMouseState = leftButtonisPressed;
         } 
         
-        if(IsCursorVisible)
         AnchorCursor(newPosition);
     }
 
@@ -138,6 +139,7 @@ public class VirtualMouseCursor : MonoBehaviour
         switch (toggle)
         {
             case true:
+                AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
                 IsCursorVisible = true;
                 _cursorTransform.gameObject.SetActive(true);
                 Cursor.lockState = CursorLockMode.Confined;

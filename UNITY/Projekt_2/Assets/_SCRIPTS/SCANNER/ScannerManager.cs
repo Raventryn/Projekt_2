@@ -20,6 +20,10 @@ public class ScannerManager : MonoBehaviour
 
     public Image _scannerFillBar;
 
+    public Material ObjectNotScannedMaterial;
+
+    public Material ObjectIsScannedMaterial;
+
     int _scannerMode = 1;
 
     void Awake()
