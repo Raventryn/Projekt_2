@@ -3986,6 +3986,8 @@ MonoBehaviour:
   ScannableObjectPrefabs: []
   _interpretationButtons: {fileID: 356400272}
   _scannerFillBar: {fileID: 8053649330170707052}
+  ObjectNotScannedMaterial: {fileID: 0}
+  ObjectIsScannedMaterial: {fileID: 0}
 --- !u!1 &449850880
 GameObject:
   m_ObjectHideFlags: 0
@@ -22027,6 +22029,7 @@ MonoBehaviour:
   _aquariumCollider: {fileID: 907128081}
   _fish: {fileID: 796051026}
   _fishSpeed: 0.2
+  PositionPadding: 0
   IsPatroling: 1
 --- !u!1 &1370850022
 GameObject:
@@ -31475,6 +31478,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 545999b7efb6bbd43ba9d7e77f2e312a, type: 3}
   - {fileID: 21300000, guid: e85b5f80f884ac546a7631a9ca058f33, type: 3}
   _spriteContext: 010000000200000003000000
+  scaleSpeed: 0
 --- !u!1 &1831651984
 GameObject:
   m_ObjectHideFlags: 0

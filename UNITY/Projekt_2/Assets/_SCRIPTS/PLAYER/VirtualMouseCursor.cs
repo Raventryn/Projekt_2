@@ -93,7 +93,7 @@ public class VirtualMouseCursor : MonoBehaviour
         newPosition.x = Mathf.Clamp(newPosition.x, 0f + _cursorTransform.rect.width, Screen.width - _cursorTransform.rect.width);
         newPosition.y = Mathf.Clamp(newPosition.y, 0f + _cursorTransform.rect.height, Screen.height - _cursorTransform.rect.height);
 
-        Debug.Log(newPosition);
+        //Debug.Log(newPosition);
 
         InputState.Change(virtualMouse.position, newPosition);
         InputState.Change(virtualMouse.delta, deltaValue);

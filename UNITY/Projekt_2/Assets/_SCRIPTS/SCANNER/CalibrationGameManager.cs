@@ -70,7 +70,7 @@ public class CalibrationGameManager : MonoBehaviour
             panel.SetActive(false);
         }
 
-        StartMinigame();
+        //StartMinigame();
     }
 
     // Update is called once per frame
