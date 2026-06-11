@@ -14,7 +14,8 @@ public enum InputEventContext
     SCANNER_VIEW,
     SCANNER_BUTTONS,
     SCANNER_MINIGAME,
-    CALIBRATING
+    CALIBRATING,
+    MENU
 }
 public class InputEvents
 {

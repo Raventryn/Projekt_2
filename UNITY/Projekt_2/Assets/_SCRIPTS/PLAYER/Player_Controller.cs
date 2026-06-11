@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class Player_Controller : MonoBehaviour
 {
+    public PlayerSettingsSO PlayerSettings;
+
     //PlayerInput Component
     [SerializeField] private PlayerInput _playerInput;
     //Character Controller Component
@@ -40,9 +42,6 @@ public class Player_Controller : MonoBehaviour
     public GameObject CameraFollowTarget;
     public float TopClamp;
     public float BottomClamp;
-
-    [Range(2f, 15.0f)]
-    public float LookSensitivity = 6;
 
     private float CameraPitch;
 
@@ -107,7 +106,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Start()
     {
-        SetLookSensitivity(LookSensitivity);
+        SetLookSensitivity(PlayerSettings.LookSensitivity);
         SetMoveSpeed(false, false);
         _defaultHeight = _characterController.height;
         ShowCursor(false);
@@ -330,17 +329,17 @@ public class Player_Controller : MonoBehaviour
 
     public void AddLookSensitivity(float value)
     {
-        LookSensitivity = Mathf.Clamp(LookSensitivity += value * 0.1f, 2f, 15f);
+        PlayerSettings.LookSensitivity = Mathf.Clamp(PlayerSettings.LookSensitivity += value * 0.1f, 2f, 15f);
 
-        LookAction.ApplyParameterOverride("scaleVector2:x", LookSensitivity);
-        LookAction.ApplyParameterOverride("scaleVector2:y", LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:x", PlayerSettings.LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:y", PlayerSettings.LookSensitivity);
     }
 
     public void SetLookSensitivity(float value)
     {
-        LookSensitivity = Mathf.Clamp(value, 2f, 15f);
+        PlayerSettings.LookSensitivity = Mathf.Clamp(value, 2f, 15f);
 
-        LookAction.ApplyParameterOverride("scaleVector2:x", LookSensitivity);
-        LookAction.ApplyParameterOverride("scaleVector2:y", LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:x", PlayerSettings.LookSensitivity);
+        LookAction.ApplyParameterOverride("scaleVector2:y", PlayerSettings.LookSensitivity);
     }
 }

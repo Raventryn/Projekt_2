@@ -63,9 +63,9 @@ public class CursorController : MonoBehaviour
     {
         Vector2 moveDirection = _lookAction.ReadValue<Vector2>();
 
-        float xPosition = moveDirection.x * _playerController.LookSensitivity * Time.deltaTime;
+        float xPosition = moveDirection.x * _playerController.PlayerSettings.LookSensitivity * Time.deltaTime;
 
-        float yPosition = moveDirection.y * _playerController.LookSensitivity * Time.deltaTime;
+        float yPosition = moveDirection.y * _playerController.PlayerSettings.LookSensitivity * Time.deltaTime;
 
         Cursor.transform.localPosition += new Vector3 (xPosition, yPosition, 0);
 

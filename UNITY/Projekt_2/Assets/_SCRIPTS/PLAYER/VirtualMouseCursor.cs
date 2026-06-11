@@ -12,7 +12,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
     public bool IsCursorVisible;
 
-    [SerializeField] Player_Controller _playerController;
+    [SerializeField] PlayerSettingsSO _playerSettings;
     [SerializeField] PlayerInput _playerInput;
     [SerializeField] RectTransform _cursorTransform;
     [SerializeField] RectTransform _canvasTransform;
@@ -85,7 +85,7 @@ public class VirtualMouseCursor : MonoBehaviour
         if(virtualMouse == null || !IsCursorVisible) return;
 
         Vector2 deltaValue = Mouse.current.delta.ReadValue();//Gamepad.current.leftStick.ReadValue();
-        deltaValue *= _playerController.LookSensitivity * _pointerSpeedMultiplier * Time.unscaledDeltaTime;
+        deltaValue *= _playerSettings.LookSensitivity * _pointerSpeedMultiplier * Time.unscaledDeltaTime;
 
         Vector2 currentPosition = virtualMouse.position.ReadValue();
         Vector2 newPosition = currentPosition + deltaValue;

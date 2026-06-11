@@ -276,7 +276,7 @@ public class CalibrationGameManager : MonoBehaviour
 
         _playerController.AddLookSensitivity(value);
 
-        _sensitivityBar.fillAmount = _playerController.LookSensitivity / 15f;
+        _sensitivityBar.fillAmount = _playerController.PlayerSettings.LookSensitivity / 15f;
     }
 
     void ChangeTargetArmMaterial(MaterialType type)

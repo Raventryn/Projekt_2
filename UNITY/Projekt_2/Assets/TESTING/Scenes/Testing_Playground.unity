@@ -9458,7 +9458,7 @@ MonoBehaviour:
   _uiCanvas: {fileID: 5560928}
   _InventoryContentParent: {fileID: 1467699668}
   _LevelMenuContentParent: {fileID: 374858018}
-  _scrollSpeed: 2
+  _scrollSpeed: 4
   _itemName: {fileID: 744247507}
   _itemInfo: {fileID: 407173616}
   _leftScrollButton: {fileID: 310391711}

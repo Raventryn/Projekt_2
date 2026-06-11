@@ -1,34 +1,31 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using TMPro;
 using System.Collections;
-using Unity.VisualScripting;
 
-public class DialogueChoiceButton : MonoBehaviour
+public class ScaleButtonOnHover : MonoBehaviour
 {
-    [Header("Components")]
-    [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI choiceText;
+    [SerializeField] float scaleSpeed = 4;
 
     RectTransform buttonRectTransform;
 
     float _defaultScaleValue;
     float _targetScaleValue;
-
     float _scaleSpeedMultiplier;
 
     bool _isScaleButton;
 
-    private int _choiceIndex = -1;
-
-    private void OnEnable()
+    void OnEnable()
     {
-        button.onClick.AddListener(() => SelectButton());
-
         buttonRectTransform = GetComponent<RectTransform>();
 
         _defaultScaleValue = buttonRectTransform.localScale.x;
+        
+        buttonRectTransform.localScale = _defaultScaleValue * Vector3.one;
+    }
+
+    void OnDisable()
+    {
+        buttonRectTransform.localScale = _defaultScaleValue * Vector3.one;
+        _isScaleButton = false;
     }
 
     void Update()
@@ -39,31 +36,9 @@ public class DialogueChoiceButton : MonoBehaviour
         }
     }
 
-    public void SetChoiceText(string choiceTextString)
-    {
-        choiceText.text = choiceTextString;
-    }
-
-    public void SetChoiceIndex(int choiceIndex) 
-    { 
-        _choiceIndex = choiceIndex;
-    }
-
-    public void SelectButton()
-    {
-        GameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(_choiceIndex);
-
-        _targetScaleValue = _defaultScaleValue * 0.6f;
-
-        _scaleSpeedMultiplier = 3f;
-
-        _isScaleButton = true;
-
-        StartCoroutine(DelayChoiceEvent());
-    }
-
     public void PulseButton(int value)
     {
+
         switch (value)
         {
             case 1:
@@ -83,13 +58,24 @@ public class DialogueChoiceButton : MonoBehaviour
     {
         if(buttonRectTransform.localScale.x != _targetScaleValue)
         {
-            buttonRectTransform.localScale = Vector3.MoveTowards(buttonRectTransform.localScale, _targetScaleValue * Vector3.one, 6 * _scaleSpeedMultiplier * Time.deltaTime);
+            buttonRectTransform.localScale = Vector3.MoveTowards(buttonRectTransform.localScale, _targetScaleValue * Vector3.one, scaleSpeed * _scaleSpeedMultiplier * Time.deltaTime);
 
             if(buttonRectTransform.localScale.x == _targetScaleValue)
             {
                 _isScaleButton = false;
             }
         }
+    }
+
+    public void SelectButton()
+    {
+        _targetScaleValue = _defaultScaleValue * 0.6f;
+
+        _scaleSpeedMultiplier = 3f;
+
+        _isScaleButton = true;
+
+        StartCoroutine(DelayChoiceEvent());
     }
 
     private IEnumerator DelayChoiceEvent()
@@ -102,7 +88,5 @@ public class DialogueChoiceButton : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
 
         _isScaleButton = false;
-
-        GameEventsManager.instance.dialogueEvents.PressedChoiceButton();
     }
 }
