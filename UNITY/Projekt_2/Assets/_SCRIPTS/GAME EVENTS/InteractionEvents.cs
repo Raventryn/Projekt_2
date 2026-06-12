@@ -80,5 +80,11 @@ public class InteractionEvents
     {
         onOpenFurniture?.Invoke(gameObject, toggle);
     }
-        
+
+    public event Action<GameObject> onLockedObjectInteraction;
+
+    public void LockedObjectInteraction(GameObject gameObject)
+    {
+        onLockedObjectInteraction?.Invoke(gameObject);
+    }
 }

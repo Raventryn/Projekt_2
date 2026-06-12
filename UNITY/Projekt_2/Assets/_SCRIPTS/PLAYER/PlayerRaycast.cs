@@ -54,6 +54,9 @@ public class PlayerRaycast : MonoBehaviour
                 case "Scanner_Object":
                     GameEventsManager.instance.inputEvents.Interaction(InteractionType.SCANNER, hit.collider.gameObject);
                     break;
+                case "Locked_Object":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.LOCKED_OBJECT, hit.collider.gameObject);
+                    break;
             }
             
         }
@@ -91,6 +94,9 @@ public class PlayerRaycast : MonoBehaviour
                         break;
                     case "Scanner_Object":
                         GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.SCANNER);
+                        break;
+                    case "Locked_Object":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.PICKUP);
                         break;
                 }
             }  

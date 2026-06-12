@@ -17,6 +17,9 @@ public enum OpenDirection
 
 public class OpenFurniture : MonoBehaviour
 {
+    [SerializeField] bool requiresItemToOpen;
+    [SerializeField] InventoryItemData itemData;
+
     [SerializeField] List<GameObject> m_Drawers;
     [SerializeField] List<FurnitureType> m_Type;
     [SerializeField] List<OpenDirection> m_OpenDirection;
@@ -51,6 +54,12 @@ public class OpenFurniture : MonoBehaviour
     {
 
         if(gameObject != this.gameObject) return;
+
+        if (requiresItemToOpen)
+        {
+            if(InventorySystem.instance.Get(itemData) == null) return; //Send event that player does not have required item
+        }
+            
         
         for(int i = 0; i < m_Drawers.Count; i++)
         {

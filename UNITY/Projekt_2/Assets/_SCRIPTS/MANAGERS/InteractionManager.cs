@@ -5,7 +5,8 @@ public enum InteractionType
     DEFAULT,
     PICKUP,
     DIALOGUE,
-    SCANNER
+    SCANNER,
+    LOCKED_OBJECT
 }
 
 public class InteractionManager : MonoBehaviour
@@ -37,6 +38,9 @@ public class InteractionManager : MonoBehaviour
                 break;
             case InteractionType.SCANNER:
                 GameEventsManager.instance.interactionEvents.ScannerInteraction(gameObject);
+                break;
+            case InteractionType.LOCKED_OBJECT:
+                GameEventsManager.instance.interactionEvents.LockedObjectInteraction(gameObject);
                 break;
         }
     }

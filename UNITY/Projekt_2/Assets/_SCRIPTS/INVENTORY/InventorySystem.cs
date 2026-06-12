@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
+    public static InventorySystem instance;
     private Dictionary<InventoryItemData, InventoryItem> m_itemDictionary;
     public List<InventoryItem> inventory {get; private set;}
 
     void Awake()
     {
+        if(instance != null)
+        {
+            Debug.LogError("More than one InventorySystem active!");
+            return;
+        }
+
+        instance = this;
+
         inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemData, InventoryItem>();
     }

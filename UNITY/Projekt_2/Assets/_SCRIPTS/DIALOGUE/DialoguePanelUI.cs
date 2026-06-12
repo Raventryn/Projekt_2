@@ -23,7 +23,7 @@ public class DialoguePanelUI : MonoBehaviour
     [SerializeField] private bool makePredictable;
 
     private DialogueAudioInfoSO currentAudioInfo;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     private string _dialogueLine;
 
@@ -32,7 +32,6 @@ public class DialoguePanelUI : MonoBehaviour
     void Awake()
     {
         currentAudioInfo = defaultAudioInfo;
-        audioSource = this.gameObject.AddComponent<AudioSource>();
     }
 
 

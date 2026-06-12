@@ -50,7 +50,7 @@ public class PauseMenuManager : MonoBehaviour
 
     void PauseOrContinueGame(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU || settingsMenuContainer.activeSelf) return;
 
         if (!_isGamePaused)
         {

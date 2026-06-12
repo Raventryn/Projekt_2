@@ -55,6 +55,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
         if(_cursorTransform != null)
         {
+            AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
             Vector2 position = _cursorTransform.anchoredPosition;
             InputState.Change(virtualMouse.position, position);
         }
@@ -63,7 +64,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
         GameEventsManager.instance.inputEvents.onShowCursor += ShowCursor;
 
-        AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
+        InputState.Change(virtualMouse.position, new Vector2(Screen.width/2, Screen.height/2));
     }
 
     private void OnDisable()
@@ -148,6 +149,7 @@ public class VirtualMouseCursor : MonoBehaviour
                 IsCursorVisible = false;
                 _cursorTransform.gameObject.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                InputState.Change(virtualMouse.position, new Vector2(Screen.width/2, Screen.height/2));
                 AnchorCursor(new Vector2(Screen.width/2, Screen.height/2));
                 break;
         }
