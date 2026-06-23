@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mat_FullscreenDither
+  m_Shader: {fileID: -6465566751694194690, guid: 111857f64a2946743a0263dd3cbff28c, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _USENOISE
+  - _USEPIXELATION
+  - _USETHRESHOLDMAP
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: _Brightness
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ColorPalette:
+        m_Texture: {fileID: 2800000, guid: e21f81cd3c2243a4382c4f79543d3bec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DitherPattern:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2b9e9aef8d7a41ed9bacc2f9e8ea7f3f_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: b17199d4f4e0c7042ab86029b71378a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9c28cfe0178141519c6f9c100f16e95a_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 33028f6705e110543a354e6c0e8bce03, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c4ae040afab34ee8851c5a1bd92f5e81_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: b17199d4f4e0c7042ab86029b71378a4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c91aaf57d30e403cbe6dc613a5337918_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 809ceb2c01aba9b4b89f1f9c4a340b13, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_f5193befb02042189baae3b3abc16045_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ThresholdMap:
+        m_Texture: {fileID: 2800000, guid: 98aaa42957950054cb1724fdaed3f2df, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Brightness: 2
+    - _ColorDepth: 32
+    - _DitherSpread: 0.1
+    - _PaletteColorCount: 0
+    - _PatternScale: 2.8
+    - _PatternSize: 1
+    - _Pixelation: 0.172
+    - _ThresholdMapDimension: 8
+    - _USECOLORPALETTE: 0
+    - _USEGREYSCALE: 0
+    - _USENOISE: 1
+    - _USEPIXELATION: 1
+    - _USETHRESHOLDMAP: 1
+    - _UseNoise: 1
+    - _UsePixelation: 1
+    - _UseThresholdTexture: 0
+    m_Colors: []
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
