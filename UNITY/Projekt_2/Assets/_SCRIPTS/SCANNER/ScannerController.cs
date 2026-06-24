@@ -200,7 +200,7 @@ public class ScannerController : MonoBehaviour
 
     void OffsetScanViewCamera()
     {
-        Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
+        /*Vector2 screenUV = new Vector2((VirtualMouseCursor.instance.CursorScreenPosition.x / Screen.width) -0.5f, (VirtualMouseCursor.instance.CursorScreenPosition.y / Screen.height) -0.5f);
 
         //Debug.Log(screenUV);
 
@@ -209,7 +209,10 @@ public class ScannerController : MonoBehaviour
 
         Vector3 newPosition = new Vector3(xPos, _cameraDefaultPosition.y, zPos);
 
-        _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);
+        _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);*/
+
+        _camera.transform.Translate(_camera.transform.right * VirtualMouseCursor.instance.Delta.x * Time.deltaTime * -0.001f * _offsetClampValue);
+        _camera.transform.Translate(_camera.transform.up * VirtualMouseCursor.instance.Delta.y * Time.deltaTime * 0.001f * _offsetClampValue);
     }
 
     void ScreenToWorldPoint()

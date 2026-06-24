@@ -9,6 +9,7 @@ public class VirtualMouseCursor : MonoBehaviour
     public static VirtualMouseCursor instance;
 
     public Vector3 CursorScreenPosition;
+    public Vector2 Delta;
 
     public bool IsCursorVisible;
 
@@ -100,6 +101,8 @@ public class VirtualMouseCursor : MonoBehaviour
         InputState.Change(virtualMouse.delta, deltaValue);
 
         CursorScreenPosition = virtualMouse.position.ReadValue();
+
+        Delta = virtualMouse.position.ReadValue() - currentPosition;
 
         /*Vector2 moveDirection = Mouse.current.delta.ReadValue();
 

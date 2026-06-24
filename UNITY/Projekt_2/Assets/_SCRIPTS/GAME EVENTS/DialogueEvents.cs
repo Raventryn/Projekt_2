@@ -105,4 +105,11 @@ public class DialogueEvents
     {
         onEarlyExitDialogue?.Invoke();
     }
+
+    public event Action<string> onAdvanceDialogueCamera;
+
+    public void AdvanceDialogueCamera(string cameraStage)
+    {
+        onAdvanceDialogueCamera?.Invoke(cameraStage);
+    }
 }

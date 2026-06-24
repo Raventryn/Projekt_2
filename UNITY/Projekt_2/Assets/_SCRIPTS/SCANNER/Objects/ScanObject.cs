@@ -14,6 +14,7 @@ public class ScanObject : MonoBehaviour
 
     public ScannableObjectKind ObjectKind;
     public ScannableObjectType ObjectType;
+    public GameObject ScanObjectGO;
     float _scanTimer = 3;
     bool _objectScanned;
     bool _scanningObject;
@@ -49,8 +50,8 @@ public class ScanObject : MonoBehaviour
 
     void Start()
     {
-        _meshFilter = GetComponent<MeshFilter>();
-        _renderer = GetComponent<Renderer>();
+        _meshFilter = ScanObjectGO.GetComponent<MeshFilter>();
+        _renderer = ScanObjectGO.GetComponent<Renderer>();
         _tmpText = _InfoCanvasContainer.GetComponentInChildren<TMP_Text>();
         _typewriter = _InfoCanvasContainer.GetComponentInChildren<TypewriterComponent>();
         _ButtonsCanvasContainer = ScannerManager.instance._interpretationButtons;

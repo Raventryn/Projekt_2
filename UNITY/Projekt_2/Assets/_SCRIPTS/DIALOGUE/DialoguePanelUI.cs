@@ -38,7 +38,7 @@ public class DialoguePanelUI : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.dialogueEvents.onDialogueStarted += DialogueStarted;
-        GameEventsManager.instance.dialogueEvents.onDialogueFinished += DialogueFinished;
+        //GameEventsManager.instance.dialogueEvents.onDialogueFinished += DialogueFinished;
         GameEventsManager.instance.dialogueEvents.onDisplayDialogue += DisplayDialogue;
 
         GameEventsManager.instance.dialogueEvents.onPassDialogueUIPanel += SetReferences;
@@ -50,7 +50,7 @@ public class DialoguePanelUI : MonoBehaviour
     private void OnDisable()
     {
         GameEventsManager.instance.dialogueEvents.onDialogueStarted -= DialogueStarted;
-        GameEventsManager.instance.dialogueEvents.onDialogueFinished -= DialogueFinished;
+        //GameEventsManager.instance.dialogueEvents.onDialogueFinished -= DialogueFinished;
         GameEventsManager.instance.dialogueEvents.onDisplayDialogue -= DisplayDialogue;
 
         GameEventsManager.instance.dialogueEvents.onPassDialogueUIPanel -= SetReferences;
@@ -72,11 +72,15 @@ public class DialoguePanelUI : MonoBehaviour
         }
 
         dialogueTypewriter.onCharacterVisible.AddListener(PlayTypewriterSound);
+        dialogueTypewriter.onTextShowed.AddListener(StopTypewriter);
     }
 
     private void ClearReferences()
     {
+        DialogueFinished();
+
         dialogueTypewriter.onCharacterVisible.RemoveListener(PlayTypewriterSound);
+        dialogueTypewriter.onTextShowed.RemoveListener(StopTypewriter);
 
         contentParent = null;
         dialogueTypewriter = null;
@@ -170,6 +174,8 @@ public class DialoguePanelUI : MonoBehaviour
 
         char character = charData.info.character;
 
+        if(character == '!' || character == '?' || character == '.' || character == '-') return;
+
         AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
         int frequencyLevel = currentAudioInfo.frequencyLevel;
         float minPitch = currentAudioInfo.minPitch;
@@ -217,7 +223,6 @@ public class DialoguePanelUI : MonoBehaviour
                 soundClip = dialogueTypingSoundClips[randomIndex];
                 audioSource.pitch = Random.Range(minPitch, maxPitch);
             }
-            Debug.Log(character);
             audioSource.PlayOneShot(soundClip);
         }
     }

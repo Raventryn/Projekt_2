@@ -27,7 +27,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ColorPalette:
-        m_Texture: {fileID: 2800000, guid: e21f81cd3c2243a4382c4f79543d3bec, type: 3}
+        m_Texture: {fileID: 2800000, guid: f32b58ab366f2d448993ed1b1e49b44b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DitherPattern:
@@ -72,8 +72,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 2
-    - _ColorDepth: 32
+    - _Brightness: 1.37
+    - _ColorDepth: 64
     - _DitherSpread: 0.1
     - _PaletteColorCount: 0
     - _PatternScale: 2.8

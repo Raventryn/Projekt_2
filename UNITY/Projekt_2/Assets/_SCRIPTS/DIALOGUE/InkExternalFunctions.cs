@@ -9,6 +9,7 @@ public class InkExternalFunctions
         story.BindExternalFunction("StartQuest", (string Id) => StartQuest(Id));
         story.BindExternalFunction("AdvanceQuest", (string Id) => AdvanceQuest(Id));
         story.BindExternalFunction("FinishQuest", (string Id) => FinishQuest(Id));
+        story.BindExternalFunction("AdvanceDialogueCamera", (string cameraStage) => AdvanceDialogueCamera(cameraStage));
         //story.BindExternalFunction("SendSpitEvent", () => SendSpitEvent());
     }
 
@@ -18,6 +19,7 @@ public class InkExternalFunctions
         story.UnbindExternalFunction("StartQuest");
         story.UnbindExternalFunction("AdvanceQuest");
         story.UnbindExternalFunction("FinishQuest");
+        story.UnbindExternalFunction("AdvanceDialogueCamera");
         //story.UnbindExternalFunction("SendSpitEvent");
     }
 
@@ -39,6 +41,11 @@ public class InkExternalFunctions
     private void FinishQuest(string id)
     {
         GameEventsManager.instance.questEvents.FinishQuest(id);
+    }
+
+    private void AdvanceDialogueCamera(string cameraStage)
+    {
+        GameEventsManager.instance.dialogueEvents.AdvanceDialogueCamera(cameraStage);
     }
 
 }

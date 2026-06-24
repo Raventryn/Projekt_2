@@ -2,6 +2,7 @@
 EXTERNAL StartQuest(Id)
 EXTERNAL AdvanceQuest(Id)
 EXTERNAL FinishQuest(Id)
+EXTERNAL AdvanceDialogueCamera(cameraStage)
 
 //quest id (quest id + ID for variable name)
 VAR DummyQuestId = "DummyQuest"
@@ -11,3 +12,4 @@ VAR DummyQuestState = "REQUIREMENTS_NOT_MET"
 
 INCLUDE DummyQuestTest.ink
 INCLUDE TestStory.ink
+INCLUDE RoberStory.ink

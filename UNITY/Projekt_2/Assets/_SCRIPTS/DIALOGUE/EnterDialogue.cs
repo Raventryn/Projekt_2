@@ -12,7 +12,7 @@ public class EnterDialogue : MonoBehaviour
     [Header("Dialogue Knot")]
     [SerializeField] private string dialogueKnotName;
 
-    [SerializeField] CinemachineCamera _dialogueCamera;
+    [SerializeField] List<CinemachineCamera> _dialogueCamera = new List<CinemachineCamera>();
 
     [SerializeField] GameObject _contentParent;
 
@@ -27,12 +27,14 @@ public class EnterDialogue : MonoBehaviour
     Vector3 _cameraDefaultPosition;
     float _offsetClampValue;
     bool IsInDialogue;
+    bool IsOffsetCamera;
+
+    int currentCameraIndex;
 
     void Awake()
     {
         ResetPanel();
         _contentParent.SetActive(false);
-        _cameraDefaultPosition = _dialogueCamera.transform.localPosition;
     }
 
     void OnEnable()
@@ -42,6 +44,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onDialogueFinished += ExitDialogue;
 
         GameEventsManager.instance.dialogueEvents.onDialogueFinished += SendFinishedEvent;
+        GameEventsManager.instance.dialogueEvents.onAdvanceDialogueCamera += AdvanceCurrentCamera;
     }
 
     void OnDisable()
@@ -51,13 +54,19 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= ExitDialogue;
 
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= SendFinishedEvent;
+        GameEventsManager.instance.dialogueEvents.onAdvanceDialogueCamera -= AdvanceCurrentCamera;
     }
 
     void Update()
     {
-        if (IsInDialogue && VirtualMouseCursor.instance.IsCursorVisible)
+        if (IsInDialogue && VirtualMouseCursor.instance.IsCursorVisible && IsOffsetCamera)
         {
             OffsetScanViewCamera();
+        }
+
+        if (IsInDialogue)
+        {
+            _contentParent.transform.position = SetCanvasWorldPosition();
         }
     }
 
@@ -85,12 +94,17 @@ public class EnterDialogue : MonoBehaviour
 
         GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons, _dialogueAudioInfo);
 
-        _dialogueCamera.Priority = 1;
+        _cameraDefaultPosition = _dialogueCamera[0].transform.localPosition;
 
-        _offsetClampValue = (this.gameObject.transform.position - _dialogueCamera.transform.position).magnitude;
+        _dialogueCamera[0].Priority = 1;
+
+        currentCameraIndex = 0;
+
+        _offsetClampValue = (this.gameObject.transform.position - _dialogueCamera[0].transform.position).magnitude;
         //Debug.Log(_offsetClampValue);
 
         IsInDialogue = true;
+        IsOffsetCamera = true;
 
         SendDialogueEvent();
     }
@@ -101,12 +115,34 @@ public class EnterDialogue : MonoBehaviour
 
         //Debug.Log(screenUV);
 
-        float xPos = _cameraDefaultPosition.z + (screenUV.x / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.x + (screenUV.x / 5), _cameraDefaultPosition.x - 0.1f, _cameraDefaultPosition.x + 0.1f);
-        float yPos = _cameraDefaultPosition.y + (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
+        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.right * VirtualMouseCursor.instance.Delta.x * Time.deltaTime * -0.001f * _offsetClampValue);
+        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.up * VirtualMouseCursor.instance.Delta.y * Time.deltaTime * 0.001f * _offsetClampValue);
 
-        Vector3 newPosition = new Vector3(_cameraDefaultPosition.x, yPos, xPos);
+        //float xPos = _cameraDefaultPosition.z + (screenUV.x / (5f * _offsetClampValue)); 
+        //float yPos = _cameraDefaultPosition.y + (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);
 
-        _dialogueCamera.transform.localPosition = Vector3.MoveTowards(_dialogueCamera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);
+        //Vector3 newPosition = new Vector3(_cameraDefaultPosition.x, yPos, xPos);
+
+        //_dialogueCamera[currentCameraIndex].transform.localPosition = Vector3.MoveTowards(_dialogueCamera[currentCameraIndex].transform.localPosition, newPosition, 0.1f + Time.deltaTime);
+    }
+
+    void AdvanceCurrentCamera(string cameraIndexString)
+    {
+        IsOffsetCamera = false;
+
+        int cameraIndex = int.Parse(cameraIndexString);
+        _dialogueCamera[cameraIndex].Priority = 2;
+        _dialogueCamera[currentCameraIndex].Priority = -1;
+        
+        _cameraDefaultPosition = _dialogueCamera[cameraIndex].transform.localPosition;
+
+        currentCameraIndex = cameraIndex;
+
+        _offsetClampValue = (this.gameObject.transform.position - _dialogueCamera[currentCameraIndex].transform.position).magnitude;
+
+        _dialogueCamera[cameraIndex].Priority = 1;
+
+        IsOffsetCamera = true;
     }
 
     void EarlyExit(InputEventContext context)
@@ -120,9 +156,9 @@ public class EnterDialogue : MonoBehaviour
     {
         IsInDialogue = false;
 
-        _dialogueCamera.Priority = -1;
+        _dialogueCamera[currentCameraIndex].Priority = -1;
 
-        _dialogueCamera.LookAt = null;
+        _dialogueCamera[currentCameraIndex].LookAt = null;
 
         GameEventsManager.instance.dialogueEvents.ClearDialogueUIPanel();
 
@@ -135,5 +171,14 @@ public class EnterDialogue : MonoBehaviour
     private void ResetPanel()
     {
         _dialogueText.text = "";
+    }
+
+    public Vector3 SetCanvasWorldPosition()
+    {
+        Vector2 viewportPoint = Camera.main.ViewportToScreenPoint(new Vector2(0.3f, 0.5f));
+
+        Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(viewportPoint.x, viewportPoint.y, 1f));
+
+        return newPoint;
     }
 }

@@ -80,7 +80,7 @@ public class KukasTalkBehaviour : MonoBehaviour
 
     void ShowOrHideCanvas(bool toggle)
     {
-        canvasAnimator.SetBool("isShowCanvas", toggle);
+        canvasAnimator.SetBool("showText", toggle);
     }
 
     IEnumerator VoiceLineTimings()
