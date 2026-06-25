@@ -211,8 +211,8 @@ public class ScannerController : MonoBehaviour
 
         _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, newPosition, 0.1f + Time.deltaTime);*/
 
-        _camera.transform.Translate(_camera.transform.right * VirtualMouseCursor.instance.Delta.x * Time.deltaTime * -0.001f * _offsetClampValue);
-        _camera.transform.Translate(_camera.transform.up * VirtualMouseCursor.instance.Delta.y * Time.deltaTime * 0.001f * _offsetClampValue);
+        _camera.transform.Translate(_camera.transform.right * VirtualMouseCursor.instance.ClampedDelta.x * Time.deltaTime * -0.001f * _offsetClampValue);
+        _camera.transform.Translate(_camera.transform.up * VirtualMouseCursor.instance.ClampedDelta.y * Time.deltaTime * 0.001f * _offsetClampValue);
     }
 
     void ScreenToWorldPoint()

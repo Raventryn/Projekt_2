@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerSettingsSO", menuName = "ScriptableObjects/PlayerSettingsSO", order = 4)]
 public class PlayerSettingsSO : ScriptableObject
 {
-    [Range(2f, 15f)]
-    public float LookSensitivity = 6f;
+    [Range(0.5f, 10f)]
+    public float LookSensitivity = 3.5f;
 
     [Range(-80f, 0f)]
     public float MasterVolume;

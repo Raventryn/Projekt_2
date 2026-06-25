@@ -115,8 +115,8 @@ public class EnterDialogue : MonoBehaviour
 
         //Debug.Log(screenUV);
 
-        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.right * VirtualMouseCursor.instance.Delta.x * Time.deltaTime * -0.001f * _offsetClampValue);
-        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.up * VirtualMouseCursor.instance.Delta.y * Time.deltaTime * 0.001f * _offsetClampValue);
+        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.right * VirtualMouseCursor.instance.ClampedDelta.x * Time.deltaTime * -0.001f * _offsetClampValue);
+        _dialogueCamera[currentCameraIndex].transform.Translate(_dialogueCamera[currentCameraIndex].transform.up * VirtualMouseCursor.instance.ClampedDelta.y * Time.deltaTime * 0.001f * _offsetClampValue);
 
         //float xPos = _cameraDefaultPosition.z + (screenUV.x / (5f * _offsetClampValue)); 
         //float yPos = _cameraDefaultPosition.y + (screenUV.y / (5f * _offsetClampValue));//Mathf.Clamp(_camera.transform.localPosition.z + (screenUV.y / 5), _cameraDefaultPosition.z - 0.1f, _cameraDefaultPosition.z + 0.1f);

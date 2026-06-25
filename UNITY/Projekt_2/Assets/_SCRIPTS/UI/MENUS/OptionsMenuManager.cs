@@ -160,7 +160,7 @@ public class OptionsMenuManager : MonoBehaviour
 
         audioMixer.SetFloat("volumeMaster", correctedValue);
 
-        masterVolumeText.text = "Master Volume: " + (value * 100).ToString("F0");
+        masterVolumeText.text = "Master: " + (value * 100).ToString("F0");
 
         _playerSettings.MasterVolume = correctedValue;
     }
@@ -171,7 +171,7 @@ public class OptionsMenuManager : MonoBehaviour
 
         audioMixer.SetFloat("volumeVoices", correctedValue);
 
-        voicesVolumeText.text = "Voices Volume: " + (value * 100).ToString("F0");
+        voicesVolumeText.text = "Voices: " + (value * 100).ToString("F0");
 
         _playerSettings.VoicesVolume = correctedValue;
     }
@@ -182,7 +182,7 @@ public class OptionsMenuManager : MonoBehaviour
 
         audioMixer.SetFloat("volumeEffects", correctedValue);
 
-        effectsVolumeText.text = "Effects Volume: " + (value * 100).ToString("F0");
+        effectsVolumeText.text = "Effects: " + (value * 100).ToString("F0");
 
         _playerSettings.EffectsVolume = correctedValue;
     }
@@ -193,17 +193,17 @@ public class OptionsMenuManager : MonoBehaviour
 
         audioMixer.SetFloat("volumeEnvironment", correctedValue);
 
-        environmentVolumeText.text = "Environment Volume: " + (value * 100).ToString("F0");
+        environmentVolumeText.text = "Environment: " + (value * 100).ToString("F0");
 
         _playerSettings.EnvironmentVolume = correctedValue;
     }
 
     void SetVolumeTexts()
     {
-        masterVolumeText.text = "Master Volume: 50";
-        voicesVolumeText.text = "Voices Volume: 100";
-        effectsVolumeText.text = "Effects Volume: 100";
-        environmentVolumeText.text = "Environment Volume: 100";
+        masterVolumeText.text = "Master: 50";
+        voicesVolumeText.text = "Voices: 100";
+        effectsVolumeText.text = "Effects: 100";
+        environmentVolumeText.text = "Environment: 100";
     }
 
     IEnumerator DelayButtonAction()

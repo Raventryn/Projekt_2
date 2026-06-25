@@ -9,6 +9,7 @@ public class VirtualMouseCursor : MonoBehaviour
     public static VirtualMouseCursor instance;
 
     public Vector3 CursorScreenPosition;
+    public Vector2 ClampedDelta;
     public Vector2 Delta;
 
     public bool IsCursorVisible;
@@ -84,13 +85,15 @@ public class VirtualMouseCursor : MonoBehaviour
 
     void UpdateMotion()
     {
-        if(virtualMouse == null || !IsCursorVisible) return;
+        if(virtualMouse == null) return;
 
         Vector2 deltaValue = Mouse.current.delta.ReadValue();//Gamepad.current.leftStick.ReadValue();
         deltaValue *= _playerSettings.LookSensitivity * _pointerSpeedMultiplier * Time.unscaledDeltaTime;
 
         Vector2 currentPosition = virtualMouse.position.ReadValue();
         Vector2 newPosition = currentPosition + deltaValue;
+
+        Delta = newPosition - currentPosition;
 
         newPosition.x = Mathf.Clamp(newPosition.x, 0f + _cursorTransform.rect.width, Screen.width - _cursorTransform.rect.width);
         newPosition.y = Mathf.Clamp(newPosition.y, 0f + _cursorTransform.rect.height, Screen.height - _cursorTransform.rect.height);
@@ -102,7 +105,7 @@ public class VirtualMouseCursor : MonoBehaviour
 
         CursorScreenPosition = virtualMouse.position.ReadValue();
 
-        Delta = virtualMouse.position.ReadValue() - currentPosition;
+        ClampedDelta = virtualMouse.position.ReadValue() - currentPosition;
 
         /*Vector2 moveDirection = Mouse.current.delta.ReadValue();
 
@@ -126,7 +129,8 @@ public class VirtualMouseCursor : MonoBehaviour
             _previousMouseState = leftButtonisPressed;
         } 
         
-        AnchorCursor(newPosition);
+        if(IsCursorVisible)
+            AnchorCursor(newPosition);
     }
 
     void AnchorCursor(Vector2 position)

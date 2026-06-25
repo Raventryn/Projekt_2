@@ -57,10 +57,12 @@ public class Player_Controller : MonoBehaviour
 
     private float _defaultHeight;
 
+    private float _distanceWalked;
+
     private bool _allowMove = true;
     private bool _allowLook = true;
     
-
+    Vector3 _cameraRestPosition;
     
 
     private void Awake()
@@ -109,6 +111,7 @@ public class Player_Controller : MonoBehaviour
         SetLookSensitivity(PlayerSettings.LookSensitivity);
         SetMoveSpeed(false, false);
         _defaultHeight = _characterController.height;
+        _cameraRestPosition = CameraFollowTarget.transform.localPosition;
         ShowCursor(false);
     }
 
@@ -136,7 +139,15 @@ public class Player_Controller : MonoBehaviour
         if(inputStrength != Vector2.zero)
         {
             moveDirection = transform.right * inputStrength.x + transform.forward * inputStrength.y;
-        }   
+
+            _distanceWalked += _moveSpeed * Time.deltaTime;
+
+            CameraBobOnWalk();
+        }
+        else
+        {
+            ReturnCameraToRestPosition();
+        } 
 
         _characterController.Move(moveDirection.normalized *(_moveSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
     }
@@ -145,18 +156,16 @@ public class Player_Controller : MonoBehaviour
     {
         if(!_allowLook) return;
 
-        Vector2 lookInput = LookAction.ReadValue<Vector2>();
-
-        //Debug.Log(lookInput);
+        Vector2 lookInput = VirtualMouseCursor.instance.Delta;//LookAction.ReadValue<Vector2>(); 
 
         CameraRotation(lookInput);
 
-        transform.Rotate(Vector3.up * lookInput.x * /*LookSensitivity */ Time.deltaTime);
+        transform.Rotate(Vector3.up * lookInput.x * PlayerSettings.LookSensitivity * Time.deltaTime);
     }
 
     private void CameraRotation(Vector2 lookInput)
     {
-        CameraPitch -= lookInput.y * /*LookSensitivity */ Time.deltaTime;
+        CameraPitch -= lookInput.y * PlayerSettings.LookSensitivity * Time.deltaTime;
         CameraPitch = Mathf.Clamp(CameraPitch, BottomClamp,TopClamp);
 
         CameraFollowTarget.transform.localRotation = Quaternion.Euler(CameraPitch, 0, 0);
@@ -341,5 +350,27 @@ public class Player_Controller : MonoBehaviour
 
         LookAction.ApplyParameterOverride("scaleVector2:x", PlayerSettings.LookSensitivity);
         LookAction.ApplyParameterOverride("scaleVector2:y", PlayerSettings.LookSensitivity);
+    }
+
+    private void CameraBobOnWalk()
+    {
+        //CameraFollowTarget.transform.Translate(CameraFollowTarget.transform.up * (Mathf.Sin(Time.timeSinceLevelLoad * _moveSpeed * 5f) * 1f) * Time.deltaTime);
+        float yOffset = 0;
+        
+        if(!isSprinting)
+            yOffset = Mathf.Sin(_distanceWalked * 8f) * 0.002f;
+        else
+            yOffset = Mathf.Sin(_distanceWalked * 4.5f) * 0.008f;
+
+        Vector3 targetPosition = new Vector3(CameraFollowTarget.transform.localPosition.x, CameraFollowTarget.transform.localPosition.y + yOffset, CameraFollowTarget.transform.localPosition.z);
+
+        CameraFollowTarget.transform.localPosition = Vector3.MoveTowards(CameraFollowTarget.transform.localPosition, targetPosition, _moveSpeed);
+    
+        Debug.Log(CameraFollowTarget.transform.localPosition.y + Mathf.Sin(_distanceWalked * 5f) * 0.02f);
+    }
+
+    private void ReturnCameraToRestPosition()
+    {
+        CameraFollowTarget.transform.localPosition = Vector3.MoveTowards(CameraFollowTarget.transform.localPosition, _cameraRestPosition, Time.deltaTime);
     }
 }
