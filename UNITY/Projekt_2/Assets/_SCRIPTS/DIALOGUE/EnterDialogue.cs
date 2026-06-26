@@ -28,6 +28,7 @@ public class EnterDialogue : MonoBehaviour
     float _offsetClampValue;
     bool IsInDialogue;
     bool IsOffsetCamera;
+    bool IsCurrentDialogueObject;
 
     int currentCameraIndex;
 
@@ -105,6 +106,7 @@ public class EnterDialogue : MonoBehaviour
 
         IsInDialogue = true;
         IsOffsetCamera = true;
+        IsCurrentDialogueObject = true;
 
         SendDialogueEvent();
     }
@@ -128,6 +130,8 @@ public class EnterDialogue : MonoBehaviour
 
     void AdvanceCurrentCamera(string cameraIndexString)
     {
+        if(!IsCurrentDialogueObject) return;
+
         IsOffsetCamera = false;
 
         int cameraIndex = int.Parse(cameraIndexString);
@@ -155,6 +159,8 @@ public class EnterDialogue : MonoBehaviour
     void ExitDialogue()
     {
         IsInDialogue = false;
+
+        IsCurrentDialogueObject = false;
 
         _dialogueCamera[currentCameraIndex].Priority = -1;
 

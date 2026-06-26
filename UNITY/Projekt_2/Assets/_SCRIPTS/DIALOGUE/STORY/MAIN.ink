@@ -13,3 +13,4 @@ VAR DummyQuestState = "REQUIREMENTS_NOT_MET"
 INCLUDE DummyQuestTest.ink
 INCLUDE TestStory.ink
 INCLUDE RoberStory.ink
+INCLUDE DOLStory.ink
