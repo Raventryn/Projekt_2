@@ -12,7 +12,7 @@ public class PlayAnimInEditMode : MonoBehaviour
         if (!animatorPlaying)
         {
             Debug.Log("Playing");
-            animator.Play("Old Man Idle", 0);
+            //animator.AnimationMode
             animatorPlaying = true;
         }
     }
