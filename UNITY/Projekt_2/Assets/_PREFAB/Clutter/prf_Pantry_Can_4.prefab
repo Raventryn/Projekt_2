@@ -502,7 +502,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 690c438ff74c9924d87c46aa5f96b825, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4f9c0ecfb59eb4a4299aeec4aba3d5d3, type: 2}
+      objectReference: {fileID: 2100000, guid: b326339370f373d47ad4bdfe66c4c2d5, type: 2}
     - target: {fileID: 919132149155446097, guid: 690c438ff74c9924d87c46aa5f96b825, type: 3}
       propertyPath: m_Name
       value: prf_Pantry_Can_4
@@ -590,6 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   ObjectKind: 0
   ObjectType: 0
+  ScanObjectGO: {fileID: 0}
   _InfoCanvasContainer: {fileID: 6370531704994342429}
   _InfoCanvasAnimator: {fileID: 1735735545734046681}
 --- !u!4 &6379650975300331042 stripped

@@ -502,7 +502,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 7774b043b1c4fc544a6fa834ec6045c1, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4f9c0ecfb59eb4a4299aeec4aba3d5d3, type: 2}
+      objectReference: {fileID: 2100000, guid: 987088b1694aeda498ab7fc71399786d, type: 2}
     - target: {fileID: 919132149155446097, guid: 7774b043b1c4fc544a6fa834ec6045c1, type: 3}
       propertyPath: m_Name
       value: prf_CleaningBottle_1
@@ -568,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   ObjectKind: 0
   ObjectType: 0
+  ScanObjectGO: {fileID: 0}
   _InfoCanvasContainer: {fileID: 7187056115051056371}
   _InfoCanvasAnimator: {fileID: 2580705250895678624}
 --- !u!95 &2580705250895678624

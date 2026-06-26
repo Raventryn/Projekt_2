@@ -48,10 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2e8641aa0b41f78459af2e77b392bcd3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8d1ec9f309d934847a27065d5f9ba59f, type: 2}
     - target: {fileID: 919132149155446097, guid: 2e8641aa0b41f78459af2e77b392bcd3, type: 3}
       propertyPath: m_Name
       value: prf_L_VinylPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 7997404560770498997, guid: 2e8641aa0b41f78459af2e77b392bcd3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8d1ec9f309d934847a27065d5f9ba59f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

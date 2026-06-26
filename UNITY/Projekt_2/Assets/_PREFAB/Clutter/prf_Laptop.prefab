@@ -502,7 +502,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 7ea2ebc61e7416b4cbe4bb3ef59e4dfd, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4f9c0ecfb59eb4a4299aeec4aba3d5d3, type: 2}
+      objectReference: {fileID: 2100000, guid: b326339370f373d47ad4bdfe66c4c2d5, type: 2}
     - target: {fileID: 919132149155446097, guid: 7ea2ebc61e7416b4cbe4bb3ef59e4dfd, type: 3}
       propertyPath: m_Name
       value: prf_Laptop
@@ -573,6 +573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   ObjectKind: 0
   ObjectType: 0
+  ScanObjectGO: {fileID: 0}
   _InfoCanvasContainer: {fileID: 3308757058954058391}
   _InfoCanvasAnimator: {fileID: 2152074932923057423}
 --- !u!95 &2152074932923057423

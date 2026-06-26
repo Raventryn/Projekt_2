@@ -502,7 +502,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 811b0b506c6297449941502e5a1be7e8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4f9c0ecfb59eb4a4299aeec4aba3d5d3, type: 2}
+      objectReference: {fileID: 2100000, guid: b326339370f373d47ad4bdfe66c4c2d5, type: 2}
     - target: {fileID: 919132149155446097, guid: 811b0b506c6297449941502e5a1be7e8, type: 3}
       propertyPath: m_Name
       value: prf_CD_Open
@@ -595,5 +595,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   ObjectKind: 0
   ObjectType: 0
+  ScanObjectGO: {fileID: 0}
   _InfoCanvasContainer: {fileID: 2198244605880961773}
   _InfoCanvasAnimator: {fileID: 4463772648551433051}

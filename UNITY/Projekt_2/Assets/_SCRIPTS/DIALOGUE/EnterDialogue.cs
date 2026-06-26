@@ -172,6 +172,8 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
+
+        GameEventsManager.instance.inputEvents.ShowCursor(false);
     }
 
     private void ResetPanel()

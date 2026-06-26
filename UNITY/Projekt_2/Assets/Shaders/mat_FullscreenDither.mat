@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _USENOISE
   - _USEPIXELATION
   - _USETHRESHOLDMAP
   m_InvalidKeywords: []
@@ -74,20 +73,21 @@ Material:
     m_Floats:
     - _Brightness: 1.37
     - _ColorDepth: 64
-    - _DitherSpread: 0.1
+    - _DitherSpread: 0.09
     - _PaletteColorCount: 0
     - _PatternScale: 2.8
     - _PatternSize: 1
-    - _Pixelation: 0.172
+    - _Pixelation: 0.201
     - _ThresholdMapDimension: 8
     - _USECOLORPALETTE: 0
     - _USEGREYSCALE: 0
-    - _USENOISE: 1
+    - _USENOISE: 0
     - _USEPIXELATION: 1
     - _USETHRESHOLDMAP: 1
     - _UseNoise: 1
     - _UsePixelation: 1
     - _UseThresholdTexture: 0
+    - _tiling: 1
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

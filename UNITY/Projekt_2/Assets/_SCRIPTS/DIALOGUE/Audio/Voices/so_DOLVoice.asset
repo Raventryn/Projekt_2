@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827688881d9471e4ea4a307f5e2009d6, type: 3}
   m_Name: so_DOLVoice
   m_EditorClassIdentifier: Assembly-CSharp::DialogueAudioInfoSO
-  id: RoberVoice
+  id: DOLVoice
   dialogueTypingSoundClips:
   - {fileID: 8300000, guid: a16ad2f8f5daa9d4ba08e0a6441170ee, type: 3}
   - {fileID: 8300000, guid: a4a28d06546660c4285d3cc0218a94c9, type: 3}
@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9b1b56326d2c49f449c995e8e90751a3, type: 3}
   - {fileID: 8300000, guid: 44ec6fe8745eacd40a9e74d35992bd9f, type: 3}
   frequencyLevel: 2
-  minPitch: 0.95
-  maxPitch: 1.15
+  minPitch: 1.15
+  maxPitch: 1.25
   stopAudioSource: 0

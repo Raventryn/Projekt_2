@@ -48,10 +48,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 50ad87e06082bb14ca6f02ae5b286d30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94ed1a641da5a074dab50ac60a433bdf, type: 2}
     - target: {fileID: 919132149155446097, guid: 50ad87e06082bb14ca6f02ae5b286d30, type: 3}
       propertyPath: m_Name
       value: prf_K_Fridge
       objectReference: {fileID: 0}
+    - target: {fileID: 4462500484514536879, guid: 50ad87e06082bb14ca6f02ae5b286d30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94ed1a641da5a074dab50ac60a433bdf, type: 2}
+    - target: {fileID: 6810041919551927187, guid: 50ad87e06082bb14ca6f02ae5b286d30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94ed1a641da5a074dab50ac60a433bdf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
