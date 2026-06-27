@@ -42,9 +42,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Blur_Offset: 0.00028
-    - _ChromaticAbberationStrength: 0.00181
-    - _ScanLinesOpacity: 0.5
+    - _Blur_Offset: 0.00024
+    - _ChromaticAbberationStrength: 0.00101
+    - _ScanLinesOpacity: 0.555
     - _Scan_Lines_Speed: 0.109
     - _SubpixelResolution: 2
     - _USECHROMATICABBERATION: 1
