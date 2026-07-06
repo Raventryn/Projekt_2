@@ -7,19 +7,18 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_N_Furniture_2
+  m_Name: mat_N_Apartment
   m_Shader: {fileID: -6465566751694194690, guid: 86bbca69533bf9648b2b3bc8f67263ff, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ALPHATEST_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 2000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -35,7 +34,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseTexture:
-        m_Texture: {fileID: 2800000, guid: ed72741d605aebf458664fd7f1b45fe9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3f1a496dedc025b44a95cf28833f5ef7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -71,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
-        m_Texture: {fileID: 2800000, guid: e2607e62a97d07a40af85f5b9b9d171a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7e1297a2fba6f7542a8d8b5f4f178f40, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -103,9 +102,9 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AllowGlitch: 0
     - _AllowVertexJitter: 0
-    - _AlphaClip: 1
-    - _AlphaClipThreshold: 0.6
-    - _AlphaToMask: 1
+    - _AlphaClip: 0
+    - _AlphaClipThreshold: 0
+    - _AlphaToMask: 0
     - _AmbientOcclusionStrength: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -154,7 +153,7 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &772381390140732161
+--- !u!114 &6554808065433197608
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
