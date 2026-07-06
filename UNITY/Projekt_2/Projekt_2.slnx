@@ -20,6 +20,7 @@
   <Project Path="Unity.Searcher.Editor.csproj" />
   <Project Path="Unity.ProBuilder.Editor.csproj" />
   <Project Path="Unity.VisualScripting.Core.csproj" />
+  <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.ConversionSystem.csproj" />
   <Project Path="Unity.VisualScripting.State.Editor.csproj" />
   <Project Path="Autodesk.Fbx.csproj" />
@@ -39,6 +40,7 @@
   <Project Path="Febucci.TextAnimatorForUnity.Runtime.csproj" />
   <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="InkEditor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Unity.AI.Navigation.Editor.csproj" />
   <Project Path="Unity.Recorder.csproj" />
   <Project Path="Unity.ProBuilder.KdTree.csproj" />
@@ -50,7 +52,6 @@
   <Project Path="Unity.Mathematics.Editor.csproj" />
   <Project Path="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
   <Project Path="Febucci.TextAnimatorForUnity.UITk.Runtime.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Unity.ProBuilder.AssetIdRemapUtility.csproj" />
   <Project Path="EZhex1991.EZSoftBone.Editor.csproj" />
   <Project Path="Unity.Settings.Editor.csproj" />
