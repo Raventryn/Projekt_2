@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d6d6fabc627b6f04b9ee2ed86611a4c6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2712209c521c44741a86ca7be143d035, type: 2}
+    - target: {fileID: -3983214644912168466, guid: d6d6fabc627b6f04b9ee2ed86611a4c6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2712209c521c44741a86ca7be143d035, type: 2}
+    - target: {fileID: -123035801217700872, guid: d6d6fabc627b6f04b9ee2ed86611a4c6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2712209c521c44741a86ca7be143d035, type: 2}
     - target: {fileID: 919132149155446097, guid: d6d6fabc627b6f04b9ee2ed86611a4c6, type: 3}
       propertyPath: m_Name
       value: prf_N_MilitaryWardrobe

@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: dc1cec58f661fa448b669b2a87d1d79b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3dc161ca645729c4989a54375c68e848, type: 2}
+    - target: {fileID: -5057411591526729531, guid: dc1cec58f661fa448b669b2a87d1d79b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3dc161ca645729c4989a54375c68e848, type: 2}
+    - target: {fileID: -4209576410975184903, guid: dc1cec58f661fa448b669b2a87d1d79b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3dc161ca645729c4989a54375c68e848, type: 2}
     - target: {fileID: 919132149155446097, guid: dc1cec58f661fa448b669b2a87d1d79b, type: 3}
       propertyPath: m_Name
       value: prf_C_Desk

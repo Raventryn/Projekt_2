@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: prf_B_BathroomSink
       objectReference: {fileID: 0}
+    - target: {fileID: 3083391121561986344, guid: bde8efcbf65f663459684a99eb27283f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94ed1a641da5a074dab50ac60a433bdf, type: 2}
+    - target: {fileID: 5727490110940124697, guid: bde8efcbf65f663459684a99eb27283f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 94ed1a641da5a074dab50ac60a433bdf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

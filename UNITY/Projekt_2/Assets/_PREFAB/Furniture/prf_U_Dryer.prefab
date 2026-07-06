@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9ede137f59061e14b8757cd27f1292d6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cf5948eacf2a7c4395c53b254bab842, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 9ede137f59061e14b8757cd27f1292d6, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3552600981486332236, guid: de8d2629585ebfe42a96b95a201be5ca, type: 3}
     - target: {fileID: 919132149155446097, guid: 9ede137f59061e14b8757cd27f1292d6, type: 3}
       propertyPath: m_Name
       value: prf_U_Dryer

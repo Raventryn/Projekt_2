@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: dc627ae173d420d4c9280f476289d15f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a3f5b2aa5d1bcf2498d6d61fcdf6d166, type: 2}
     - target: {fileID: 919132149155446097, guid: dc627ae173d420d4c9280f476289d15f, type: 3}
       propertyPath: m_Name
       value: prf_N_ArmChair

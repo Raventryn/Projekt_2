@@ -11,7 +11,9 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 111857f64a2946743a0263dd3cbff28c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _USENOISE
+  - _USEPIXELATION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +21,12 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: _Brightness
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _ColorPalette:
-        m_Texture: {fileID: 2800000, guid: 51751561f2e934f4dac3ace3f8425a03, type: 3}
+        m_Texture: {fileID: 2800000, guid: d57a1212ab9e53d4d8bae36b5ad2df65, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DitherPattern:
@@ -52,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ThresholdMap:
-        m_Texture: {fileID: 2800000, guid: 98aaa42957950054cb1724fdaed3f2df, type: 3}
+        m_Texture: {fileID: 2800000, guid: 33028f6705e110543a354e6c0e8bce03, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -69,23 +71,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 1.29
-    - _ColorDepth: 75
-    - _DitherSpread: 2
+    - _Brightness: 1
+    - _ColorDepth: 64
+    - _DitherSpread: 0.39
     - _PaletteColorCount: 0
     - _PatternScale: 2.8
     - _PatternSize: 1
-    - _Pixelation: 1
+    - _Pixelation: 1.6
     - _ThresholdMapDimension: 8
     - _USECOLORPALETTE: 0
     - _USEGREYSCALE: 0
-    - _USENOISE: 0
-    - _USEPIXELATION: 0
+    - _USENOISE: 1
+    - _USEPIXELATION: 1
     - _USETHRESHOLDMAP: 0
     - _UseNoise: 1
     - _UsePixelation: 1
     - _UseThresholdTexture: 0
-    - _tiling: 34.18
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
