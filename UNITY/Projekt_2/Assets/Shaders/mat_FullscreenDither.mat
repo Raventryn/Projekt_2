@@ -73,7 +73,7 @@ Material:
     m_Floats:
     - _Brightness: 1
     - _ColorDepth: 64
-    - _DitherSpread: 0.39
+    - _DitherSpread: 0.24
     - _PaletteColorCount: 0
     - _PatternScale: 2.8
     - _PatternSize: 1
