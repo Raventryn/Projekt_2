@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3231053191603110359}
   - component: {fileID: 4510679888952940087}
   - component: {fileID: 5243321866860502595}
+  - component: {fileID: 8887805614509299110}
   m_Layer: 0
   m_Name: prf_Box_3
   m_TagString: Untagged
@@ -90,3 +91,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8887805614509299110
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294256693519498245}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35527596, y: 0.26495618, z: 0.6760523}
+  m_Center: {x: 0.00024574995, y: 0.13247967, z: 0.22235534}
