@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7065d84e610a41243838e74da0a13c50, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
@@ -68,7 +68,7 @@ Material:
     - _Cull: 2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EmissionStrength: 0
+    - _EmissionStrength: 1
     - _GlitchScale: 85
     - _GlitchSpeed: 0.25
     - _GlitchStrength: 1

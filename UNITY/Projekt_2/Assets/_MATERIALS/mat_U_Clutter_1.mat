@@ -43,13 +43,19 @@ Material:
         m_Texture: {fileID: 2800000, guid: 99f6cb8c568adc14abab1bc7d0820c88, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissionTexture:
+        m_Texture: {fileID: 2800000, guid: 5b418aac0b5c07e48902d6c0bba58c65, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalTexture:
         m_Texture: {fileID: 2800000, guid: 04a63d034c38a674c95eee0a120b7aca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EmissionStrength: 1
     - _Smoothness: 0
-    m_Colors: []
+    m_Colors:
+    - _EmissionColor: {r: 2, g: 2, b: 2, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
