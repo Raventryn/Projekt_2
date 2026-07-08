@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7139730894181266768}
   - component: {fileID: 6833395562277774465}
   - component: {fileID: 6037737963394601324}
+  - component: {fileID: 7217543691456386613}
   m_Layer: 0
   m_Name: prf_Electricitybox
   m_TagString: Untagged
@@ -90,3 +91,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7217543691456386613
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7337517522889804334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6019444, y: 1.2993884, z: 0.27325776}
+  m_Center: {x: 0, y: -0.2366505, z: 0.13662885}
