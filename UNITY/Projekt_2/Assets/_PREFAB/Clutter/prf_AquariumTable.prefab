@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 7263412490720049775}
   - component: {fileID: 2230481993042707278}
   - component: {fileID: 5272126404909046884}
+  - component: {fileID: 8836456923495564583}
   m_Layer: 0
   m_Name: prf_AquariumTable
   m_TagString: Untagged
@@ -317,3 +318,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1653404, y: 1.4359689, z: 0.6249385}
   m_Center: {x: -0.00032234192, y: 0.71798444, z: 0.004967928}
+--- !u!65 &8836456923495564583
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176510303681530640}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.09, y: 0.46, z: 0.49}
+  m_Center: {x: -0.00032234192, y: 1.1, z: 0.004967928}

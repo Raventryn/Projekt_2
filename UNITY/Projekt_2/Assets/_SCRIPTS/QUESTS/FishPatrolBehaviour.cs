@@ -5,6 +5,8 @@ public class FishPatrolBehaviour : MonoBehaviour
     [SerializeField] BoxCollider _aquariumCollider;
     [SerializeField] GameObject _fish;
     [SerializeField] float _fishSpeed = 1;
+    [SerializeField] float _newTargetIntervall = 2;
+    [SerializeField] float _rotationSpeed = 20;
     public float PositionPadding = 0;
     Vector3 _currentTarget;
 
@@ -12,7 +14,7 @@ public class FishPatrolBehaviour : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("GenerateTargetPoint", 0, 2);
+        InvokeRepeating("GenerateTargetPoint", 0, _newTargetIntervall);
     }
 
     void Update()
@@ -39,6 +41,6 @@ public class FishPatrolBehaviour : MonoBehaviour
         _fish.transform.localPosition = newPosition;
 
         if((_currentTarget - _fish.transform.localPosition).magnitude >= 0.0005f)
-            _fish.transform.rotation = Quaternion.Slerp(_fish.transform.rotation, Quaternion.LookRotation(_currentTarget - _fish.transform.localPosition, Vector3.up), 20 * Time.deltaTime);
+            _fish.transform.rotation = Quaternion.Slerp(_fish.transform.rotation, Quaternion.LookRotation(_currentTarget - _fish.transform.localPosition, Vector3.up), _rotationSpeed * Time.deltaTime);
     }
 }
