@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Heavy Fog 2
   m_EditorClassIdentifier: 
   raymarchQuality: 7
+  raymarchNearStepping: 8
   raymarchMinStep: 0.25
   jittering: 1
   dithering: 1
@@ -49,7 +50,7 @@ MonoBehaviour:
   terrainFogHeight: 25
   terrainFogMinAltitude: 0
   terrainFogMaxAltitude: 150
-  albedo: {r: 0.9098039, g: 0.9098039, b: 0.9098039, a: 1}
+  albedo: {r: 1, g: 1, b: 1, a: 1}
   enableDepthGradient: 0
   depthGradient:
     serializedVersion: 2
@@ -78,6 +79,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   depthGradientMaxDistance: 500
@@ -109,6 +111,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   brightness: 1
@@ -128,12 +131,14 @@ MonoBehaviour:
   lightDiffusionModel: 0
   lightDiffusionPower: 26
   lightDiffusionIntensity: 0.25
-  receiveShadows: 1
+  lightDiffusionNearDepthAtten: 0
+  receiveShadows: 0
   shadowIntensity: 0.4
   shadowCancellation: 0
   shadowMaxDistance: 250
   cookie: 0
   distantFog: 1
+  distantFogShowInEditMode: 1
   distantFogStartDistance: 500
   distantFogDistanceDensity: 0.3
   distantFogMaxHeight: 250
@@ -143,3 +148,11 @@ MonoBehaviour:
   distantFogRenderQueue: 2999
   distantFogBaseAltitude: 0
   distantFogSymmetrical: 0
+  distantFogTransparencySupport: 0
+  distantFogNoise: 0
+  distantFogNoiseTexture: {fileID: 11700000, guid: 950add8d241c6479bbab1f10e1035d60, type: 2}
+  distantFogDistanceNoiseScale: 0.1
+  distantFogDistanceNoiseStrength: 0.5
+  distantFogDistanceNoiseMaxDistance: 250
+  distantFogNoiseWindDirection: {x: 0.002, y: 0.002, z: 0}
+  customMesh: {fileID: 0}
