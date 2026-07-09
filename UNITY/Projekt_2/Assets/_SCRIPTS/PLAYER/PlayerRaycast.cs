@@ -86,6 +86,9 @@ public class PlayerRaycast : MonoBehaviour
 
                 switch (hit.collider.tag)
                 {
+                    case "Untagged":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.PICKUP);
+                        break;
                     case "PickUp_Object":
                         GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.PICKUP);
                         break;
