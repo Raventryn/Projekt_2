@@ -131,7 +131,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EmissionStrength: 0.5
+    - _EmissionStrength: 1
     - _EnvironmentReflections: 1
     - _GlitchScale: 85
     - _GlitchSpeed: 0.25
