@@ -78,7 +78,6 @@ public class DialoguePanelUI : MonoBehaviour
     private void ClearReferences()
     {
         DialogueFinished();
-
         dialogueTypewriter.onCharacterVisible.RemoveListener(PlayTypewriterSound);
         dialogueTypewriter.onTextShowed.RemoveListener(StopTypewriter);
 

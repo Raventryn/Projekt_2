@@ -46,10 +46,12 @@ public class CompareWaves : MonoBehaviour
     void OnEnable()
     {
         GameEventsManager.instance.questEvents.onStartScanMinigame += ShowMinigameUI;
+        GameEventsManager.instance.inputEvents.onPressedEscape += CloseMinigameUI;
     }
     void OnDisable()
     {
         GameEventsManager.instance.questEvents.onStartScanMinigame -= ShowMinigameUI;
+        GameEventsManager.instance.inputEvents.onPressedEscape -= CloseMinigameUI;
     }
 
 
@@ -83,6 +85,13 @@ public class CompareWaves : MonoBehaviour
     {
         objectType = type;
         StartCoroutine(ToggleContentParent(toggle));
+    }
+
+    void CloseMinigameUI(InputEventContext context)
+    {
+        if(context != InputEventContext.SCANNER_MINIGAME) return;
+
+        StartCoroutine(ToggleContentParent(false));
     }
 
     public void StartMinigame()

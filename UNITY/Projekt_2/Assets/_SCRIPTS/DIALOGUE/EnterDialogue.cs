@@ -44,7 +44,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedEscape += EarlyExit;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished += ExitDialogue;
 
-        GameEventsManager.instance.dialogueEvents.onDialogueFinished += SendFinishedEvent;
+        //GameEventsManager.instance.dialogueEvents.onDialogueFinished += SendFinishedEvent;
         GameEventsManager.instance.dialogueEvents.onAdvanceDialogueCamera += AdvanceCurrentCamera;
     }
 
@@ -54,7 +54,7 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.inputEvents.onPressedEscape -= EarlyExit;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= ExitDialogue;
 
-        GameEventsManager.instance.dialogueEvents.onDialogueFinished -= SendFinishedEvent;
+        //GameEventsManager.instance.dialogueEvents.onDialogueFinished -= SendFinishedEvent;
         GameEventsManager.instance.dialogueEvents.onAdvanceDialogueCamera -= AdvanceCurrentCamera;
     }
 
@@ -158,6 +158,8 @@ public class EnterDialogue : MonoBehaviour
 
     void ExitDialogue()
     {
+        if(!IsInDialogue) return;
+
         IsInDialogue = false;
 
         IsCurrentDialogueObject = false;

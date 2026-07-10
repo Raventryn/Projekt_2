@@ -366,7 +366,7 @@ public class Player_Controller : MonoBehaviour
 
         CameraFollowTarget.transform.localPosition = Vector3.MoveTowards(CameraFollowTarget.transform.localPosition, targetPosition, _moveSpeed);
     
-        Debug.Log(CameraFollowTarget.transform.localPosition.y + Mathf.Sin(_distanceWalked * 5f) * 0.02f);
+        //Debug.Log(CameraFollowTarget.transform.localPosition.y + Mathf.Sin(_distanceWalked * 5f) * 0.02f);
     }
 
     private void ReturnCameraToRestPosition()

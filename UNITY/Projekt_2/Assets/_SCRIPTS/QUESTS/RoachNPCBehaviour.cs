@@ -25,7 +25,7 @@ public class RoachNPCBehaviour : MonoBehaviour
 
         _agent.updateRotation = false;
 
-        InvokeRepeating("SetDestination", 0, 3);
+        InvokeRepeating("SetDestination", 0, 5);
     }
 
     void Update()

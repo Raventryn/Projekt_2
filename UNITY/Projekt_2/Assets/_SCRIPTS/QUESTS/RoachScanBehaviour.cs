@@ -5,10 +5,12 @@ public class RoachScanBehaviour : MonoBehaviour
     [SerializeField] GameObject _roachObject;
     [SerializeField] Material _rawMaterial;
     [SerializeField] Material _cookedMaterial;
+    [SerializeField] ScanObject _scanObject;
 
     Material _roachMaterial;
     Animator _animator;
     ParticleSystem _particleSystem;
+    BoxCollider _collider;
 
     RoachNPCBehaviour _npcBehaviour;
 
@@ -63,6 +65,7 @@ public class RoachScanBehaviour : MonoBehaviour
         _animator = GetComponent<Animator>();
         _particleSystem = GetComponentInChildren<ParticleSystem>();
         _npcBehaviour = GetComponent<RoachNPCBehaviour>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     void StartScanning(GameObject gameObject, ScannerMode mode)
@@ -86,6 +89,7 @@ public class RoachScanBehaviour : MonoBehaviour
 
     void StopCooking()
     {
+        IsScannable = false;
         _animator.SetTrigger("IsCooked");
         _npcBehaviour.StopBehaviour();
         GameEventsManager.instance.questEvents.GrilledRoach();
@@ -96,5 +100,14 @@ public class RoachScanBehaviour : MonoBehaviour
     void AllowRoachScan(bool toggle)
     {
         IsScannable = toggle;
+        ScanObject scanObject = GetComponentInChildren<ScanObject>();
+        if (scanObject._GlitchParticles.isEmitting)
+        {
+            scanObject.HideScanGlitch(scanObject.ObjectType);
+            scanObject.ChangeMaterial(scanObject.DefaultMaterial);
+        }
+            
+        scanObject.enabled = !toggle;
+        _collider.enabled = toggle;
     }
 }

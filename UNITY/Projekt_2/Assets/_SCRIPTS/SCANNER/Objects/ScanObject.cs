@@ -11,16 +11,16 @@ public class ScanObject : MonoBehaviour
     InterpretObject _interpretObject;
     TriggerMinigame _triggerMinigame;
 
-
+    public string Name;
     public ScannableObjectKind ObjectKind;
     public ScannableObjectType ObjectType;
     public GameObject ScanObjectGO;
-    float _scanTimer = 3;
+    float _scanTimer = 1;
     bool _objectScanned;
     bool _scanningObject;
     [SerializeField] GameObject _InfoCanvasContainer;
     [SerializeField] Animator _InfoCanvasAnimator;
-    [SerializeField] ParticleSystem _GlitchParticles;
+    public ParticleSystem _GlitchParticles;
     [SerializeField] ScanObject[] _InterpretationOptions = new ScanObject[3];
     GameObject _ButtonsCanvasContainer;
     Image _fillBarImage;
@@ -28,7 +28,7 @@ public class ScanObject : MonoBehaviour
     TypewriterComponent _typewriter;
     MeshFilter _meshFilter;
     Renderer _renderer;
-    Material _defaultMaterial;
+    public Material DefaultMaterial;
     float _defaultScaleValue;
     float _pulseScaleValue;
     bool _isPulseObject;
@@ -63,13 +63,14 @@ public class ScanObject : MonoBehaviour
         _descriptionText = _tmpText.text;
         _tmpText.text = "";
         _fillBarImage.enabled = false;
-        _defaultMaterial = _renderer.material;
+        DefaultMaterial = _renderer.material;
         _defaultScaleValue = gameObject.transform.localScale.x;
         _pulseScaleValue = _defaultScaleValue * 1.1f;
         if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
             _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
         _InfoCanvasContainer.SetActive(false);
 
+        if(!_objectScanned)
         ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
 
         InstantiateClasses();
@@ -164,13 +165,13 @@ public class ScanObject : MonoBehaviour
 
         if (!_objectScanned)
         {
-            _scanTimer = 3;
-            _fillBarImage.fillAmount = 1 - _scanTimer / 3f;
+            _scanTimer = 1;
+            _fillBarImage.fillAmount = 1 - _scanTimer / 1f;
         }
 
         if (_objectScanned)
         {
-            ChangeMaterial(_defaultMaterial);
+            ChangeMaterial(DefaultMaterial);
         }
         else
         {
@@ -212,7 +213,7 @@ public class ScanObject : MonoBehaviour
         if(_scanTimer > 0)
         {
             _scanTimer -= 1 * Time.deltaTime;
-            _fillBarImage.fillAmount = 1 - _scanTimer / 3f;
+            _fillBarImage.fillAmount = 1 - _scanTimer / 1f;
         }
         else if(_scanTimer <= 0)
         {
@@ -223,7 +224,7 @@ public class ScanObject : MonoBehaviour
         }
     }
 
-    void ChangeMaterial(Material material)
+    public void ChangeMaterial(Material material)
     {
         _renderer.material = material;
     }
@@ -254,9 +255,10 @@ public class ScanObject : MonoBehaviour
         
     }
 
-    void HideScanGlitch(ScannableObjectType type)
+    public void HideScanGlitch(ScannableObjectType type)
     {
         if(type != ObjectType) return;
+        if(_GlitchParticles == null) return;
         _GlitchParticles.Stop();
     }
 }

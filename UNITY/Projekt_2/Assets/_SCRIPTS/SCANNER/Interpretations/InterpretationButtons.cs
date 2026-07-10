@@ -67,13 +67,13 @@ public class InterpretationButtons : MonoBehaviour
         _type = type;
 
         _choiceZERO = objects[0];
-        _buttonZEROText.text = objects[0].gameObject.name;
+        _buttonZEROText.text = objects[0].Name;
 
         _choiceONE = objects[1];
-        _buttonONEText.text = objects[1].gameObject.name;
+        _buttonONEText.text = objects[1].Name;
 
         _choiceTWO = objects[2];
-        _buttonTWOText.text = objects[2].gameObject.name;
+        _buttonTWOText.text = objects[2].Name;
 
         /*switch (type)
         {

@@ -65,6 +65,7 @@ public enum ScannableObjectType
     SMALLMONITOR,
     SMALLRADIO,
     OPENBOOK,
+    ROACH
 
 
 

@@ -520,11 +520,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
+  Name: Yellow Tang
   ObjectKind: 1
   ObjectType: 23
   ScanObjectGO: {fileID: 2806105287792392922}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
+  _GlitchParticles: {fileID: 0}
+  _InterpretationOptions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!95 &4430531856486183046
 Animator:
   serializedVersion: 7
