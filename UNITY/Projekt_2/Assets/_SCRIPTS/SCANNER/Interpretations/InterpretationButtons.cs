@@ -62,11 +62,20 @@ public class InterpretationButtons : MonoBehaviour
         _buttonTWOText = _button2.GetComponentInChildren<TMP_Text>();
     }
 
-    void ShowButtonCanvas(bool toggle, ScannableObjectType type)
+    void ShowButtonCanvas(bool toggle, ScannableObjectType type, ScanObject[] objects)
     {
         _type = type;
 
-        switch (type)
+        _choiceZERO = objects[0];
+        _buttonZEROText.text = objects[0].gameObject.name;
+
+        _choiceONE = objects[1];
+        _buttonONEText.text = objects[1].gameObject.name;
+
+        _choiceTWO = objects[2];
+        _buttonTWOText.text = objects[2].gameObject.name;
+
+        /*switch (type)
         {
             case ScannableObjectType.SPHERE:
                 _choiceZERO = _sphereOptionZERO;
@@ -111,7 +120,7 @@ public class InterpretationButtons : MonoBehaviour
                 _buttonTWOText.text = _cylinderOptionTWO.gameObject.name;
 
                 break;
-        }
+        }*/
 
         StartCoroutine(ButtonCanvasAnimation(toggle));
     }

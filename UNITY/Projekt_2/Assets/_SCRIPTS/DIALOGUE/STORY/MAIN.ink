@@ -6,9 +6,11 @@ EXTERNAL AdvanceDialogueCamera(cameraStage)
 
 //quest id (quest id + ID for variable name)
 VAR DummyQuestId = "DummyQuest"
+VAR RoachQuestId = "RoachQuest"
 
 //quest states (quest Id + state for variable name)
 VAR DummyQuestState = "REQUIREMENTS_NOT_MET"
+VAR RoachQuestState = "REQUIREMENTS_NOT_MET"
 
 INCLUDE DummyQuestTest.ink
 INCLUDE TestStory.ink

@@ -41,11 +41,11 @@ public class QuestEvents
         onChangeSphereColour?.Invoke(colour);
     }
 
-    public event Action<bool, ScannableObjectType> onShowButtonCanvas;
+    public event Action<bool, ScannableObjectType, ScanObject[]> onShowButtonCanvas;
 
-    public void ShowButtonCanvas(bool toggle, ScannableObjectType type)
+    public void ShowButtonCanvas(bool toggle, ScannableObjectType type, ScanObject[] objects)
     {
-        onShowButtonCanvas?.Invoke(toggle, type);
+        onShowButtonCanvas?.Invoke(toggle, type, objects);
     }
 
     public event Action<ScannableObjectType, GameObject> onReplaceInterpretableObjects;
@@ -69,11 +69,18 @@ public class QuestEvents
         onInterpretedObject?.Invoke();
     }
 
-    public event Action<bool> onStartScanMinigame;
+    public event Action<bool,ScannableObjectType> onStartScanMinigame;
 
-    public void StartScanMinigame(bool toggle)
+    public void StartScanMinigame(bool toggle, ScannableObjectType type)
     {
-        onStartScanMinigame?.Invoke(toggle);
+        onStartScanMinigame?.Invoke(toggle, type);
+    }
+
+    public event Action<ScannableObjectType> onHideScanGlitch;
+
+    public void HideScanGlitch(ScannableObjectType type)
+    {
+        onHideScanGlitch?.Invoke(type);
     }
 
     public event Action<bool> onStartFishMinigame;
@@ -81,5 +88,19 @@ public class QuestEvents
     public void StartFishMinigame(bool toggle)
     {
         onStartFishMinigame?.Invoke(toggle);
+    }
+
+    public event Action onGrilledRoach;
+
+    public void GrilledRoach()
+    {
+        onGrilledRoach?.Invoke();
+    }
+
+    public event Action<bool> onAllowRoachScan;
+
+    public void AllowRoachScan(bool toggle)
+    {
+        onAllowRoachScan?.Invoke(toggle);
     }
 }

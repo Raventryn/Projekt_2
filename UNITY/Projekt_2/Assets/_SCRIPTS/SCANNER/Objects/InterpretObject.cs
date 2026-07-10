@@ -3,6 +3,7 @@ using UnityEngine;
 public class InterpretObject : MonoBehaviour
 {
     public ScannableObjectType ObjectType;
+    public ScanObject[] InterpretationOptions = new ScanObject[3];
 
     void OnEnable()
     {
@@ -17,7 +18,7 @@ public class InterpretObject : MonoBehaviour
     public void ShowButtonCanvas(bool toggle)
     {
         GameEventsManager.instance.inputEvents.ReleaseInteract();
-        GameEventsManager.instance.questEvents.ShowButtonCanvas(toggle, ObjectType);
+        GameEventsManager.instance.questEvents.ShowButtonCanvas(toggle, ObjectType, InterpretationOptions);
     }
 
     void ReplaceGameObject(ScannableObjectType type, GameObject gameObject)
@@ -36,6 +37,7 @@ public class InterpretObject : MonoBehaviour
             ScannerManager.instance.ScannedObjects[newScanObject.ObjectType] = true;
 
         GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(newScanObject.ObjectType);
+        GameEventsManager.instance.questEvents.HideScanGlitch(newScanObject.ObjectType);
 
         Destroy(this.gameObject);
         //this.gameObject.SetActive(false);
