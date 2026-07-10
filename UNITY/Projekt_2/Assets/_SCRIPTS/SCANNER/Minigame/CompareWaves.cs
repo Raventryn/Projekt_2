@@ -30,7 +30,7 @@ public class CompareWaves : MonoBehaviour
 
     [SerializeField] Color[] lineColors;
     LineColors previousColor;
-    
+    ScannableObjectType objectType;
     Vector3 _playerLinePosition;
 
 
@@ -79,8 +79,9 @@ public class CompareWaves : MonoBehaviour
         } 
     }
 
-    void ShowMinigameUI(bool toggle)
+    void ShowMinigameUI(bool toggle, ScannableObjectType type)
     {
+        objectType = type;
         StartCoroutine(ToggleContentParent(toggle));
     }
 
@@ -257,8 +258,10 @@ public class CompareWaves : MonoBehaviour
             
             Debug.Log("Succeeded!");
 
-            ShowMinigameUI(false);
+            ShowMinigameUI(false, objectType);
             ExperienceManager.instance.AddMoney(Random.Range(12, 25));
+
+            GameEventsManager.instance.questEvents.HideScanGlitch(objectType);
             //Send Event that minigame is finished
             //If object is to be picked up, change tag and layer of object
         }

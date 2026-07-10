@@ -738,6 +738,18 @@ PrefabInstance:
       propertyPath: _ButtonsCanvasContainer
       value: 
       objectReference: {fileID: 356400272}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3816102370563446635, guid: ea6cb700aa70e4a47a503d6d2319eb11, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5811944044539252320, guid: 8fd333eff40beae4783aa79a3e4ab376, type: 3}
     - target: {fileID: 6091705080371200418, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.7
@@ -2234,6 +2246,18 @@ PrefabInstance:
       propertyPath: _ButtonsCanvasContainer
       value: 
       objectReference: {fileID: 356400272}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3816102370563446635, guid: ea6cb700aa70e4a47a503d6d2319eb11, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5811944044539252320, guid: 8fd333eff40beae4783aa79a3e4ab376, type: 3}
     - target: {fileID: 4208206642156129532, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -9593,8 +9617,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VirtualMouseCursor
   CursorScreenPosition: {x: 0, y: 0, z: 0}
+  ClampedDelta: {x: 0, y: 0}
+  Delta: {x: 0, y: 0}
   IsCursorVisible: 0
-  _playerController: {fileID: 247970641}
+  _playerSettings: {fileID: 0}
   _playerInput: {fileID: 247970638}
   _cursorTransform: {fileID: 623877936}
   _canvasTransform: {fileID: 1186262271}
@@ -18167,6 +18193,18 @@ PrefabInstance:
       propertyPath: _ButtonsCanvasContainer
       value: 
       objectReference: {fileID: 356400272}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 3816102370563446635, guid: ea6cb700aa70e4a47a503d6d2319eb11, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+    - target: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5811944044539252320, guid: 8fd333eff40beae4783aa79a3e4ab376, type: 3}
     - target: {fileID: 6091705080371200418, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
       propertyPath: m_LocalPosition.z
       value: -2
@@ -20967,6 +21005,7 @@ MonoBehaviour:
   - {fileID: 0}
   defaultAudioInfo: {fileID: 11400000, guid: 285037e7b44a74446a2615e83226c3c1, type: 2}
   makePredictable: 1
+  audioSource: {fileID: 0}
 --- !u!43 &1256986957
 Mesh:
   m_ObjectHideFlags: 0
@@ -30523,8 +30562,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   ObjectKind: 0
   ObjectType: 0
+  ScanObjectGO: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1687335413}
   _InfoCanvasAnimator: {fileID: 1748747664}
+  _InterpretationOptions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!95 &1748747664
 Animator:
   serializedVersion: 7
@@ -31020,7 +31064,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnterDialogue
   dialogueKnotName: DummyQuestStart
-  _dialogueCamera: {fileID: 1167932499}
+  _dialogueCamera:
+  - {fileID: 0}
   _contentParent: {fileID: 930063901}
   _dialogueText: {fileID: 1482916758}
   dialogueAnimator: {fileID: 9073152700412684602}
@@ -31881,6 +31926,18 @@ PrefabInstance:
       propertyPath: _ButtonsCanvasContainer
       value: 
       objectReference: {fileID: 356400272}
+    - target: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5811944044539252320, guid: 8fd333eff40beae4783aa79a3e4ab376, type: 3}
+    - target: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3816102370563446635, guid: ea6cb700aa70e4a47a503d6d2319eb11, type: 3}
+    - target: {fileID: 1006693534759361480, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
+      propertyPath: '_InterpretationOptions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 640106565541781579, guid: d79dacf8eec64ce4988e226c8c06623f, type: 3}
     - target: {fileID: 1410918654403146920, guid: e1cb6150ba677cd4f9aecb9e6cf08983, type: 3}
       propertyPath: m_Name
       value: Cylinder (1)
@@ -34563,6 +34620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c280d7fef2eb9b54e8de7059adaa95de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenFurniture
+  requiresItemToOpen: 0
+  itemData: {fileID: 0}
   m_Drawers:
   - {fileID: 1293442322049091595}
   - {fileID: 4986251487099241773}
@@ -35180,6 +35239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c280d7fef2eb9b54e8de7059adaa95de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenFurniture
+  requiresItemToOpen: 0
+  itemData: {fileID: 0}
   m_Drawers:
   - {fileID: 2193326225777728975}
   m_Type: 00000000

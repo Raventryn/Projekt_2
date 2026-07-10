@@ -7,7 +7,7 @@ public class RoachNPCBehaviour : MonoBehaviour
 {
     NavMeshAgent _agent;
     RoachScanBehaviour _scanBehaviour;
-    NavMeshSurface _navMesh;
+    [SerializeField] NavMeshSurface _navMesh;
     BoxCollider _walkableArea;
 
     bool _IsWalking;
@@ -18,10 +18,12 @@ public class RoachNPCBehaviour : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _scanBehaviour = GetComponent<RoachScanBehaviour>();
 
-        _navMesh = FindAnyObjectByType<NavMeshSurface>();
+        //_navMesh = FindAnyObjectByType<NavMeshSurface>();
         _walkableArea = _navMesh.GetComponent<BoxCollider>();
 
         _defaultSpeed = _agent.speed;
+
+        _agent.updateRotation = false;
 
         InvokeRepeating("SetDestination", 0, 3);
     }
@@ -71,10 +73,13 @@ public class RoachNPCBehaviour : MonoBehaviour
         _agent.SetPath(path);
 
         _IsWalking = true;
+
+        gameObject.transform.rotation = Quaternion.LookRotation(destination - transform.position, transform.up);
     }
 
     public void StopBehaviour()
     {
+        _agent.isStopped = true;
         Destroy(this);
     }
 

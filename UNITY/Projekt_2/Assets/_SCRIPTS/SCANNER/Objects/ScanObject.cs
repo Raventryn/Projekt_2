@@ -20,6 +20,8 @@ public class ScanObject : MonoBehaviour
     bool _scanningObject;
     [SerializeField] GameObject _InfoCanvasContainer;
     [SerializeField] Animator _InfoCanvasAnimator;
+    [SerializeField] ParticleSystem _GlitchParticles;
+    [SerializeField] ScanObject[] _InterpretationOptions = new ScanObject[3];
     GameObject _ButtonsCanvasContainer;
     Image _fillBarImage;
     TMP_Text _tmpText;
@@ -39,6 +41,7 @@ public class ScanObject : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn += ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff += ObjectScanOff;
         GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState += UpdateScannedState;
+        GameEventsManager.instance.questEvents.onHideScanGlitch += HideScanGlitch;
     }
 
     void OnDisable()
@@ -46,6 +49,7 @@ public class ScanObject : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn -= ObjectScanOn;
         GameEventsManager.instance.interactionEvents.onScanObjectOff -= ObjectScanOff;
         GameEventsManager.instance.interactionEvents.onUpdateObjectScannedState -= UpdateScannedState;
+        GameEventsManager.instance.questEvents.onHideScanGlitch -= HideScanGlitch;
     }
 
     void Start()
@@ -95,6 +99,7 @@ public class ScanObject : MonoBehaviour
             case ScannableObjectKind.SPECIAL:
                 _interpretObject = gameObject.AddComponent<InterpretObject>();
                 _interpretObject.ObjectType = ObjectType;
+                _interpretObject.InterpretationOptions = _InterpretationOptions;
                 break;
             case ScannableObjectKind.QUEST:
                 _triggerMinigame = gameObject.AddComponent<TriggerMinigame>();
@@ -115,6 +120,7 @@ public class ScanObject : MonoBehaviour
         if(type != ObjectType) return;
 
         _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
+
         Debug.Log(_objectScanned + " / " + ScannerManager.instance.ScannedObjects[ObjectType]);
     }
 
@@ -191,7 +197,7 @@ public class ScanObject : MonoBehaviour
                 //Add Money after interpreting
                 break;
             case ScannableObjectKind.QUEST:
-                _triggerMinigame.OpenMinigame(true);
+                _triggerMinigame.OpenMinigame(true, ObjectType);
                 GameEventsManager.instance.inputEvents.ReleaseInteract();
                 GameEventsManager.instance.inputEvents.EquipScanner(-1);
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.CALIBRATING);
@@ -246,5 +252,11 @@ public class ScanObject : MonoBehaviour
             }
         }
         
+    }
+
+    void HideScanGlitch(ScannableObjectType type)
+    {
+        if(type != ObjectType) return;
+        _GlitchParticles.Stop();
     }
 }

@@ -8,17 +8,20 @@ enum ButtonType
 {
     START,
     OPTIONS,
-    QUIT
+    QUIT,
+    CREDITS
 }
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] Button startButton;
     [SerializeField] Button optionsButton;
     [SerializeField] Button quitButton;
+    [SerializeField] Button creditsButton;
     [SerializeField] CanvasGroup fullscreenPanelCG; 
     [SerializeField] float fadeDuration;
     [SerializeField] GameObject mainMenuContainer;
     [SerializeField] GameObject settingsMenuContainer;
+    [SerializeField] GameObject creditsMenuContainer;
     [SerializeField] Scene gameScene;
 
     event Action onFinishedFade;
@@ -35,6 +38,7 @@ public class MainMenuManager : MonoBehaviour
         startButton.onClick.AddListener(() => StartButtonAction(ButtonType.START));
         optionsButton.onClick.AddListener(() => StartButtonAction(ButtonType.OPTIONS));
         quitButton.onClick.AddListener(() => StartButtonAction(ButtonType.QUIT));
+        creditsButton.onClick.AddListener(() => StartButtonAction(ButtonType.CREDITS));
     }
 
     void StartGame()
@@ -47,6 +51,12 @@ public class MainMenuManager : MonoBehaviour
     {
         mainMenuContainer.SetActive(false);
         settingsMenuContainer.SetActive(true);
+    }
+
+    void ShowCredits()
+    {
+        mainMenuContainer.SetActive(false);
+        creditsMenuContainer.SetActive(true);
     }
 
     void QuitGame()
@@ -74,6 +84,9 @@ public class MainMenuManager : MonoBehaviour
             case ButtonType.QUIT:
                 onFinishedFade += QuitGame;
                 StartCoroutine(FadeOut());
+                break;
+            case ButtonType.CREDITS:
+                ShowCredits();
                 break;
         }
     }
