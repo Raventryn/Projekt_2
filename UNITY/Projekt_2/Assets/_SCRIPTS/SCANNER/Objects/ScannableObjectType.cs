@@ -2,8 +2,8 @@
 public enum ScannableObjectKind
 {
     GENERIC,
-    SPECIAL,
-    QUEST
+    INTERPRETABLE,
+    MINIGAME
 }
 
 public enum ScannableObjectType
@@ -65,7 +65,13 @@ public enum ScannableObjectType
     SMALLMONITOR,
     SMALLRADIO,
     OPENBOOK,
-    ROACH
+    ROACH,
+    BOOK_5,
+    COMMS_1,
+    CD_PILE,
+    VR_HEADSET,
+    VINYL_PLAYER,
+    BIG_RADIO
 
 
 

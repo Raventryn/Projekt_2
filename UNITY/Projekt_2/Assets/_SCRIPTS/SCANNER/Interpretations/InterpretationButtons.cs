@@ -145,6 +145,7 @@ public class InterpretationButtons : MonoBehaviour
 
         StartCoroutine(ButtonCanvasAnimation(false));
         ExperienceManager.instance.AddMoney(Random.Range(6, 15));
+        GameEventsManager.instance.questEvents.ObjectInterpreted();
     }
 
         IEnumerator ButtonCanvasAnimation(bool toggle)

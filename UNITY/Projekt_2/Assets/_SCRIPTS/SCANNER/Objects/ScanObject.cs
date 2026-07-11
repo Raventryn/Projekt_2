@@ -15,6 +15,7 @@ public class ScanObject : MonoBehaviour
     public ScannableObjectKind ObjectKind;
     public ScannableObjectType ObjectType;
     public GameObject ScanObjectGO;
+    public Collider Collider;
     float _scanTimer = 1;
     bool _objectScanned;
     bool _scanningObject;
@@ -66,12 +67,13 @@ public class ScanObject : MonoBehaviour
         DefaultMaterial = _renderer.material;
         _defaultScaleValue = gameObject.transform.localScale.x;
         _pulseScaleValue = _defaultScaleValue * 1.1f;
+        Collider = GetComponent<Collider>();
         if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
             _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
         _InfoCanvasContainer.SetActive(false);
 
-        if(!_objectScanned)
-        ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
+        if(!_objectScanned && ObjectKind != ScannableObjectKind.GENERIC)
+            ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
 
         InstantiateClasses();
     }
@@ -97,12 +99,12 @@ public class ScanObject : MonoBehaviour
     {
         switch (ObjectKind)
         {
-            case ScannableObjectKind.SPECIAL:
+            case ScannableObjectKind.INTERPRETABLE:
                 _interpretObject = gameObject.AddComponent<InterpretObject>();
                 _interpretObject.ObjectType = ObjectType;
                 _interpretObject.InterpretationOptions = _InterpretationOptions;
                 break;
-            case ScannableObjectKind.QUEST:
+            case ScannableObjectKind.MINIGAME:
                 _triggerMinigame = gameObject.AddComponent<TriggerMinigame>();
                 break;
         }
@@ -169,7 +171,7 @@ public class ScanObject : MonoBehaviour
             _fillBarImage.fillAmount = 1 - _scanTimer / 1f;
         }
 
-        if (_objectScanned)
+        if (_objectScanned || ObjectKind == ScannableObjectKind.GENERIC)
         {
             ChangeMaterial(DefaultMaterial);
         }
@@ -193,11 +195,11 @@ public class ScanObject : MonoBehaviour
                 _showCanvas.ShowInformationCanvas(true);
                 ExperienceManager.instance.AddMoney(Random.Range(3, 10));
                 break;
-            case ScannableObjectKind.SPECIAL:
+            case ScannableObjectKind.INTERPRETABLE:
                 _interpretObject.ShowButtonCanvas(true);
                 //Add Money after interpreting
                 break;
-            case ScannableObjectKind.QUEST:
+            case ScannableObjectKind.MINIGAME:
                 _triggerMinigame.OpenMinigame(true, ObjectType);
                 GameEventsManager.instance.inputEvents.ReleaseInteract();
                 GameEventsManager.instance.inputEvents.EquipScanner(-1);
@@ -260,5 +262,10 @@ public class ScanObject : MonoBehaviour
         if(type != ObjectType) return;
         if(_GlitchParticles == null) return;
         _GlitchParticles.Stop();
+    }
+
+    public void ToggleCollider(bool toggle)
+    {
+        Collider.enabled = toggle;
     }
 }

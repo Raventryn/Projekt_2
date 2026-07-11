@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class RoachScanBehaviour : MonoBehaviour
@@ -25,6 +26,7 @@ public class RoachScanBehaviour : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn += StartScanning;
         GameEventsManager.instance.interactionEvents.onScanObjectOff += StopScanning;
         GameEventsManager.instance.questEvents.onAllowRoachScan += AllowRoachScan;
+        GameEventsManager.instance.questEvents.onInterpretedObject += UpdateRoachObject;
     }
 
     void OnDisable()
@@ -32,6 +34,7 @@ public class RoachScanBehaviour : MonoBehaviour
         GameEventsManager.instance.interactionEvents.onScanObjectOn -= StartScanning;
         GameEventsManager.instance.interactionEvents.onScanObjectOff -= StopScanning;
         GameEventsManager.instance.questEvents.onAllowRoachScan -= AllowRoachScan;
+        GameEventsManager.instance.questEvents.onInterpretedObject -= UpdateRoachObject;
     }
 
     void Start()
@@ -70,6 +73,7 @@ public class RoachScanBehaviour : MonoBehaviour
 
     void StartScanning(GameObject gameObject, ScannerMode mode)
     {
+        Debug.Log(gameObject);
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN || !IsScannable) return;
 
         IsBeingScanned = true;
@@ -103,11 +107,29 @@ public class RoachScanBehaviour : MonoBehaviour
         ScanObject scanObject = GetComponentInChildren<ScanObject>();
         if (scanObject._GlitchParticles.isEmitting)
         {
-            scanObject.HideScanGlitch(scanObject.ObjectType);
-            scanObject.ChangeMaterial(scanObject.DefaultMaterial);
+            if (scanObject._GlitchParticles != null)
+            {
+               scanObject.HideScanGlitch(scanObject.ObjectType);
+            scanObject.ChangeMaterial(scanObject.DefaultMaterial); 
+            }   
         }
-            
+        
+        scanObject.ToggleCollider(!toggle);
         scanObject.enabled = !toggle;
         _collider.enabled = toggle;
+    }
+
+    void UpdateRoachObject()
+    {
+        StartCoroutine(DelayGOUpdate());
+    }
+
+    IEnumerator DelayGOUpdate()
+    {
+        yield return null;
+
+        _scanObject = GetComponentInChildren<ScanObject>();
+        _roachObject = _scanObject.ScanObjectGO;
+        SetReferences(_roachObject);
     }
 }
