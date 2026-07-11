@@ -267,6 +267,9 @@ public class CompareWaves : MonoBehaviour
             
             Debug.Log("Succeeded!");
 
+            ScannerManager.instance.ScannedObjects[objectType] = true;
+            GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
+
             ShowMinigameUI(false, objectType);
             ExperienceManager.instance.AddMoney(Random.Range(12, 25));
 

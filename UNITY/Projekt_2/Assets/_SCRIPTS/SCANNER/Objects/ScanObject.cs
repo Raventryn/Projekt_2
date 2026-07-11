@@ -192,10 +192,14 @@ public class ScanObject : MonoBehaviour
         switch (ObjectKind)
         {
             case ScannableObjectKind.GENERIC:
+                ScannerManager.instance.ScannedObjects[ObjectType] = true;
+                _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
                 _showCanvas.ShowInformationCanvas(true);
                 ExperienceManager.instance.AddMoney(Random.Range(3, 10));
                 break;
             case ScannableObjectKind.INTERPRETABLE:
+                ScannerManager.instance.ScannedObjects[ObjectType] = true;
+                _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
                 _interpretObject.ShowButtonCanvas(true);
                 //Add Money after interpreting
                 break;
@@ -219,8 +223,6 @@ public class ScanObject : MonoBehaviour
         }
         else if(_scanTimer <= 0)
         {
-            ScannerManager.instance.ScannedObjects[ObjectType] = true;
-            _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
             _fillBarImage.enabled = false;
             FirstTimeScan();
         }

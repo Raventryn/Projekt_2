@@ -44,7 +44,7 @@ public class Door : MonoBehaviour
 
     void OpenDoor(GameObject gameObject)
     {
-        if(gameObject != this.gameObject || !_isInteactionBlocked) return;
+        if(gameObject != this.gameObject || _isInteactionBlocked) return;
 
         _isObjectMoving = true;
         _isInteactionBlocked = true;
