@@ -245,8 +245,8 @@ public class CalibrationGameManager : MonoBehaviour
     {
         _angle += 2 * Time.deltaTime;
 
-        float xPosition = (0.7f * Mathf.Cos(-_angle)) - 0.15f; 
-        float yPosition = (0.66f * Mathf.Sin(-_angle)) + 0.05f;
+        float xPosition = (1f * Mathf.Cos(-_angle)) - 0.12f; 
+        float yPosition = (0.75f * Mathf.Sin(-_angle)) + 0.2f;
 
         Debug.Log(xPosition);
 
