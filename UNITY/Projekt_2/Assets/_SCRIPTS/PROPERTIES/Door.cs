@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class Door : MonoBehaviour
 {
     [SerializeField] Vector3 _openRotation;
+    Collider _doorCollider;
     Vector3 _closedRotation;
     Vector3 _originRotation;
 
@@ -24,6 +25,7 @@ public class Door : MonoBehaviour
     void Start()
     {
         _closedRotation = transform.localEulerAngles;
+        _doorCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -44,10 +46,13 @@ public class Door : MonoBehaviour
 
     void OpenDoor(GameObject gameObject)
     {
-        if(gameObject != this.gameObject || _isInteactionBlocked) return;
+        if(gameObject != this.gameObject || _isInteactionBlocked ) return;
+
 
         _isObjectMoving = true;
         _isInteactionBlocked = true;
+
+        _doorCollider.enabled = false;
     }
 
     void RotateDoor(Vector3 target)
@@ -65,6 +70,8 @@ public class Door : MonoBehaviour
                     transform.localEulerAngles = target;
                     _isObjectMoving = false;
                     _isDoorOpen = false;
+
+                    _doorCollider.enabled = true;
 
                     _isInteactionBlocked = false;
                 }

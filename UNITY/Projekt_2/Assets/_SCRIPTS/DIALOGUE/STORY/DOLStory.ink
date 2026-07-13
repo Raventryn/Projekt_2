@@ -31,7 +31,11 @@
     <br>
     *[Yes!]
         <wave> THANK YOU!</wave>
+        Here is the fish.
+        Bring him back soon please.
+        ~AddItem("INVENTORY:GUPPY")
         ~FinishQuest(RoachQuestId)
+        
         -> END
     *[Nopers!]
         Oh...

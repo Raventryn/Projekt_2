@@ -76,6 +76,13 @@ public class QuestEvents
         onStartScanMinigame?.Invoke(toggle, type);
     }
 
+    public event Action onFinishedScanMinigame;
+
+    public void FinishedScanMinigame()
+    {
+        onFinishedScanMinigame?.Invoke();
+    }
+
     public event Action<ScannableObjectType> onHideScanGlitch;
 
     public void HideScanGlitch(ScannableObjectType type)
@@ -102,5 +109,26 @@ public class QuestEvents
     public void AllowRoachScan(bool toggle)
     {
         onAllowRoachScan?.Invoke(toggle);
+    }
+
+    public event Action onStartCalibrationMinigame;
+
+    public void StartCalibrationMinigame()
+    {
+        onStartCalibrationMinigame?.Invoke();
+    }
+
+    public event Action onFinishedCalibrationMinigame;
+
+    public void FinishedCalibrationMinigame()
+    {
+        onFinishedCalibrationMinigame?.Invoke();
+    }
+
+    public event Action onSitPlayerUp;
+
+    public void SitPlayerUp()
+    {
+        onSitPlayerUp?.Invoke();
     }
 }

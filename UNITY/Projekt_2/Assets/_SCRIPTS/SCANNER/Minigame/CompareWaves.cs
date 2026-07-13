@@ -83,15 +83,19 @@ public class CompareWaves : MonoBehaviour
 
     void ShowMinigameUI(bool toggle, ScannableObjectType type)
     {
+        GameEventsManager.instance.playerEvents.BlockPlayerInput(true);
+
         objectType = type;
         StartCoroutine(ToggleContentParent(toggle));
     }
 
     void CloseMinigameUI(InputEventContext context)
     {
-        if(context != InputEventContext.SCANNER_MINIGAME) return;
+        if(context != InputEventContext.SCANNER_MINIGAME || objectType == ScannableObjectType.GAMESTART_DUMMY) return;
 
         StartCoroutine(ToggleContentParent(false));
+
+        GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
     }
 
     public void StartMinigame()
@@ -271,8 +275,10 @@ public class CompareWaves : MonoBehaviour
             GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
 
             ShowMinigameUI(false, objectType);
-            ExperienceManager.instance.AddMoney(Random.Range(12, 25));
+            if(objectType != ScannableObjectType.GAMESTART_DUMMY)
+                ExperienceManager.instance.AddMoney(Random.Range(12, 25));
 
+            GameEventsManager.instance.questEvents.FinishedScanMinigame();
             GameEventsManager.instance.questEvents.HideScanGlitch(objectType);
             //Send Event that minigame is finished
             //If object is to be picked up, change tag and layer of object

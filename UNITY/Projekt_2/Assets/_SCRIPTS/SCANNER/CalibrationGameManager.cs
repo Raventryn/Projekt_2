@@ -47,6 +47,8 @@ public class CalibrationGameManager : MonoBehaviour
 
     void OnEnable()
     {
+        GameEventsManager.instance.questEvents.onStartCalibrationMinigame += StartMinigame;
+
         GameEventsManager.instance.inputEvents.onEquipScanner += EquipArm;
         GameEventsManager.instance.inputEvents.onEquipScanner += ChangeMouseSensitivity;
         GameEventsManager.instance.inputEvents.onEquipScanner += HideHintPanel;
@@ -54,6 +56,8 @@ public class CalibrationGameManager : MonoBehaviour
 
     void OnDisable()
     {
+        GameEventsManager.instance.questEvents.onStartCalibrationMinigame -= StartMinigame;
+
         GameEventsManager.instance.inputEvents.onEquipScanner -= EquipArm;
         GameEventsManager.instance.inputEvents.onEquipScanner -= ChangeMouseSensitivity;
         GameEventsManager.instance.inputEvents.onEquipScanner -= HideHintPanel;
@@ -133,6 +137,9 @@ public class CalibrationGameManager : MonoBehaviour
         }
 
         ShowHintPanels(_panels[2], true);
+        
+
+        GameEventsManager.instance.questEvents.FinishedCalibrationMinigame();
     }
 
     void ComparePointerPosition()

@@ -39,6 +39,7 @@ public class ScannerController : MonoBehaviour
     bool _scannerCoroutinePlaying;
     bool _resetArmRotation = false;
     bool _blockRC;
+    bool _IsInputBlocked;
 
     public bool IsInScanView;
 
@@ -59,6 +60,8 @@ public class ScannerController : MonoBehaviour
 
     void OnEnable()
     {
+        GameEventsManager.instance.playerEvents.onBlockPlayerInput += BlockPlayerInput;
+
         GameEventsManager.instance.interactionEvents.onEnterScanView += EnterScanView;
         GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract += ScannerOff;
@@ -71,6 +74,8 @@ public class ScannerController : MonoBehaviour
 
     void OnDisable()
     {
+        GameEventsManager.instance.playerEvents.onBlockPlayerInput -= BlockPlayerInput;
+
         GameEventsManager.instance.interactionEvents.onEnterScanView -= EnterScanView;
         GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
@@ -113,6 +118,11 @@ public class ScannerController : MonoBehaviour
         }
     }
 
+    void BlockPlayerInput(bool toggle)
+    {
+        _IsInputBlocked = toggle;
+    }
+
     void RestartScanner(ScannerMode mode)
     {
         switch (mode)
@@ -134,7 +144,7 @@ public class ScannerController : MonoBehaviour
 
     void ShowScanner(InputEventContext context, float value)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || _scannerCoroutinePlaying) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER && context != InputEventContext.SCANNER_VIEW || _scannerCoroutinePlaying || _IsInputBlocked) return;
 
         switch (value)
         {

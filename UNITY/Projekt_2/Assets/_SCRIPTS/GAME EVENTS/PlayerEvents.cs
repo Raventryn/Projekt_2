@@ -43,4 +43,11 @@ public class PlayerEvents
     {
         onReturnPlayer?.Invoke(playerObject, callerObject);
     }
+
+    public event Action<bool> onBlockPlayerInput;
+
+    public void BlockPlayerInput(bool toggle)
+    {
+        onBlockPlayerInput?.Invoke(toggle);
+    }
 }

@@ -109,9 +109,18 @@ public class RoachScanBehaviour : MonoBehaviour
         {
             if (scanObject._GlitchParticles != null)
             {
-               scanObject.HideScanGlitch(scanObject.ObjectType);
-            scanObject.ChangeMaterial(scanObject.DefaultMaterial); 
+                scanObject.HideScanGlitch(scanObject.ObjectType);
+                scanObject.ChangeMaterial(scanObject.DefaultMaterial); 
             }   
+        }
+
+        if (!ScannerManager.instance.ScannedObjects.ContainsKey(scanObject.ObjectType))
+        {
+            ScannerManager.instance.ScannedObjects.Add(scanObject.ObjectType, true);
+        }
+        else if (ScannerManager.instance.ScannedObjects.ContainsKey(scanObject.ObjectType))
+        {
+            ScannerManager.instance.ScannedObjects[scanObject.ObjectType] = true;
         }
         
         scanObject.ToggleCollider(!toggle);

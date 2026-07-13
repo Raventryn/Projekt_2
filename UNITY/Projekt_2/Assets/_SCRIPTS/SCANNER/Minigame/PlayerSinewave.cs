@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerSinewave : MonoBehaviour
 {
     public LineRenderer _lineRenderer;
+    [SerializeField] Player_Controller _playerController;
     [SerializeField] int _points;
     [SerializeField] Vector2 xLimits = new Vector2(0, 1);
 
@@ -56,7 +57,7 @@ public class PlayerSinewave : MonoBehaviour
     {
         if(/*context != InputEventContext.SCANNER_MINIGAME && */ WaveSpeed == 0) return;
 
-        Frequency = Mathf.Clamp(Frequency += -value.x * 0.001f, 0.33f, 1.1f);
-        Amplitude = Mathf.Clamp(Amplitude += value.y * 0.001f, 0.55f, 2.9f);
+        Frequency = Mathf.Clamp(Frequency += -value.x * _playerController.PlayerSettings.LookSensitivity * 0.00001f, 0.33f, 1.1f);
+        Amplitude = Mathf.Clamp(Amplitude += value.y * _playerController.PlayerSettings.LookSensitivity * 0.00001f, 0.55f, 2.9f);
     }
 }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d473ed167e16c46940161aed459c3e, type: 3}
+  m_Name: GameStartQuest
+  m_EditorClassIdentifier: Assembly-CSharp::QuestInfoSO
+  <id>k__BackingField: GameStartQuest
+  DisplayName: Game Start
+  QuestPrerequesites: []
+  QuestStepPrefabs:
+  - {fileID: 4053797318126798695, guid: fdf214e22e15bf94398b6087777fe13d, type: 3}
+  - {fileID: 7282487180913117660, guid: 4b36a9d569ae3584da06d2d03b877e0a, type: 3}

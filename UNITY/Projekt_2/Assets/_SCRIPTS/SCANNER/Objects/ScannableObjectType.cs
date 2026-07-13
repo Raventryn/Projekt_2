@@ -8,10 +8,7 @@ public enum ScannableObjectKind
 
 public enum ScannableObjectType
 {
-    CAPSULE,
-    SPHERE,
-    CUBE,
-    CYLINDER,
+    GAMESTART_DUMMY,
     LAPTOP,
     PENCILS,
     TOILET_PAPER,

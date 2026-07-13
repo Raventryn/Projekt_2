@@ -10,6 +10,9 @@ public class InkExternalFunctions
         story.BindExternalFunction("AdvanceQuest", (string Id) => AdvanceQuest(Id));
         story.BindExternalFunction("FinishQuest", (string Id) => FinishQuest(Id));
         story.BindExternalFunction("AdvanceDialogueCamera", (string cameraStage) => AdvanceDialogueCamera(cameraStage));
+        story.BindExternalFunction("SitPlayerUp", () => SitPlayerUp());
+        story.BindExternalFunction("AddItem", (string Id) => AddItem(Id));
+        story.BindExternalFunction("RemoveItem", (string Id) => RemoveItem(Id));
         //story.BindExternalFunction("SendSpitEvent", () => SendSpitEvent());
     }
 
@@ -20,6 +23,9 @@ public class InkExternalFunctions
         story.UnbindExternalFunction("AdvanceQuest");
         story.UnbindExternalFunction("FinishQuest");
         story.UnbindExternalFunction("AdvanceDialogueCamera");
+        story.UnbindExternalFunction("SitPlayerUp");
+        story.UnbindExternalFunction("AddItem");
+        story.UnbindExternalFunction("RemoveItem");
         //story.UnbindExternalFunction("SendSpitEvent");
     }
 
@@ -48,4 +54,18 @@ public class InkExternalFunctions
         GameEventsManager.instance.dialogueEvents.AdvanceDialogueCamera(cameraStage);
     }
 
+    private void SitPlayerUp()
+    {
+        GameEventsManager.instance.questEvents.SitPlayerUp();
+    }
+
+    private void AddItem(string Id)
+    {
+        GameEventsManager.instance.inventoryEvents.AddItem(Id);
+    }
+
+    private void RemoveItem(string Id)
+    {
+        GameEventsManager.instance.inventoryEvents.RemoveItem(Id);
+    }
 }

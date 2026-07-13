@@ -10,24 +10,34 @@ public class PlayerRaycast : MonoBehaviour
     bool _IsWidgetHidden;
     bool _IsRaycastHit;
 
+    bool _IsInputBlocked;
+
     void OnEnable()
     {
         GameEventsManager.instance.inputEvents.onPressedInteract += Raycast;
+        GameEventsManager.instance.playerEvents.onBlockPlayerInput += BlockPlayerInput;
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.inputEvents.onPressedInteract -= Raycast;
+        GameEventsManager.instance.playerEvents.onBlockPlayerInput -= BlockPlayerInput;
     }
 
     void Update()
     {
-        WidgetRaycast();
+        if(!_IsInputBlocked)
+            WidgetRaycast();
+    }
+
+    void BlockPlayerInput(bool toggle)
+    {
+        _IsInputBlocked = toggle;
     }
 
     void Raycast(InputEventContext context)
     {
-        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER) return;
+        if(context != InputEventContext.DEFAULT && context != InputEventContext.SCANNER ) return;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
 

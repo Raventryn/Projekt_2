@@ -24,11 +24,13 @@ public class InventorySystem : MonoBehaviour
     void OnEnable()
     {
         GameEventsManager.instance.inventoryEvents.onPickUpItem += Add;
+        GameEventsManager.instance.inventoryEvents.onRemoveItemFromInventory += Remove;
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.inventoryEvents.onPickUpItem -= Add;
+        GameEventsManager.instance.inventoryEvents.onRemoveItemFromInventory -= Remove;
     }
 
     public InventoryItem Get(InventoryItemData referenceData)
