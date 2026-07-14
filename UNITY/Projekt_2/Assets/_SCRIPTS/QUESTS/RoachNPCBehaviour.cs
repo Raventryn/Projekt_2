@@ -25,7 +25,7 @@ public class RoachNPCBehaviour : MonoBehaviour
 
         _agent.updateRotation = false;
 
-        InvokeRepeating("SetDestination", 0, 5);
+        InvokeRepeating("SetDestination", 0, 8);
     }
 
     void Update()
@@ -34,7 +34,7 @@ public class RoachNPCBehaviour : MonoBehaviour
         {
             if(_agent.remainingDistance <= 0.05f && !_scanBehaviour.IsBeingScanned)
             {
-                Invoke("SetDestination", 1.5f);
+                Invoke("SetDestination", 4f);
                 _IsWalking = false;
             }
 

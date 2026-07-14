@@ -118,7 +118,7 @@ public class RoachScanBehaviour : MonoBehaviour
         {
             ScannerManager.instance.ScannedObjects.Add(scanObject.ObjectType, true);
         }
-        else if (ScannerManager.instance.ScannedObjects.ContainsKey(scanObject.ObjectType))
+        else
         {
             ScannerManager.instance.ScannedObjects[scanObject.ObjectType] = true;
         }

@@ -83,8 +83,6 @@ public class CompareWaves : MonoBehaviour
 
     void ShowMinigameUI(bool toggle, ScannableObjectType type)
     {
-        GameEventsManager.instance.playerEvents.BlockPlayerInput(true);
-
         objectType = type;
         StartCoroutine(ToggleContentParent(toggle));
     }
@@ -94,8 +92,6 @@ public class CompareWaves : MonoBehaviour
         if(context != InputEventContext.SCANNER_MINIGAME || objectType == ScannableObjectType.GAMESTART_DUMMY) return;
 
         StartCoroutine(ToggleContentParent(false));
-
-        GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
     }
 
     public void StartMinigame()
@@ -135,6 +131,8 @@ public class CompareWaves : MonoBehaviour
 
                 yield return new WaitForSeconds(0.15f);
 
+                GameEventsManager.instance.playerEvents.BlockPlayerInput(true);
+
                 GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_MINIGAME);
 
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
@@ -160,6 +158,7 @@ public class CompareWaves : MonoBehaviour
                     GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
                 }
                 
+                GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
 
                 GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
@@ -187,7 +186,7 @@ public class CompareWaves : MonoBehaviour
             _transferSpeedBar.SetPosition(i, newPosition);
         }
 
-        if(amplitudeDifference <= 0.17f && frequencyDifference <= 0.017f)
+        if(amplitudeDifference <= 0.25f && frequencyDifference <= 0.03f)
         {
 
             timer -= 1 * transferSpeed * Time.deltaTime;
@@ -203,7 +202,7 @@ public class CompareWaves : MonoBehaviour
                 ResetWavePositition();
             }
         }
-        else if(amplitudeDifference <= 0.25f && frequencyDifference <= 0.025f)
+        else if(amplitudeDifference <= 0.32f && frequencyDifference <= 0.04f)
         {
             timer -= 1 * transferSpeed * Time.deltaTime;
 
@@ -216,7 +215,7 @@ public class CompareWaves : MonoBehaviour
         else
         {
 
-            transferSpeed = Mathf.Clamp(transferSpeed -= 0.15f * Time.deltaTime, 0, 1);
+            transferSpeed = Mathf.Clamp(transferSpeed -= 0.07f * Time.deltaTime, 0, 1);
 
             ShakeWave(totalDifference);
 
@@ -275,9 +274,10 @@ public class CompareWaves : MonoBehaviour
             GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
 
             ShowMinigameUI(false, objectType);
+            ResetMinigame();
             if(objectType != ScannableObjectType.GAMESTART_DUMMY)
                 ExperienceManager.instance.AddMoney(Random.Range(12, 25));
-
+            
             GameEventsManager.instance.questEvents.FinishedScanMinigame();
             GameEventsManager.instance.questEvents.HideScanGlitch(objectType);
             //Send Event that minigame is finished
