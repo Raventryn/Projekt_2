@@ -522,8 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Toothpaste
   ObjectKind: 1
-  ObjectType: 32
+  ObjectType: 29
   ScanObjectGO: {fileID: 486585376167232288}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}

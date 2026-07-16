@@ -522,8 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Facewash
   ObjectKind: 1
-  ObjectType: 44
+  ObjectType: 41
   ScanObjectGO: {fileID: 8369149872703464559}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}

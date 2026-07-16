@@ -522,8 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Postcard
   ObjectKind: 1
-  ObjectType: 40
+  ObjectType: 37
   ScanObjectGO: {fileID: 2554236920711198093}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}

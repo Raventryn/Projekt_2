@@ -522,8 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Toiletbrush
   ObjectKind: 1
-  ObjectType: 26
+  ObjectType: 23
   ScanObjectGO: {fileID: 1548598160184737983}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}

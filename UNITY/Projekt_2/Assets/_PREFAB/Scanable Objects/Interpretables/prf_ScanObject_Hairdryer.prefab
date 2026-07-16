@@ -522,15 +522,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Hairdryer
   ObjectKind: 1
-  ObjectType: 7
+  ObjectType: 4
   ScanObjectGO: {fileID: 5347510508752604199}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}
   _InterpretationOptions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5067330419100531149}
+  - {fileID: 5067330419100531149, guid: 7991961a66ddfc44fb616c65fedcccf1, type: 3}
+  - {fileID: 5067330419100531149, guid: 386f3f641d2165644932f604d5862cdc, type: 3}
   DefaultMaterial: {fileID: 0}
 --- !u!95 &4430531856486183046
 Animator:

@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Spatula
   ObjectKind: 0
-  ObjectType: 21
+  ObjectType: 18
   ScanObjectGO: {fileID: 1567885308505076659}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Plate
   ObjectKind: 0
-  ObjectType: 41
+  ObjectType: 38
   ScanObjectGO: {fileID: 1415044010762680589}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

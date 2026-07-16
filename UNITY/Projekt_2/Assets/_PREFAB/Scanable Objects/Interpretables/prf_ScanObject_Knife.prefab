@@ -522,15 +522,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Knife
   ObjectKind: 1
-  ObjectType: 25
+  ObjectType: 22
   ScanObjectGO: {fileID: 3402993297063548852}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}
   _InterpretationOptions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5067330419100531149, guid: 87fa229b2a6b8eb4cafc1fdf9798cb1c, type: 3}
+  - {fileID: 5067330419100531149}
+  - {fileID: 5067330419100531149, guid: 5f4d0ccf4dafa4c4589ee6de022a4704, type: 3}
   DefaultMaterial: {fileID: 0}
 --- !u!95 &4430531856486183046
 Animator:

@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Small Bowl
   ObjectKind: 0
-  ObjectType: 14
+  ObjectType: 91
   ScanObjectGO: {fileID: 1931695805764970430}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

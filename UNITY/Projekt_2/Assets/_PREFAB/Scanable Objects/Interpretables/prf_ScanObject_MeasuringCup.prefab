@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Measuring Cup
   ObjectKind: 1
-  ObjectType: 56
+  ObjectType: 89
   ScanObjectGO: {fileID: 317935966421520386}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

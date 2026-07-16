@@ -88,7 +88,21 @@ public enum ScannableObjectType
     PLIERS,
     KEYBOARD,
     PCMONITOR,
-    WATERBOTTLE2
+    WATERBOTTLE2,
+    BROKENEGG,
+    BULLET,
+    EGG,
+    PISTOL,
+    PIZZA,
+    RUBBERDUCK,
+    TVREMOTE,
+    WOODENFISH,
+    MEASURINGCUP,
+    TOPF,
+    BOWL,
+    MEDICKIT,
+    HANGINGBASS
+
 
 
 

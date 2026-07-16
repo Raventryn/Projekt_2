@@ -523,8 +523,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Yellow Tang
   ObjectKind: 1
-  ObjectType: 61
+  ObjectType: 58
   ScanObjectGO: {fileID: 5061162104658233631}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 768730651366937812}

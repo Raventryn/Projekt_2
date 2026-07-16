@@ -354,8 +354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Roach
   ObjectKind: 1
-  ObjectType: 57
+  ObjectType: 54
   ScanObjectGO: {fileID: 2030306111254312970}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 792611326754257839}
   _InfoCanvasAnimator: {fileID: 1476449687845100911}
   _GlitchParticles: {fileID: 5989421058266963193}
