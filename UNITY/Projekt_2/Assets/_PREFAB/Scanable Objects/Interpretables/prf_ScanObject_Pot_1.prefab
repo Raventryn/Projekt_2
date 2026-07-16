@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Pot
-  ObjectKind: 1
+  ObjectKind: 0
   ObjectType: 21
   ScanObjectGO: {fileID: 6080694424598463126}
   Collider: {fileID: 0}

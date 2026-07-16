@@ -40,7 +40,7 @@ public class ScannerManager : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    /*void OnEnable()
     {
         GameEventsManager.instance.inputEvents.onPressedAltInteract += ChangeScannerMode;
     }
@@ -48,7 +48,7 @@ public class ScannerManager : MonoBehaviour
     void OnDisable()
     {
         GameEventsManager.instance.inputEvents.onPressedAltInteract -= ChangeScannerMode;
-    }
+    }*/
 
     void Start()
     {

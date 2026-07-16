@@ -68,7 +68,28 @@ public enum ScannableObjectType
     CD_PILE,
     VR_HEADSET,
     VINYL_PLAYER,
-    BIG_RADIO
+    BIG_RADIO,
+    KITCHEN_UTENSIL,
+    ZEWA,
+    KNIFEBLOCK,
+    CATTLE,
+    BEERBOTTLE,
+    SPEAKER,
+    CAN2,
+    CAN3,
+    CAN4,
+    CAN5,
+    PICKELEDGLASS1,
+    PICKELEDGLASS2,
+    SOAPTHING1,
+    SOAPTHING2,
+    TOILET,
+    WINTERGOGGLES,
+    PLIERS,
+    KEYBOARD,
+    PCMONITOR,
+    WATERBOTTLE2
+
 
 
 

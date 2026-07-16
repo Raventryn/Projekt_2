@@ -63,7 +63,8 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.playerEvents.onBlockPlayerInput += BlockPlayerInput;
 
         GameEventsManager.instance.interactionEvents.onEnterScanView += EnterScanView;
-        GameEventsManager.instance.inputEvents.onPressedEscape += ExitScanView;
+        GameEventsManager.instance.inputEvents.onPressedAltInteract += ExitScanView;
+        GameEventsManager.instance.inputEvents.onPressedEscape+= ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract += ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract += ScannerRaycast;
 
@@ -77,6 +78,7 @@ public class ScannerController : MonoBehaviour
         GameEventsManager.instance.playerEvents.onBlockPlayerInput -= BlockPlayerInput;
 
         GameEventsManager.instance.interactionEvents.onEnterScanView -= EnterScanView;
+        GameEventsManager.instance.inputEvents.onPressedAltInteract -= ExitScanView;
         GameEventsManager.instance.inputEvents.onPressedEscape -= ExitScanView;
         GameEventsManager.instance.inputEvents.onReleaseInteract -= ScannerOff;
         GameEventsManager.instance.inputEvents.onHoldInteract -= ScannerRaycast;
