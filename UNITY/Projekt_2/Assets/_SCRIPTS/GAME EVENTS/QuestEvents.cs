@@ -131,4 +131,11 @@ public class QuestEvents
     {
         onSitPlayerUp?.Invoke();
     }
+
+    public event Action onDisableGlitches;
+
+    public void DisableGlitches()
+    {
+        onDisableGlitches?.Invoke();
+    }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using Febucci.TextAnimatorForUnity;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -124,6 +125,15 @@ public class ScanObject : MonoBehaviour
 
         _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
 
+        if(_objectScanned == true)
+        {
+            ChangeMaterial(DefaultMaterial);
+        }
+        else
+        {
+            ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
+        }
+
         Debug.Log(_objectScanned + " / " + ScannerManager.instance.ScannedObjects[ObjectType]);
     }
 
@@ -198,8 +208,8 @@ public class ScanObject : MonoBehaviour
                 ExperienceManager.instance.AddMoney(Random.Range(3, 10));
                 break;
             case ScannableObjectKind.INTERPRETABLE:
-                ScannerManager.instance.ScannedObjects[ObjectType] = true;
-                _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
+                //ScannerManager.instance.ScannedObjects[ObjectType] = true;
+                //_objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
                 _interpretObject.ShowButtonCanvas(true);
                 //Add Money after interpreting
                 break;
@@ -230,6 +240,7 @@ public class ScanObject : MonoBehaviour
 
     public void ChangeMaterial(Material material)
     {
+        if(_renderer != null)
         _renderer.material = material;
     }
 

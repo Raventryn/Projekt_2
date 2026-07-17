@@ -157,6 +157,8 @@ public class CompareWaves : MonoBehaviour
                 {
                     GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER_VIEW);
                 }
+
+                GameEventsManager.instance.questEvents.DisableGlitches();
                 
                 GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
 
@@ -186,7 +188,7 @@ public class CompareWaves : MonoBehaviour
             _transferSpeedBar.SetPosition(i, newPosition);
         }
 
-        if(amplitudeDifference <= 0.25f && frequencyDifference <= 0.03f)
+        if(amplitudeDifference <= 0.21f && frequencyDifference <= 0.023f)
         {
 
             timer -= 1 * transferSpeed * Time.deltaTime;
@@ -202,7 +204,7 @@ public class CompareWaves : MonoBehaviour
                 ResetWavePositition();
             }
         }
-        else if(amplitudeDifference <= 0.32f && frequencyDifference <= 0.04f)
+        else if(amplitudeDifference <= 0.29f && frequencyDifference <= 0.035f)
         {
             timer -= 1 * transferSpeed * Time.deltaTime;
 
@@ -215,7 +217,7 @@ public class CompareWaves : MonoBehaviour
         else
         {
 
-            transferSpeed = Mathf.Clamp(transferSpeed -= 0.07f * Time.deltaTime, 0, 1);
+            transferSpeed = Mathf.Clamp(transferSpeed -= 0.088f * Time.deltaTime, 0, 1);
 
             ShakeWave(totalDifference);
 
@@ -270,14 +272,15 @@ public class CompareWaves : MonoBehaviour
             
             Debug.Log("Succeeded!");
 
-            ScannerManager.instance.ScannedObjects[objectType] = true;
-            GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
-
             ShowMinigameUI(false, objectType);
             ResetMinigame();
             if(objectType != ScannableObjectType.GAMESTART_DUMMY)
+            {
+                ScannerManager.instance.ScannedObjects[objectType] = true;
+                GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
                 ExperienceManager.instance.AddMoney(Random.Range(12, 25));
-            
+            }
+
             GameEventsManager.instance.questEvents.FinishedScanMinigame();
             GameEventsManager.instance.questEvents.HideScanGlitch(objectType);
             //Send Event that minigame is finished

@@ -58,20 +58,24 @@ public class MoveOrRotateObject : MonoBehaviour
                 }
                 break;
             case FurnitureType.DOOR:
-                Vector3 directionR = targetPosition - _originRotation;
-                transform.Rotate(directionR * 5f * Time.deltaTime);
+                //Vector3 directionR = targetPosition - _originRotation;
+                //transform.Rotate(directionR * 5f * Time.deltaTime);
+
+                float angleDifference = Quaternion.Angle(Quaternion.Euler(targetPosition), transform.localRotation);
+
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(targetPosition), (10f + angleDifference * 2f) * Time.deltaTime);
 
                 switch (_IsDoorOpen)
                 {
                     case true:
-                        if(Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) >= -0.01f)
+                        if(angleDifference <= 0.01f)
                         {
                             transform.localEulerAngles = targetPosition;
                             IsObjectMoving = false;
                         }
                         break;
                     case false:
-                        if(Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) <= 0.01f)
+                        if(angleDifference <= 0.01f)//Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) <= 0.01f)
                         {
                             transform.localEulerAngles = targetPosition;
                             IsObjectMoving = false;

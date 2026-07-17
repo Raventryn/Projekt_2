@@ -148,7 +148,7 @@ public class CalibrationGameManager : MonoBehaviour
 
         if(difference.magnitude <= 0.2f)
         {
-            _positionMatch = Mathf.Clamp(_positionMatch += 17f * Time.deltaTime, 0, 100);
+            _positionMatch = Mathf.Clamp(_positionMatch += 25f * Time.deltaTime, 0, 100);
 
             if(_currentMaterial != MaterialType.GREEN)
             {

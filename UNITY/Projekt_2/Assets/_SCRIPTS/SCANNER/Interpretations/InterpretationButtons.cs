@@ -127,6 +127,9 @@ public class InterpretationButtons : MonoBehaviour
 
     public void SetChoice(int i)
     {
+        ScannerManager.instance.ScannedObjects[_type] = true;
+        GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(_type);
+
         switch (i)
         {
             case 0:

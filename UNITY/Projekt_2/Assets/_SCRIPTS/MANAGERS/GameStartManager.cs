@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KinoGlitch;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class GameStartManager : MonoBehaviour
@@ -11,15 +13,21 @@ public class GameStartManager : MonoBehaviour
     [SerializeField] Animator _cameraAnimator;
     [SerializeField] CinemachineCamera _animationCamera;
     [SerializeField] List<AnimationClip> _animationClips = new List<AnimationClip>();
+    [SerializeField] DigitalGlitchController _glitchController;
+    [SerializeField] float _glitchFadeTime;
+
+    float _glitchThreshold;
 
     void OnEnable()
     {
         GameEventsManager.instance.questEvents.onSitPlayerUp += PlayLastAnimation;
+        GameEventsManager.instance.questEvents.onDisableGlitches += DisableGlitch;
     }
 
     void OnDisable()
     {
         GameEventsManager.instance.questEvents.onSitPlayerUp -= PlayLastAnimation;
+        GameEventsManager.instance.questEvents.onDisableGlitches -= DisableGlitch;
     }
 
     void Start()
@@ -31,6 +39,30 @@ public class GameStartManager : MonoBehaviour
 
         StartCoroutine(AwaitAnimation(1));
         _animationCamera.Priority = 1;
+
+        _glitchController.Intensity = 1;
+        _glitchThreshold = 0.08f;
+    }
+
+    void Update()
+    {
+        if(_glitchController.Intensity > _glitchThreshold)
+        {
+            DecreaseGlitchStrength();
+        }
+    }
+
+    void DecreaseGlitchStrength()
+    {
+        _glitchController.Intensity -= (1 / _glitchFadeTime) * Time.deltaTime;
+
+        if(_glitchController.Intensity <= 0) _glitchController.Intensity = 0;
+    }
+
+    void DisableGlitch()
+    {
+        _glitchThreshold = 0;
+        //Disable Particles
     }
 
     void ReleasePlayer()
@@ -84,6 +116,7 @@ public class GameStartManager : MonoBehaviour
                 yield return new WaitForSeconds(_animationClips[2].length - 0.05f);
                 Debug.Log("Ended Animation");
                 ReleasePlayer();
+                this.enabled = false;
                 break;
         }
         
