@@ -66,6 +66,8 @@ public class InventorySystem : MonoBehaviour
 
             Debug.Log(item.Data.ItemName);
         }
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.ITEM_PICKUP, false);
     }
 
     //Remove item from stack, if stack size is 0, remove item from inventory

@@ -22,11 +22,13 @@ public class ScanCameraGlitches : MonoBehaviour
     {
         if (_IsGlitching)
         {
-            if(_glitchController.ScanLineJitter < 0.05 && _IsStrenghtening)
+            if(_glitchController.ScanLineJitter < 0.1f && _IsStrenghtening)
             {
                 _glitchController.ScanLineJitter += 0.1f + Time.deltaTime;
 
-                if(_glitchController.ScanLineJitter >= 0.05f)
+                Debug.Log("Entered");
+
+                if(_glitchController.ScanLineJitter >= 0.1f)
                     _IsStrenghtening = false;
             }
             else

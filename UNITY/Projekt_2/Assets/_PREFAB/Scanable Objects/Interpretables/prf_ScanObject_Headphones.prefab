@@ -5359,7 +5359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Headphones
   ObjectKind: 2
-  ObjectType: 30
+  ObjectType: 27
   ScanObjectGO: {fileID: 3453920761742672239}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

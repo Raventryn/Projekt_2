@@ -148,6 +148,8 @@ public class ScanObject : MonoBehaviour
 
         ChangeMaterial(ScannerManager.instance.ObjectIsScannedMaterial);
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCAN_START, false);
+
         if (!ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
         {
             ScannerManager.instance.ScannedObjects.Add(ObjectType, false);
@@ -275,6 +277,7 @@ public class ScanObject : MonoBehaviour
         if(type != ObjectType) return;
         if(_GlitchParticles == null) return;
         _GlitchParticles.Stop();
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCAN_END, false);
     }
 
     public void ToggleCollider(bool toggle)

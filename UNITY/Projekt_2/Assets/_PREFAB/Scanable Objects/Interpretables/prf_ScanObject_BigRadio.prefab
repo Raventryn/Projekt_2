@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Big Radio
   ObjectKind: 1
-  ObjectType: 63
+  ObjectType: 60
   ScanObjectGO: {fileID: 8573535000879707575}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

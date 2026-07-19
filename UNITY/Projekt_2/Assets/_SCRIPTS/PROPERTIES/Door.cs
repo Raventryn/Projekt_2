@@ -48,6 +48,7 @@ public class Door : MonoBehaviour
     {
         if(gameObject != this.gameObject || _isInteactionBlocked ) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN, false);
 
         _isObjectMoving = true;
         _isInteactionBlocked = true;
@@ -74,6 +75,8 @@ public class Door : MonoBehaviour
                     _doorCollider.enabled = true;
 
                     _isInteactionBlocked = false;
+
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_CLOSE, false);
                 }
                 break;
             case false:

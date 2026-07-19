@@ -293,6 +293,8 @@ public class ScannerController : MonoBehaviour
                 GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
             }
 
+            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCAN, true);
+
             GameEventsManager.instance.inputEvents.ShowCursor(true);
             IsScanning = true;
             _resetArmRotation = false;
@@ -359,7 +361,10 @@ public class ScannerController : MonoBehaviour
 
         _scannerCone.ToggleVisibility(false);
 
+        GameEventsManager.instance.soundEvents.StopSound();
+
         GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
+
         if(_xrayDecal != null && ScannerManager.instance.ScannerMode == ScannerMode.XRAY) _xrayDecal.enabled = false;
 
         if(context == InputEventContext.SCANNER)

@@ -522,7 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Can
   ObjectKind: 1
-  ObjectType: 9
+  ObjectType: 6
   ScanObjectGO: {fileID: 7816353949356818238}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}

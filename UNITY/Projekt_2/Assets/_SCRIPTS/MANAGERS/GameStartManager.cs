@@ -42,6 +42,8 @@ public class GameStartManager : MonoBehaviour
 
         _glitchController.Intensity = 1;
         _glitchThreshold = 0.08f;
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.WAKE_UP, false);
     }
 
     void Update()

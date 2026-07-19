@@ -522,8 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
   Name: Largemouth Bass
   ObjectKind: 1
-  ObjectType: 35
+  ObjectType: 32
   ScanObjectGO: {fileID: 4142357728626348925}
+  Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 1106432839741852729}
   _InfoCanvasAnimator: {fileID: 4430531856486183046}
   _GlitchParticles: {fileID: 0}

@@ -11,6 +11,7 @@ public class GameEventsManager : MonoBehaviour
     public QuestEvents questEvents;
     public InteractionEvents interactionEvents;
     public UIEvents uiEvents;
+    public SoundEvents soundEvents;
 
     void Awake()
     {
@@ -29,5 +30,6 @@ public class GameEventsManager : MonoBehaviour
         questEvents = new QuestEvents();
         interactionEvents = new InteractionEvents();
         uiEvents = new UIEvents();
+        soundEvents = new SoundEvents();
     }
 }
