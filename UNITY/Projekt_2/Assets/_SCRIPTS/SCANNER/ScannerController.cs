@@ -153,6 +153,8 @@ public class ScannerController : MonoBehaviour
             case 1f:
                 if(context == InputEventContext.DEFAULT) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.SCANNER);
 
+                GameEventsManager.instance.uiEvents.ShowScannerTooltip(false);
+
                 _blockRC = false;
 
                 ScannerArm.SetActive(true);
@@ -362,6 +364,8 @@ public class ScannerController : MonoBehaviour
         _scannerCone.ToggleVisibility(false);
 
         GameEventsManager.instance.soundEvents.StopSound();
+
+        GameEventsManager.instance.uiEvents.ShowInventoryTooltip(true);
 
         GameEventsManager.instance.interactionEvents.ScanObjectOff(_lastScannedObject, ScannerManager.instance.ScannerMode);
 

@@ -57,7 +57,12 @@ public class OpenFurniture : MonoBehaviour
 
         if (requiresItemToOpen)
         {
-            if(InventorySystem.instance.Get(itemData) == null) return; //Send event that player does not have required item
+            if(InventorySystem.instance.Get(itemData) == null)
+            {
+                if(toggle == true)
+                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_LOCKED, false);
+                return; //Send event that player does not have required item
+            } 
         }
             
         
@@ -69,9 +74,11 @@ public class OpenFurniture : MonoBehaviour
                     switch (drawerComponents[m_Drawers[i]].type)
                     {
                         case FurnitureType.DRAWER:
+                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DRAWER_OPEN, false);
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDrawerPosition(m_Drawers[i]));
                             break;
                         case FurnitureType.DOOR:
+                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN, false);
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDoorRotation(m_Drawers[i], i));
                             break;
                     }
@@ -80,6 +87,7 @@ public class OpenFurniture : MonoBehaviour
                     switch (drawerComponents[m_Drawers[i]].type)
                         {
                             case FurnitureType.DRAWER:
+                                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DRAWER_CLOSE, false);
                                 drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedPosition);
                                 break;
                             case FurnitureType.DOOR:

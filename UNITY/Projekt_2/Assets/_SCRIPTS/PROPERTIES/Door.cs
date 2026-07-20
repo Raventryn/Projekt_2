@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 public class Door : MonoBehaviour
 {
     [SerializeField] Vector3 _openRotation;
+    AudioSource audioSource;
+    [SerializeField] AudioClip openSound;
+    [SerializeField] AudioClip closeSound;
     Collider _doorCollider;
     Vector3 _closedRotation;
     Vector3 _originRotation;
@@ -26,6 +29,7 @@ public class Door : MonoBehaviour
     {
         _closedRotation = transform.localEulerAngles;
         _doorCollider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -48,12 +52,12 @@ public class Door : MonoBehaviour
     {
         if(gameObject != this.gameObject || _isInteactionBlocked ) return;
 
-        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN, false);
-
         _isObjectMoving = true;
         _isInteactionBlocked = true;
 
         _doorCollider.enabled = false;
+
+        audioSource.PlayOneShot(openSound);
     }
 
     void RotateDoor(Vector3 target)
@@ -76,7 +80,7 @@ public class Door : MonoBehaviour
 
                     _isInteactionBlocked = false;
 
-                    GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_CLOSE, false);
+                    audioSource.PlayOneShot(closeSound);
                 }
                 break;
             case false:

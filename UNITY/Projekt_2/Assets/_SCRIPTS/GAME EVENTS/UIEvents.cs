@@ -16,4 +16,18 @@ public class UIEvents
     {
         onHideInteractionWidget?.Invoke();
     }
+
+    public event Action<bool> onShowScannerTooltip;
+
+    public void ShowScannerTooltip(bool toggle)
+    {
+        onShowScannerTooltip?.Invoke(toggle);
+    }
+
+    public event Action<bool> onShowInventoryTooltip;
+
+    public void ShowInventoryTooltip(bool toggle)
+    {
+        onShowInventoryTooltip?.Invoke(toggle);
+    }
 }

@@ -49,7 +49,7 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] bool isCrouched;
     [SerializeField] bool isStanding = true;
 
-    private float _moveSpeed;
+    public float MoveSpeed;
     private float _verticalVelocity;
     private float _gravityStrength = 9.81f;
 
@@ -61,6 +61,8 @@ public class Player_Controller : MonoBehaviour
 
     private bool _allowMove = true;
     private bool _allowLook = true;
+
+    private bool isPlayingStepSounds;
     
     Vector3 _cameraRestPosition;
     
@@ -130,6 +132,17 @@ public class Player_Controller : MonoBehaviour
 
         Vector2 inputStrength = _moveAction.ReadValue<Vector2>();
 
+        if (!isPlayingStepSounds && inputStrength.magnitude != 0)
+        {
+            isPlayingStepSounds = true;
+            GameEventsManager.instance.soundEvents.PlayStepSounds();
+        }
+        else if (isPlayingStepSounds && inputStrength.magnitude == 0)
+        {
+            isPlayingStepSounds = false;
+            GameEventsManager.instance.soundEvents.StopStepSounds();
+        }
+
         /*gameObject.transform.Translate(Vector3.forward * _moveSpeed * inputStrength.y * Time.deltaTime, Space.Self);
 
         gameObject.transform.Translate(Vector3.right * _moveSpeed * inputStrength.x * Time.deltaTime, Space.Self);*/
@@ -140,7 +153,7 @@ public class Player_Controller : MonoBehaviour
         {
             moveDirection = transform.right * inputStrength.x + transform.forward * inputStrength.y;
 
-            _distanceWalked += _moveSpeed * Time.deltaTime;
+            _distanceWalked += MoveSpeed * Time.deltaTime;
 
             CameraBobOnWalk();
         }
@@ -149,7 +162,7 @@ public class Player_Controller : MonoBehaviour
             ReturnCameraToRestPosition();
         } 
 
-        _characterController.Move(moveDirection.normalized *(_moveSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        _characterController.Move(moveDirection.normalized *(MoveSpeed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
     private void Look()
@@ -243,15 +256,15 @@ public class Player_Controller : MonoBehaviour
     {
         if(sprinting)
         {
-            _moveSpeed = SprintSpeed;
+            MoveSpeed = SprintSpeed;
         }
         else if (crouching)
         {
-            _moveSpeed = CrouchSpeed;
+            MoveSpeed = CrouchSpeed;
         }
         else if(!IsCrouchForced)
         {
-            _moveSpeed = WalkSpeed;
+            MoveSpeed = WalkSpeed;
         }
     }
 
@@ -364,7 +377,7 @@ public class Player_Controller : MonoBehaviour
 
         Vector3 targetPosition = new Vector3(CameraFollowTarget.transform.localPosition.x, CameraFollowTarget.transform.localPosition.y + yOffset, CameraFollowTarget.transform.localPosition.z);
 
-        CameraFollowTarget.transform.localPosition = Vector3.MoveTowards(CameraFollowTarget.transform.localPosition, targetPosition, _moveSpeed);
+        CameraFollowTarget.transform.localPosition = Vector3.MoveTowards(CameraFollowTarget.transform.localPosition, targetPosition, MoveSpeed);
     
         //Debug.Log(CameraFollowTarget.transform.localPosition.y + Mathf.Sin(_distanceWalked * 5f) * 0.02f);
     }

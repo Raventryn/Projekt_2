@@ -150,6 +150,8 @@ public class InventoryUI : MonoBehaviour
 
         if (_InventoryContentParent.activeSelf)
         {
+            GameEventsManager.instance.uiEvents.ShowInventoryTooltip(false);
+
             UpdateInventory();
             if(_inventoryLength > 1)
             {
@@ -271,13 +273,16 @@ public class InventoryUI : MonoBehaviour
         if(inventoryItems.Count == 1)
         {
             _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
-            _currentItem.layer = 5;
+            SetObjectLayers(_currentItem);
         }
         else if(inventoryItems.Count == 2)
         {
             _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
             _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
             _nextItem = _previousItem;
+
+            SetObjectLayers(_currentItem);
+            SetObjectLayers(_previousItem);
 
             _currentItem.layer = 5;
             _previousItem.layer = 5;
@@ -288,10 +293,23 @@ public class InventoryUI : MonoBehaviour
             _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
             _nextItem = Instantiate(inventoryItems[2].ItemPrefab, ItemPosition("right"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
 
+            SetObjectLayers(_currentItem);
+            SetObjectLayers(_previousItem);
+            SetObjectLayers(_nextItem);
+
             _currentItem.layer = 5;
             _previousItem.layer = 5;
             _nextItem.layer = 5;  
         }  
+    }
+
+    void SetObjectLayers(GameObject gameObject)
+    {
+        gameObject.layer = 5;
+        foreach(Transform transform in gameObject.GetComponentsInChildren<Transform>())
+            {
+                transform.gameObject.layer = 5;
+            }
     }
 
     void SetSlotPositions()

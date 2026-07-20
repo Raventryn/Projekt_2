@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using KinoGlitch;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button optionsButton;
     [SerializeField] Button quitButton;
     [SerializeField] Button creditsButton;
+    [SerializeField] DigitalGlitchController glitchController;
     [SerializeField] CanvasGroup fullscreenPanelCG; 
     [SerializeField] float fadeDuration;
     [SerializeField] GameObject mainMenuContainer;
@@ -102,13 +104,18 @@ public class MainMenuManager : MonoBehaviour
     {
         float t = 0;
 
+        fullscreenPanelCG.alpha = 1f;
+        fullscreenPanelCG.gameObject.SetActive(true);
+
         while(t < fadeDuration)
         {
             t+= Time.deltaTime;
+            //glitchController.Intensity = 1f - Mathf.Clamp01(t / fadeDuration);
             fullscreenPanelCG.alpha = 1f - Mathf.Clamp01(t / fadeDuration);
             yield return null;
         }
 
+        //glitchController.Intensity = 0f;
         fullscreenPanelCG.alpha = 0f;
         fullscreenPanelCG.gameObject.SetActive(false);
 
@@ -119,16 +126,18 @@ public class MainMenuManager : MonoBehaviour
     {
         float t = 0;
 
-        fullscreenPanelCG.gameObject.SetActive(true);
+        //fullscreenPanelCG.gameObject.SetActive(true);
 
         while(t < fadeDuration)
         {
             t += Time.deltaTime;
-            fullscreenPanelCG.alpha = Mathf.Clamp01(t / fadeDuration);
+            //fullscreenPanelCG.alpha = Mathf.Clamp01(t / fadeDuration);
+            glitchController.Intensity = Mathf.Clamp01(t / fadeDuration);
             yield return null;
         }
 
-        fullscreenPanelCG.alpha = 1;
+        glitchController.Intensity = 1;
+        //fullscreenPanelCG.alpha = 1;
 
         onFinishedFade?.Invoke();
     }

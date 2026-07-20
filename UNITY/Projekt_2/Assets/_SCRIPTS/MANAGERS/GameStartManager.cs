@@ -44,6 +44,7 @@ public class GameStartManager : MonoBehaviour
         _glitchThreshold = 0.08f;
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.WAKE_UP, false);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GLITCH, true);
     }
 
     void Update()
@@ -64,6 +65,7 @@ public class GameStartManager : MonoBehaviour
     void DisableGlitch()
     {
         _glitchThreshold = 0;
+        GameEventsManager.instance.soundEvents.StopSound();
         //Disable Particles
     }
 
@@ -73,6 +75,9 @@ public class GameStartManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(true);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
+
+        GameEventsManager.instance.uiEvents.ShowScannerTooltip(true);
+        GameEventsManager.instance.soundEvents.PlayMusic();
     }
 
     void TestNextCoroutine(int stage)

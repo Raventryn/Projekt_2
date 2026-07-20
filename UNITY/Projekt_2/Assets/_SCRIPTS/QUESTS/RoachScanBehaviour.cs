@@ -76,12 +76,16 @@ public class RoachScanBehaviour : MonoBehaviour
         Debug.Log(gameObject);
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN || !IsScannable) return;
 
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SIZZLE, true);
+
         IsBeingScanned = true;
     }
 
     void StopScanning(GameObject gameObject, ScannerMode mode )
     {
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN || !IsScannable) return;
+
+        GameEventsManager.instance.soundEvents.StopSound();
         
         IsBeingScanned = false;
     }
@@ -117,10 +121,12 @@ public class RoachScanBehaviour : MonoBehaviour
         if (!ScannerManager.instance.ScannedObjects.ContainsKey(scanObject.ObjectType))
         {
             ScannerManager.instance.ScannedObjects.Add(scanObject.ObjectType, true);
+            GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(scanObject.ObjectType);
         }
         else
         {
             ScannerManager.instance.ScannedObjects[scanObject.ObjectType] = true;
+            GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(scanObject.ObjectType);
         }
         
         scanObject.ToggleCollider(!toggle);

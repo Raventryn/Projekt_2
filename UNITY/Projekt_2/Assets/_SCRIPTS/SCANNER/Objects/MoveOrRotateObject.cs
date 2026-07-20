@@ -65,23 +65,14 @@ public class MoveOrRotateObject : MonoBehaviour
 
                 transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(targetPosition), (10f + angleDifference * 2f) * Time.deltaTime);
 
-                switch (_IsDoorOpen)
+                if(angleDifference <= 0.01f)
                 {
-                    case true:
-                        if(angleDifference <= 0.01f)
-                        {
-                            transform.localEulerAngles = targetPosition;
-                            IsObjectMoving = false;
-                        }
-                        break;
-                    case false:
-                        if(angleDifference <= 0.01f)//Mathf.DeltaAngle(transform.localEulerAngles.y, targetPosition.y) <= 0.01f)
-                        {
-                            transform.localEulerAngles = targetPosition;
-                            IsObjectMoving = false;
-                        }
-                        break;
+                    transform.localEulerAngles = targetPosition;
+                    IsObjectMoving = false;
+
+                    if(!_IsDoorOpen) GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_CLOSE, false);
                 }
+
                 break;
         }
         

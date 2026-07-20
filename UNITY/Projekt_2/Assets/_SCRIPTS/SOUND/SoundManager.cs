@@ -29,6 +29,9 @@ public class SoundManager : MonoBehaviour
             case SoundType.DOOR_OPEN:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.DOOR_OPEN, isPersistent);
                 break;
+            case SoundType.DOOR_LOCKED:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.DOOR_LOCKED, isPersistent);
+                break;
             case SoundType.DOOR_CLOSE:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.DOOR_CLOSE, isPersistent);
                 break;
@@ -61,7 +64,10 @@ public class SoundManager : MonoBehaviour
                 break;  
             case SoundType.DRAWER_CLOSE:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.DRAWER_CLOSE, isPersistent);
-                break;                  
+                break;      
+            case SoundType.SIZZLE:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.SIZZLE, isPersistent);
+                break;            
         }
     }
 }

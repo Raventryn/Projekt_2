@@ -20,10 +20,18 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField] TMP_Text voicesVolumeText;
     [SerializeField] TMP_Text effectsVolumeText;
     [SerializeField] TMP_Text environmentVolumeText;
+    [SerializeField] TMP_Text musicVolumeText;
 
     [SerializeField] TMP_Dropdown resolutionsDropdown;
     [SerializeField] TMP_Dropdown refreshRatesDropdown;
     [SerializeField] TMP_Dropdown fullscreenModeDropdown;
+
+    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] Slider masterVolumeSlider;
+    [SerializeField] Slider voicesVolumeSlider;
+    [SerializeField] Slider effectsVolumeSlider;
+    [SerializeField] Slider environmentVolumeSlider;
+    [SerializeField] Slider musicVolumeSlider;
 
     List<Resolution> allResolutions = new List<Resolution>();
     List<RefreshRate> refreshRates = new List<RefreshRate>();
@@ -45,6 +53,8 @@ public class OptionsMenuManager : MonoBehaviour
         _returnButton.onClick.AddListener(() => StartCoroutine(DelayButtonAction()));
 
         SetVolumeTexts();
+
+        UpdateSliderPositions();
 
         _settingsMenuContainer.SetActive(false);
 
@@ -150,13 +160,13 @@ public class OptionsMenuManager : MonoBehaviour
 
     public void ChangeLookSensitivity(float value)
     {
-        _lookSensitivity = Mathf.Clamp(2f + (value * 13f), 2, 15);
+        _lookSensitivity = Mathf.Clamp(value * 15f, 2, 15);
         _playerSettings.LookSensitivity = _lookSensitivity;
     }
 
     public void ChangeMasterVolume(float value)
     {
-        float correctedValue = -80 + value * 100;
+        float correctedValue = -80 + value * 80;
 
         audioMixer.SetFloat("volumeMaster", correctedValue);
 
@@ -198,12 +208,34 @@ public class OptionsMenuManager : MonoBehaviour
         _playerSettings.EnvironmentVolume = correctedValue;
     }
 
+    public void ChangeMusicVolume(float value)
+    {
+        float correctedValue = -80 + value * 80;
+
+        audioMixer.SetFloat("volumeMusic", correctedValue);
+
+        musicVolumeText.text = "Music: " + (value * 100).ToString("F0");
+
+        _playerSettings.MusicVolume = correctedValue;
+    }
+
     void SetVolumeTexts()
     {
         masterVolumeText.text = "Master: 50";
         voicesVolumeText.text = "Voices: 100";
         effectsVolumeText.text = "Effects: 100";
         environmentVolumeText.text = "Environment: 100";
+        musicVolumeText.text = "Music: 100";
+    }
+
+    void UpdateSliderPositions()
+    {
+        sensitivitySlider.value = _playerSettings.LookSensitivity / 15f;
+        masterVolumeSlider.value = 1 - _playerSettings.MasterVolume / -80f;
+        voicesVolumeSlider.value = 1 - _playerSettings.VoicesVolume / -80f;
+        effectsVolumeSlider.value = 1 - _playerSettings.EffectsVolume / -80f;
+        environmentVolumeSlider.value = 1 - _playerSettings.EnvironmentVolume / -80f;
+        musicVolumeSlider.value = 1 - _playerSettings.MusicVolume / -80f;
     }
 
     IEnumerator DelayButtonAction()

@@ -29,6 +29,8 @@ public class CompareWaves : MonoBehaviour
     [SerializeField] Vector2 _progressGraphLimits = new Vector2(0, 10);
 
     [SerializeField] Color[] lineColors;
+
+    AudioSource audioSource;
     LineColors previousColor;
     ScannableObjectType objectType;
     Vector3 _playerLinePosition;
@@ -58,6 +60,8 @@ public class CompareWaves : MonoBehaviour
     void Start()
     {
         _playerLinePosition = _playerWave._lineRenderer.transform.localPosition;
+
+        audioSource = GetComponent<AudioSource>();
 
         runComparison = false;
 
@@ -109,6 +113,19 @@ public class CompareWaves : MonoBehaviour
         GameEventsManager.instance.inputEvents.ShowCursor(false);
 
         InvokeRepeating("SimplifyProgressGraph", 2, 2);
+
+        audioSource.volume = 0;
+        audioSource.Play();
+    }
+
+    void MatchAudioVolume(float value)
+    {
+        audioSource.volume = Mathf.Clamp(value , 0, 0.75f);
+    }
+
+    void ChangeAudioPitch(float value)
+    {
+        audioSource.pitch = Mathf.Clamp(value , 0.7f, 1.3f);
     }
 
     public void ResetMinigame()
@@ -144,6 +161,8 @@ public class CompareWaves : MonoBehaviour
             case false:
                 contentParentAnimator.SetBool("IsActive", false);
                 startMinigameButton.gameObject.SetActive(false);
+
+                audioSource.Stop();
 
                 yield return new WaitForSeconds(0.15f);
 
@@ -187,6 +206,9 @@ public class CompareWaves : MonoBehaviour
             Vector3 newPosition = new Vector3(pointPosition.x, transferSpeed * 5, pointPosition.z);
             _transferSpeedBar.SetPosition(i, newPosition);
         }
+
+        MatchAudioVolume(1-transferSpeed);
+        ChangeAudioPitch(0.7f + (totalDifference * 0.2f));
 
         if(amplitudeDifference <= 0.21f && frequencyDifference <= 0.023f)
         {
@@ -236,6 +258,8 @@ public class CompareWaves : MonoBehaviour
                 }
             }
 
+            
+
             if(transferSpeed <= 0)
             {
                 runComparison = false;
@@ -244,6 +268,8 @@ public class CompareWaves : MonoBehaviour
                 _targetWave.WaveSpeed = 0;
 
                 Debug.Log("Failed!");
+
+                audioSource.Stop();
 
                 GameEventsManager.instance.inputEvents.ShowCursor(true);
                 //restartMinigameButton.gameObject.SetActive(true);
@@ -271,6 +297,8 @@ public class CompareWaves : MonoBehaviour
             _targetWave.WaveSpeed = 0;
             
             Debug.Log("Succeeded!");
+
+            audioSource.Stop();
 
             ShowMinigameUI(false, objectType);
             ResetMinigame();

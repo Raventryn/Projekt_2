@@ -32,6 +32,27 @@ public class SoundEvents
             onStopSound();
         }
     }
+
+    public event Action onPlayMusic;
+
+    public void PlayMusic()
+    {
+        onPlayMusic?.Invoke();
+    }
+
+    public event Action onPlayStepSounds;
+
+    public void PlayStepSounds()
+    {
+        onPlayStepSounds?.Invoke();
+    }
+
+    public event Action onStopStepSounds;
+
+    public void StopStepSounds()
+    {
+        onStopStepSounds?.Invoke();
+    }
 }
 
 public enum SoundType
@@ -53,5 +74,6 @@ public enum SoundType
     DRAWER_CLOSE,
     CLOSET_OPEN,
     CLOSET_CLOSE,
+    SIZZLE
 
 }

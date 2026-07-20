@@ -44,6 +44,10 @@ public class ScanCameraGlitches : MonoBehaviour
 
     void GlitchOnScan(ScannableObjectType type)
     {
+        Debug.Log("Entered");
         _IsGlitching = true;
+        _IsStrenghtening = true;
+
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GLITCH, false);
     }
 }

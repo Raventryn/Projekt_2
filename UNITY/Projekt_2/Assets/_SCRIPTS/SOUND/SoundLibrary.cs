@@ -20,4 +20,5 @@ public class SoundLibrary : MonoBehaviour
     public AudioClip DRAWER_CLOSE;
     public AudioClip CLOSET_OPEN;
     public AudioClip CLOSET_CLOSE;
+    public AudioClip SIZZLE;
 }

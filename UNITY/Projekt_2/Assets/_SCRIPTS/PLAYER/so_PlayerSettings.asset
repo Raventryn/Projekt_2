@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71af34a093d69164eaac0c8739487835, type: 3}
   m_Name: so_PlayerSettings
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSettingsSO
-  LookSensitivity: 6.63
-  MasterVolume: -30.39081
+  LookSensitivity: 7.958629
+  MasterVolume: 0
   VoicesVolume: 0
   EffectsVolume: 0
   EnvironmentVolume: 0
-  fullscreenMode: 0
+  MusicVolume: 0
+  fullscreenMode: 3
