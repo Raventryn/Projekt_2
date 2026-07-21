@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3500894243780776003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9a4847a92104072b352fe44da35cbb, type: 3}
+  m_Name: Volumetric Lights
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::VolumetricLights.VolumetricLightsRenderFeature
+  m_Active: 1
+  shader: {fileID: 4800000, guid: 6b7e6acc194204408b3294f5c220fc1e, type: 3}
+  blendMode: 0
+  renderPassEvent: 450
+  downscaling: 1
+  blurPasses: 0
+  blurDownscaling: 1
+  blurSpread: 1
+  blurHDR: 1
+  blurEdgePreserve: 0
+  blurEdgeDepthThreshold: 0.001
+  brightness: 1
+  ditherStrength: 0
+  ignoreOverlayCamera: 1
 --- !u!114 &-1082912679824157270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,7 +70,8 @@ MonoBehaviour:
   - {fileID: 951197816566927469}
   - {fileID: 2070855075877784113}
   - {fileID: -1082912679824157270}
-  m_RendererFeatureMap: ad6b866f10d7b46cd83387f0e267314c6d5099df5f55330d318a023bb827bd1caa9550bca7b8f8f0
+  - {fileID: -3500894243780776003}
+  m_RendererFeatureMap: ad6b866f10d7b46cd83387f0e267314c6d5099df5f55330d318a023bb827bd1caa9550bca7b8f8f0bdaf3cdb3b536acf
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}

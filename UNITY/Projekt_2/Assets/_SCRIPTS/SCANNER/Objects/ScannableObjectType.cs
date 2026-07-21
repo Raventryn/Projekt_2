@@ -101,7 +101,13 @@ public enum ScannableObjectType
     TOPF,
     BOWL,
     MEDICKIT,
-    HANGINGBASS
+    HANGINGBASS,
+    TERMINAL_1,
+    TERMINAL_2,
+    MONITOR_1,
+    MONITOR_2,
+    FISHINGROD
+    
 
 
 
