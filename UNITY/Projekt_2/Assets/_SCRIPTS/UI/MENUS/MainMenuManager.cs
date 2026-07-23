@@ -20,6 +20,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button creditsButton;
     [SerializeField] DigitalGlitchController glitchController;
     [SerializeField] CanvasGroup fullscreenPanelCG; 
+    [SerializeField] CanvasGroup codeBlockerPanel;
     [SerializeField] float fadeDuration;
     [SerializeField] GameObject mainMenuContainer;
     [SerializeField] GameObject settingsMenuContainer;
@@ -32,7 +33,7 @@ public class MainMenuManager : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.ShowCursor(true);
         AddOnClickEvents();
-        StartCoroutine(FadeIn());
+        //StartCoroutine(FadeIn(fullscreenPanelCG));
     }
 
     void AddOnClickEvents()
@@ -41,6 +42,11 @@ public class MainMenuManager : MonoBehaviour
         optionsButton.onClick.AddListener(() => StartButtonAction(ButtonType.OPTIONS));
         quitButton.onClick.AddListener(() => StartButtonAction(ButtonType.QUIT));
         creditsButton.onClick.AddListener(() => StartButtonAction(ButtonType.CREDITS));
+    }
+
+    public void FadeOutBlockerPanel()
+    {
+        StartCoroutine(FadeIn(codeBlockerPanel));
     }
 
     void StartGame()
@@ -100,24 +106,24 @@ public class MainMenuManager : MonoBehaviour
         ExecuteButtonAction(type);
     }
 
-    IEnumerator FadeIn()
+    IEnumerator FadeIn(CanvasGroup canvasGroup)
     {
         float t = 0;
 
-        fullscreenPanelCG.alpha = 1f;
-        fullscreenPanelCG.gameObject.SetActive(true);
+        canvasGroup.alpha = 1f;
+        canvasGroup.gameObject.SetActive(true);
 
         while(t < fadeDuration)
         {
             t+= Time.deltaTime;
             //glitchController.Intensity = 1f - Mathf.Clamp01(t / fadeDuration);
-            fullscreenPanelCG.alpha = 1f - Mathf.Clamp01(t / fadeDuration);
+            canvasGroup.alpha = 1f - Mathf.Clamp01(t / fadeDuration);
             yield return null;
         }
 
         //glitchController.Intensity = 0f;
-        fullscreenPanelCG.alpha = 0f;
-        fullscreenPanelCG.gameObject.SetActive(false);
+        canvasGroup.alpha = 0f;
+        canvasGroup.gameObject.SetActive(false);
 
         onFinishedFade?.Invoke();
     }

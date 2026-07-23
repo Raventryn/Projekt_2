@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/VolumetricFog2/Demo/DemoShaderGraph/DemoShaderGraph.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/TESTING/Scenes/MainMenu_Test.unity
     guid: 16c4fd5fe4c40604cb61f1dfac1f901c
+  - enabled: 1
+    path: Assets/_SCENES/MainMenu_Test.unity
+    guid: 3ecf9f63772a8d544bcc858e791f9ffa
   - enabled: 1
     path: Assets/_SCENES/JasminTestLevel.unity
     guid: 2d40ad0030a71c949ada1e42c161f850
