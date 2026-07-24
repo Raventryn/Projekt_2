@@ -78,6 +78,7 @@ public class InventoryUI : MonoBehaviour
 
         _InventoryContentParent.SetActive(false);
         _LevelMenuContentParent.SetActive(false);
+        _switchMenusButton.gameObject.SetActive(false);
         ClearItemTexts();
 
         //_uiCanvas.gameObject.SetActive(false);
@@ -115,12 +116,15 @@ public class InventoryUI : MonoBehaviour
         if(context != InputEventContext.DEFAULT && context != InputEventContext.INVENTORY || _moveItemsLeft || _moveItemsRight) return;
         
         _isUIenabled = !_isUIenabled;
+        _switchMenusButton.gameObject.SetActive(_isUIenabled);
 
-        if(_isUIenabled == true)
+        if (_isUIenabled == true)
         {
             _previousContext = context;
 
             GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.INVENTORY);
+
+            
 
             GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
             GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
@@ -137,6 +141,8 @@ public class InventoryUI : MonoBehaviour
 
             GameEventsManager.instance.inputEvents.ShowCursor(false);
         }
+
+        GameEventsManager.instance.uiEvents.GlitchOnMenu();
 
         ToggleInventory(_isUIenabled);
         _LevelMenuContentParent.SetActive(false);

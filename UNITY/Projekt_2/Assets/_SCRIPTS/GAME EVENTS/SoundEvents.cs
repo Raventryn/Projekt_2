@@ -74,6 +74,7 @@ public enum SoundType
     DRAWER_CLOSE,
     CLOSET_OPEN,
     CLOSET_CLOSE,
-    SIZZLE
+    SIZZLE,
+    MAIN_MENU_MUSIC
 
 }

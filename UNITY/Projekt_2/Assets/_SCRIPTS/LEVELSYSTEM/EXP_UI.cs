@@ -47,7 +47,7 @@ public class EXP_UI : MonoBehaviour
         _lvlLeftText = _levelImageLeft.gameObject.GetComponentInChildren<TMP_Text>();
         _lvlRightText = _levelImageRight.gameObject.GetComponentInChildren<TMP_Text>();
 
-        _levelImageLeft.color = new Color(210f / 255, 186f / 255, 51f / 255);
+        _levelImageLeft.color = new Color(255f / 255, 205f / 255, 0f / 255);
 
         _lvlLeftText.text = $"{ExperienceManager.instance.CurrentPlayerLevel}";
         _lvlRightText.text = $"{ExperienceManager.instance.CurrentPlayerLevel + 1}";
@@ -87,7 +87,7 @@ public class EXP_UI : MonoBehaviour
         {
             ExperienceManager.instance.AddPlayerLevel();
 
-            _levelImageRight.color = new Color(210f / 255, 186f / 255, 51f / 255);
+            _levelImageRight.color = new Color(255f / 255, 205f / 255, 0f / 255);
             _lineRenderer.positionCount++;
             _lineRenderer.SetPosition(_lineRenderer.positionCount-1, new Vector3(350, 0, 0));
 
@@ -104,6 +104,10 @@ public class EXP_UI : MonoBehaviour
         foreach(AbilityButton button in _buttons)
         {
             button.UnlockButton(false);
+            if (!button.isUnlocked)
+            {
+                button.buttonComponent.image.sprite = button.defaultSprite;
+            }
         }
 
         switch (_currentSubLevel)
@@ -112,21 +116,30 @@ public class EXP_UI : MonoBehaviour
                 foreach(AbilityButton button in _subLevelOneButtons)
                 {
                     if(button.moneyRequirement <= ExperienceManager.instance.CurrentMoney)
+                    {
                         button.UnlockButton(true);
+                        button.buttonComponent.image.sprite = button.interactableSprite;
+                    }                  
                 }
                 break;
             case 2:
                 foreach(AbilityButton button in _subLevelTwoButtons)
                 {
                     if(button.moneyRequirement <= ExperienceManager.instance.CurrentMoney)
+                    {
                         button.UnlockButton(true);
+                        button.buttonComponent.image.sprite = button.interactableSprite;
+                    }                       
                 }
                 break;
             case 3:
                 foreach(AbilityButton button in _subLevelThreeButtons)
                 {
                     if(button.moneyRequirement <= ExperienceManager.instance.CurrentMoney)
+                    {
                         button.UnlockButton(true);
+                        button.buttonComponent.image.sprite = button.interactableSprite;
+                    }     
                 }
                 break;
         }
@@ -170,15 +183,18 @@ public class EXP_UI : MonoBehaviour
 
         _lvlLeftText.text = $"{ExperienceManager.instance.CurrentPlayerLevel}";
         _lvlRightText.text = $"{ExperienceManager.instance.CurrentPlayerLevel + 1}";
-        _levelImageRight.color = new Color(72f / 255, 72f / 255, 72f / 255);
+        _levelImageRight.color = new Color(255f / 255, 255f / 255, 255f / 255);
 
         _lineRenderer.positionCount = 1;
 
         foreach(AbilityButton button in _buttons)
         {
             ColorBlock buttonColors = button.buttonComponent.colors;
-            buttonColors.disabledColor = new Color(72f / 255, 72f / 255, 72f / 255);
+            buttonColors.disabledColor = button.defaultColor;
+            buttonColors.normalColor = button.defaultColor;
             button.buttonComponent.colors = buttonColors;
+            button.buttonComponent.image.sprite = button.defaultSprite;
+            button.isUnlocked = false;
         }
 
         _currentSubLevel = 1;

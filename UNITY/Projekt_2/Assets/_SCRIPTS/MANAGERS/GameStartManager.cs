@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameStartManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameStartManager : MonoBehaviour
     [SerializeField] float _glitchFadeTime;
 
     float _glitchThreshold;
+    bool isDecreaseGlitch;
 
     void OnEnable()
     {
@@ -49,7 +51,7 @@ public class GameStartManager : MonoBehaviour
 
     void Update()
     {
-        if(_glitchController.Intensity > _glitchThreshold)
+        if(_glitchController.Intensity > _glitchThreshold && isDecreaseGlitch)
         {
             DecreaseGlitchStrength();
         }
@@ -59,7 +61,11 @@ public class GameStartManager : MonoBehaviour
     {
         _glitchController.Intensity -= (1 / _glitchFadeTime) * Time.deltaTime;
 
-        if(_glitchController.Intensity <= 0) _glitchController.Intensity = 0;
+        if (_glitchController.Intensity <= 0)
+        {
+            _glitchController.Intensity = 0;
+            isDecreaseGlitch = false;
+        }
     }
 
     void DisableGlitch()
@@ -96,7 +102,12 @@ public class GameStartManager : MonoBehaviour
         switch (stage)
         {
             case 1:
-                yield return new WaitForSeconds(0.5f);
+
+                yield return new WaitForSeconds(1);
+
+                isDecreaseGlitch = true;
+
+                yield return new WaitForSeconds(1.5f);
 
                 _cameraAnimator.SetTrigger("Awake");
 

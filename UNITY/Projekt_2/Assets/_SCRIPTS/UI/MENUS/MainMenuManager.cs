@@ -27,6 +27,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject creditsMenuContainer;
     [SerializeField] Scene gameScene;
 
+    bool isGameStarted = false;
+
     event Action onFinishedFade;
 
     void Start()
@@ -46,7 +48,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void FadeOutBlockerPanel()
     {
+        if (isGameStarted) return;
+
+        isGameStarted = true;
         StartCoroutine(FadeIn(codeBlockerPanel));
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MAIN_MENU_MUSIC, true);
     }
 
     void StartGame()

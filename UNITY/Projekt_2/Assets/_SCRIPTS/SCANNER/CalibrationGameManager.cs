@@ -18,6 +18,7 @@ public class CalibrationGameManager : MonoBehaviour
     [SerializeField] GameObject _uiContentParent;
     [SerializeField] Image _matchFillBar;
     [SerializeField] Image _sensitivityBar;
+    [SerializeField] GameObject _sensitivityContainer;
     [SerializeField] GameObject[] _panels;
 
 
@@ -73,6 +74,8 @@ public class CalibrationGameManager : MonoBehaviour
         {
             panel.SetActive(false);
         }
+
+        _sensitivityContainer.SetActive(false);
 
         //StartMinigame();
     }
@@ -137,7 +140,8 @@ public class CalibrationGameManager : MonoBehaviour
         }
 
         ShowHintPanels(_panels[2], true);
-        
+
+        _uiContentParent.SetActive(false);
 
         GameEventsManager.instance.questEvents.FinishedCalibrationMinigame();
     }
@@ -203,6 +207,8 @@ public class CalibrationGameManager : MonoBehaviour
 
                 _allowEquipMethod = false;
 
+                _sensitivityContainer.SetActive(true);
+
                 break;
             case -1f:
             if(!_IsArmEquipped) return;
@@ -214,6 +220,8 @@ public class CalibrationGameManager : MonoBehaviour
                 GameEventsManager.instance.inputEvents.ShowCursor(false);
 
                 StartCoroutine(EquipArmAnim(false));
+
+                _sensitivityContainer.SetActive(false);
                 break;
         }
     }
@@ -313,6 +321,7 @@ public class CalibrationGameManager : MonoBehaviour
         panel.SetActive(toggle);
         _lastUsedPanel = panel;
     }
+
 
     IEnumerator EquipArmAnim(bool toggle)
     {

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57a6945b90dcd0c4b81619c0d8b5c283, type: 3}
   m_Name: MainMenu_ByCharacter
   m_EditorClassIdentifier: Febucci.TextAnimatorForUnity.Runtime::Febucci.TextAnimatorForUnity.TypingDelaysByCharacter
-  waitForNormalChars: 0.00083333335
-  waitLong: 0.00083333335
-  waitMiddle: 0.00083333335
+  waitForNormalChars: 0.00125
+  waitLong: 0.00125
+  waitMiddle: 0.00125
   avoidMultiplePunctuationWait: 0
   waitForNewLines: 1
   waitForLastCharacter: 1

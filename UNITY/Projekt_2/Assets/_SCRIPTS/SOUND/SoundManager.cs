@@ -67,7 +67,10 @@ public class SoundManager : MonoBehaviour
                 break;      
             case SoundType.SIZZLE:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.SIZZLE, isPersistent);
-                break;            
+                break;
+            case SoundType.MAIN_MENU_MUSIC:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.MENU_MUSIC, isPersistent);
+                break;
         }
     }
 }

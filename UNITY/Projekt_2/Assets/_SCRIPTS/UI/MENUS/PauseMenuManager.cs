@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
+using KinoGlitch;
 
 public class PauseMenuManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] GameObject settingsMenuContainer;
 
     [SerializeField] Scene gameScene;
+
+    [SerializeField] DigitalGlitchController digitalGlitchController;
 
     InputEventContext _previousContext;
 
@@ -51,6 +54,8 @@ public class PauseMenuManager : MonoBehaviour
     void PauseOrContinueGame(InputEventContext context)
     {
         if(context != InputEventContext.DEFAULT && context != InputEventContext.MENU || settingsMenuContainer.activeSelf) return;
+
+        GameEventsManager.instance.uiEvents.GlitchOnMenu();
 
         if (!_isGamePaused)
         {
@@ -139,16 +144,19 @@ public class PauseMenuManager : MonoBehaviour
     {
         float t = 0;
 
-        fullscreenPanelCG.gameObject.SetActive(true);
+        //fullscreenPanelCG.gameObject.SetActive(true);
+        digitalGlitchController.Intensity = 0;
 
         while(t < fadeDuration)
         {
             t += Time.deltaTime;
-            fullscreenPanelCG.alpha = Mathf.Clamp01(t / fadeDuration);
+            //fullscreenPanelCG.alpha = Mathf.Clamp01(t / fadeDuration);
+            digitalGlitchController.Intensity = Mathf.Clamp01(t / fadeDuration);
             yield return null;
         }
 
-        fullscreenPanelCG.alpha = 1;
+        //fullscreenPanelCG.alpha = 1;
+        digitalGlitchController.Intensity = 1;
 
         onFinishedFade?.Invoke();
     }

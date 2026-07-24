@@ -140,6 +140,8 @@ public class CompareWaves : MonoBehaviour
 
     IEnumerator ToggleContentParent(bool isActive)
     {
+        GameEventsManager.instance.uiEvents.GlitchOnMenu();
+
         switch (isActive)
         {
             case true:

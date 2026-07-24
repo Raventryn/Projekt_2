@@ -30,4 +30,11 @@ public class UIEvents
     {
         onShowInventoryTooltip?.Invoke(toggle);
     }
+
+    public event Action onGlitchOnMenu;
+
+    public void GlitchOnMenu()
+    {
+        onGlitchOnMenu?.Invoke();
+    }
 }

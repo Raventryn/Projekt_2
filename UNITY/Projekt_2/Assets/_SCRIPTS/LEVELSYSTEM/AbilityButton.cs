@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,6 +8,13 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public AbilityType abilityType;
     public float value;
     public int moneyRequirement;
+    public Sprite interactableSprite;
+    public Sprite defaultSprite;
+    public Color defaultColor;
+    public Color black;
+    public TMP_Text buttonText;
+
+    public bool isUnlocked;
 
     //public AbilityButtonLevels_SO levelSO;
 
@@ -15,6 +23,8 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     void Start()
     {
         buttonComponent = GetComponent<Button>();
+
+        black = new Color(0, 0, 0);
 
         buttonComponent.onClick.AddListener(() => UnlockAbility());
     }
@@ -49,8 +59,10 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 break;
         }
 
+        isUnlocked = true;
+
         ColorBlock buttonColors = buttonComponent.colors;
-        buttonColors.disabledColor = new Color(210f / 255, 186f / 255, 51f / 255);
+        buttonColors.disabledColor = new Color(255f / 255, 205f / 255, 0f / 255);
         buttonComponent.colors = buttonColors;
 
         ExperienceManager.instance.ButtonInteraction(this);
@@ -64,5 +76,18 @@ public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void UnlockButton(bool toggle)
     {
         buttonComponent.interactable = toggle;
+        if (toggle)
+        {
+            buttonText.color = Color.black;
+        }
+        else
+        {
+            if(isUnlocked)
+            {
+                buttonText.color = Color.black;
+            }
+            else
+                buttonText.color = Color.white;
+        }
     }
 }
