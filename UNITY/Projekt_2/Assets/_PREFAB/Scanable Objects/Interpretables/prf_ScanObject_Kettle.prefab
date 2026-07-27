@@ -305,7 +305,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Toilet Paper
+  m_text: A kettle, an electric water boiler, a device used for heating water for
+    tea or coffee.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -339,7 +340,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -464,7 +465,7 @@ GameObject:
   - component: {fileID: 5067330419100531149}
   - component: {fileID: 4430531856486183046}
   m_Layer: 7
-  m_Name: prf_ScanObject_Cattle
+  m_Name: prf_ScanObject_Kettle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -520,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Toiletpaper
+  Name: Kettle
   ObjectKind: 0
   ObjectType: 64
   ScanObjectGO: {fileID: 5474247628448456413}

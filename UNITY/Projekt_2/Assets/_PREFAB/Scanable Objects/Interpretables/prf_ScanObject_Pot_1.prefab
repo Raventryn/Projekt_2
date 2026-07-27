@@ -237,7 +237,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Pot
+      value: A pot, a large cookware usually filled with large amounts liquid for
+        boiling and reducing. Found nearly everywhere in the world throughout human
+        history.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

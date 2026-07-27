@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Toiletpaper
+  Name: Small Terminal
   ObjectKind: 0
   ObjectType: 95
   ScanObjectGO: {fileID: 1000905195262445281}

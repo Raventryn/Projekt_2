@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Yellow Tang
+  Name: VR headset
   ObjectKind: 1
   ObjectType: 58
   ScanObjectGO: {fileID: 5061162104658233631}
@@ -313,7 +313,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Pile of CDs
+      value: 'A VR headset, a head-mounted device that uses 3D near-eye displays
+        and proportional tracking to provide a virtual reality environment. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Toiletpaper
+  Name: Toilet
   ObjectKind: 2
   ObjectType: 75
   ScanObjectGO: {fileID: 4656862596815700658}
@@ -162,7 +162,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Toilet Paper
+      value: 'A toilet, a piece of sanitary hardware that collects human waste, usually
+        for disposal. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

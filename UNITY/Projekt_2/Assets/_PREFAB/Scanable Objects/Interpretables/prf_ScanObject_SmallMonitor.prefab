@@ -237,7 +237,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Small Monitor
+      value: A small display monitor, used to show specific information.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

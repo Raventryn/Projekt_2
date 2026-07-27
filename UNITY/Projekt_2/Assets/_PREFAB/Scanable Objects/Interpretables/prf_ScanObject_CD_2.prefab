@@ -166,7 +166,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A second CD
+      value: 'A compact disk, of an unknown album. Seems like all availabe information
+        about this piece of music was lost. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

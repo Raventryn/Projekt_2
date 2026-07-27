@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Measuring Cup
+  Name: Measuring cup
   ObjectKind: 1
   ObjectType: 89
   ScanObjectGO: {fileID: 317935966421520386}
@@ -241,7 +241,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Measuring Cup
+      value: 'A measuring cup. A kitchen utensile used to measure the volume of liquids
+        for baking and cooking. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

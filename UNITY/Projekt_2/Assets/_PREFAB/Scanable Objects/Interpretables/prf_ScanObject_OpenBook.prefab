@@ -69,9 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Book
+  Name: Open book
   ObjectKind: 1
-  ObjectType: 56
+  ObjectType: 53
   ScanObjectGO: {fileID: 998696836652558595}
   Collider: {fileID: 0}
   _InfoCanvasContainer: {fileID: 9193491006830195678}
@@ -241,7 +241,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Book open
+      value: An open page of the 2035 book "The final warning"., a book about a theory
+        proposing humanity could completely die out by the year 2050.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

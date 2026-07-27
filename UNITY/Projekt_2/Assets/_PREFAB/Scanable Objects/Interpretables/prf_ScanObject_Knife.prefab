@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df14ed7fe8b25234f891f9e8ccf317be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScanObject
-  Name: Knife
+  Name: Hunting knife
   ObjectKind: 1
   ObjectType: 22
   ScanObjectGO: {fileID: 3402993297063548852}
@@ -237,7 +237,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: Knife
+      value: 'A hunting knife, a tool or weapon with a cutting edge attached to a
+        handle. '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
