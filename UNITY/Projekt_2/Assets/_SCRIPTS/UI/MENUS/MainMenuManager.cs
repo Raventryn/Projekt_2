@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Febucci.TextAnimatorForUnity;
 using KinoGlitch;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,14 +27,29 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject settingsMenuContainer;
     [SerializeField] GameObject creditsMenuContainer;
     [SerializeField] Scene gameScene;
+    [SerializeField] TypewriterComponent codeTypewriter;
 
     bool isGameStarted = false;
 
     event Action onFinishedFade;
 
+    void OnEnable()
+    {
+        codeTypewriter.onTextShowed.AddListener(FadeOutBlockerPanel);
+        GameEventsManager.instance.inputEvents.onPressedInteract += SkipTypewriter;
+    }
+
+    void OnDisable()
+    {
+        codeTypewriter.onTextShowed.RemoveListener(FadeOutBlockerPanel);
+        GameEventsManager.instance.inputEvents.onPressedInteract -= SkipTypewriter;
+    }
+
     void Start()
     {
         GameEventsManager.instance.inputEvents.ShowCursor(true);
+        Cursor.visible = false;
+        isGameStarted = false;
         AddOnClickEvents();
         //StartCoroutine(FadeIn(fullscreenPanelCG));
     }
@@ -46,13 +62,20 @@ public class MainMenuManager : MonoBehaviour
         creditsButton.onClick.AddListener(() => StartButtonAction(ButtonType.CREDITS));
     }
 
+    void SkipTypewriter(InputEventContext context)
+    {
+        if(isGameStarted) return;
+
+        codeTypewriter.SkipTypewriter();
+    }
+
     public void FadeOutBlockerPanel()
     {
         if (isGameStarted) return;
 
         isGameStarted = true;
         StartCoroutine(FadeIn(codeBlockerPanel));
-        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.MAIN_MENU_MUSIC, true);
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.STARTUP_SOUND, false);
     }
 
     void StartGame()

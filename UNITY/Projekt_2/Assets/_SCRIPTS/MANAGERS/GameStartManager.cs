@@ -70,6 +70,7 @@ public class GameStartManager : MonoBehaviour
 
     void DisableGlitch()
     {
+        GameEventsManager.instance.soundEvents.ChangeAudioVolume(1f);
         _glitchThreshold = 0;
         GameEventsManager.instance.soundEvents.StopSound();
         //Disable Particles
@@ -82,8 +83,7 @@ public class GameStartManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(true);
         GameEventsManager.instance.playerEvents.BlockPlayerInput(false);
 
-        GameEventsManager.instance.uiEvents.ShowScannerTooltip(true);
-        GameEventsManager.instance.soundEvents.PlayMusic();
+        StartCoroutine(DelayMusicStart());
     }
 
     void TestNextCoroutine(int stage)
@@ -94,6 +94,14 @@ public class GameStartManager : MonoBehaviour
     void PlayLastAnimation()
     {
         StartCoroutine(AwaitAnimation(3));
+    }
+
+    IEnumerator DelayMusicStart()
+    {
+        yield return new WaitForSeconds(6);
+
+        GameEventsManager.instance.uiEvents.ShowScannerTooltip(true);
+        GameEventsManager.instance.soundEvents.PlayMusic();
     }
 
     IEnumerator AwaitAnimation(int stage)

@@ -77,10 +77,17 @@ public class OptionsMenuManager : MonoBehaviour
 
     void UpdateScreenResolution()
     {
+        Screen.fullScreenMode = fullScreenMode;
         Screen.SetResolution(screenWidth, screenHeight, fullScreenMode, refreshRate);
 
-        _playerSettings.ScreenResolution = Screen.currentResolution;
-        _playerSettings.fullscreenMode = Screen.fullScreenMode;
+        Resolution newRes = new Resolution();
+
+        newRes.width = screenWidth;
+        newRes.height = screenHeight;
+        newRes.refreshRateRatio = refreshRate;
+
+        _playerSettings.ScreenResolution = newRes;
+        _playerSettings.fullscreenMode = fullScreenMode;
     }
 
     void UpdateAvailableResolutions()

@@ -74,6 +74,15 @@ public class SoundManager : MonoBehaviour
             case SoundType.STARTGLITCHES:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.STARTGLITCHES, isPersistent);
                 break;
+            case SoundType.SCANNER_EQUIP:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.SCANNER_EQUIP, isPersistent);
+                break;
+            case SoundType.SCANNER_UNEQUIP:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.SCANNER_UNEQUIP, isPersistent);
+                break;
+            case SoundType.STARTUP_SOUND:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.STARTUP_SOUND, isPersistent);
+                break;
         }
     }
 }

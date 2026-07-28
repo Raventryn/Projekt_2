@@ -93,6 +93,8 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(false);
 
+        GameEventsManager.instance.soundEvents.ChangeAudioVolume(0.25f);
+
         GameEventsManager.instance.dialogueEvents.PassDialogueUIPanel(_contentParent, _dialogueTypewriter, dialogueAnimator, _choiceButtons, _dialogueAudioInfo);
 
         _cameraDefaultPosition = _dialogueCamera[0].transform.localPosition;
@@ -176,6 +178,8 @@ public class EnterDialogue : MonoBehaviour
         GameEventsManager.instance.playerEvents.ShowPlayerCharacter(true);
 
         GameEventsManager.instance.inputEvents.ShowCursor(false);
+
+        GameEventsManager.instance.soundEvents.ChangeAudioVolume(1f);
     }
 
     private void ResetPanel()

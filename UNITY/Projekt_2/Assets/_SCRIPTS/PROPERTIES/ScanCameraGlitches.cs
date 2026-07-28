@@ -44,6 +44,8 @@ public class ScanCameraGlitches : MonoBehaviour
 
     void GlitchOnScan(ScannableObjectType type)
     {
+        if(_IsGlitching) return;
+
         Debug.Log("Entered");
         _IsGlitching = true;
         _IsStrenghtening = true;

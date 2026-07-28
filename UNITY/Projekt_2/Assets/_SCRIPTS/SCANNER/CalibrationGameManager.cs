@@ -109,6 +109,8 @@ public class CalibrationGameManager : MonoBehaviour
         GameEventsManager.instance.playerEvents.TogglePlayerCamera(false);
         GameEventsManager.instance.playerEvents.TogglePlayerMovement(false);
 
+        GameEventsManager.instance.soundEvents.ChangeAudioVolume(0.25f);
+
         _target = Instantiate(_targetPrefab, Camera.main.transform);
         _target.transform.localPosition = new Vector3(0, 0, 2);
 
@@ -144,6 +146,7 @@ public class CalibrationGameManager : MonoBehaviour
         _uiContentParent.SetActive(false);
 
         GameEventsManager.instance.questEvents.FinishedCalibrationMinigame();
+        GameEventsManager.instance.soundEvents.ChangeAudioVolume(1f);
     }
 
     void ComparePointerPosition()
@@ -209,6 +212,8 @@ public class CalibrationGameManager : MonoBehaviour
 
                 _sensitivityContainer.SetActive(true);
 
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCANNER_EQUIP, false);
+
                 break;
             case -1f:
             if(!_IsArmEquipped) return;
@@ -222,6 +227,8 @@ public class CalibrationGameManager : MonoBehaviour
                 StartCoroutine(EquipArmAnim(false));
 
                 _sensitivityContainer.SetActive(false);
+
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCANNER_UNEQUIP, false);
                 break;
         }
     }

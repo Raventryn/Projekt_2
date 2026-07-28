@@ -155,6 +155,8 @@ public class ScannerController : MonoBehaviour
 
                 GameEventsManager.instance.uiEvents.ShowScannerTooltip(false);
 
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCANNER_EQUIP, false);
+
                 _blockRC = false;
 
                 ScannerArm.SetActive(true);
@@ -175,6 +177,8 @@ public class ScannerController : MonoBehaviour
                 if(context == InputEventContext.SCANNER) GameEventsManager.instance.inputEvents.ChangeInputContext(InputEventContext.DEFAULT);
                 
                 if(_scannerAnimator == null) return;
+
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCANNER_UNEQUIP, false);
 
                 _blockRC = true;
                 StartCoroutine(UnlockScannerOnEquip(false));

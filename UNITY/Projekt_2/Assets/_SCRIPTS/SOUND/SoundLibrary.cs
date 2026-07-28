@@ -23,4 +23,7 @@ public class SoundLibrary : MonoBehaviour
     public AudioClip SIZZLE;
     public AudioClip MENU_MUSIC;
     public AudioClip STARTGLITCHES;
+    public AudioClip SCANNER_EQUIP;
+    public AudioClip SCANNER_UNEQUIP;
+    public AudioClip STARTUP_SOUND;
 }

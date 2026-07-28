@@ -89,6 +89,9 @@ public class CompareWaves : MonoBehaviour
     {
         objectType = type;
         StartCoroutine(ToggleContentParent(toggle));
+
+        if(type == ScannableObjectType.GAMESTART_DUMMY)
+            GameEventsManager.instance.soundEvents.ChangeAudioVolume(0.25f);
     }
 
     void CloseMinigameUI(InputEventContext context)
@@ -310,6 +313,8 @@ public class CompareWaves : MonoBehaviour
                 GameEventsManager.instance.interactionEvents.UpdateObjectScannedState(objectType);
                 ExperienceManager.instance.AddMoney(Random.Range(12, 25));
             }
+
+            //GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GLITCH, false);
 
             GameEventsManager.instance.questEvents.FinishedScanMinigame();
             GameEventsManager.instance.questEvents.HideScanGlitch(objectType);

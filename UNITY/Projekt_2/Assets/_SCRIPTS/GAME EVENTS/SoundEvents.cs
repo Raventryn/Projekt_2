@@ -53,6 +53,13 @@ public class SoundEvents
     {
         onStopStepSounds?.Invoke();
     }
+
+    public event Action<float> onChangeAudioVolume;
+
+    public void ChangeAudioVolume(float value)
+    {
+        onChangeAudioVolume?.Invoke(value);
+    }
 }
 
 public enum SoundType
@@ -77,5 +84,8 @@ public enum SoundType
     SIZZLE,
     MAIN_MENU_MUSIC,
     STARTGLITCHES,
+    SCANNER_EQUIP,
+    SCANNER_UNEQUIP,
+    STARTUP_SOUND
 
 }

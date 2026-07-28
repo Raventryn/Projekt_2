@@ -43,9 +43,10 @@ public class InterpretObject : MonoBehaviour
         //this.gameObject.SetActive(false);
     }
 
-    public void SendReplaceEvent(string objectName)
+    /*public void SendReplaceEvent(string objectName)
     {
         GameEventsManager.instance.questEvents.ReplaceInterpretableObjects(ObjectType, ScannerManager.instance.ScannableObjects[objectName]);
-    }
+        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.GLITCH, false);
+    }*/
 
 }
