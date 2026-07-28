@@ -3988,6 +3988,7 @@ MonoBehaviour:
   CLOSET_CLOSE: {fileID: 8300000, guid: 71d258f2cad5f0644ab984a8b4d66608, type: 3}
   SIZZLE: {fileID: 8300000, guid: 4b75fd1ab31f2844bb6edf91d3bde6cf, type: 3}
   MENU_MUSIC: {fileID: 8300000, guid: bec2e21cdd4117746b0ea778772d1101, type: 3}
+  STARTGLITCHES: {fileID: 0}
 --- !u!1 &550762184
 GameObject:
   m_ObjectHideFlags: 0
@@ -14163,6 +14164,8 @@ MonoBehaviour:
 
     Ceiling/Snow
     texture from <wave>AMBIENTCG.COM</wave>
+
+    Animations from <wave>Mixamo</wave>
 
 '
   m_isRightToLeft: 0

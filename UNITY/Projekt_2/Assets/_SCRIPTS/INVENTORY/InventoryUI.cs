@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Febucci.TextAnimatorForUnity;
 using TMPro;
-using UnityEditor.EditorTools;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 

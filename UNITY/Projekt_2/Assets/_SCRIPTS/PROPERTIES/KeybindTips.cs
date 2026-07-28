@@ -1,5 +1,3 @@
-using TMPro;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 
 public class KeybindTips : MonoBehaviour

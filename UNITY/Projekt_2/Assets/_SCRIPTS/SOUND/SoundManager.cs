@@ -71,6 +71,9 @@ public class SoundManager : MonoBehaviour
             case SoundType.MAIN_MENU_MUSIC:
                 GameEventsManager.instance.soundEvents.SendAudioClip(library.MENU_MUSIC, isPersistent);
                 break;
+            case SoundType.STARTGLITCHES:
+                GameEventsManager.instance.soundEvents.SendAudioClip(library.STARTGLITCHES, isPersistent);
+                break;
         }
     }
 }

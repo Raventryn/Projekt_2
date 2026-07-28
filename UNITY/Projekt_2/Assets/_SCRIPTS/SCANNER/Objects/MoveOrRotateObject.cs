@@ -70,7 +70,7 @@ public class MoveOrRotateObject : MonoBehaviour
                     transform.localEulerAngles = targetPosition;
                     IsObjectMoving = false;
 
-                    if(!_IsDoorOpen) GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_CLOSE, false);
+                    //if(!_IsDoorOpen) GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_CLOSE, false);
                 }
 
                 break;

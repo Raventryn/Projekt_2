@@ -75,6 +75,7 @@ public enum SoundType
     CLOSET_OPEN,
     CLOSET_CLOSE,
     SIZZLE,
-    MAIN_MENU_MUSIC
+    MAIN_MENU_MUSIC,
+    STARTGLITCHES,
 
 }

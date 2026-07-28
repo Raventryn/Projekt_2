@@ -78,7 +78,7 @@ public class OpenFurniture : MonoBehaviour
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDrawerPosition(m_Drawers[i]));
                             break;
                         case FurnitureType.DOOR:
-                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_OPEN, false);
+                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_OPEN, false);
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDoorRotation(m_Drawers[i], i));
                             break;
                     }
@@ -91,6 +91,7 @@ public class OpenFurniture : MonoBehaviour
                                 drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedPosition);
                                 break;
                             case FurnitureType.DOOR:
+                                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_CLOSE, false);
                                 drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedRotation);
                                 break;
                         }
