@@ -40,6 +40,7 @@ public class RoachScanBehaviour : MonoBehaviour
     void Start()
     {
         SetReferences(_roachObject);
+        _collider.enabled = false;
     }
 
     void Update()
@@ -52,7 +53,7 @@ public class RoachScanBehaviour : MonoBehaviour
             var emission = _particleSystem.emission;
             emission.rateOverTime = _particlesEmissionAmount * cookedState;
 
-            Debug.Log("Cooking!");
+            //Debug.Log("Cooking!");
 
             if(cookedState >= 1f)
             {
@@ -109,9 +110,9 @@ public class RoachScanBehaviour : MonoBehaviour
     {
         IsScannable = toggle;
         ScanObject scanObject = GetComponentInChildren<ScanObject>();
-        if (scanObject._GlitchParticles.isEmitting)
+        if (scanObject._GlitchParticles != null)
         {
-            if (scanObject._GlitchParticles != null)
+            if (scanObject._GlitchParticles.isEmitting)
             {
                 scanObject.HideScanGlitch(scanObject.ObjectType);
                 scanObject.ChangeMaterial(scanObject.DefaultMaterial); 

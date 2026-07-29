@@ -157,7 +157,7 @@ public class KukasTalkBehaviour : MonoBehaviour
                 soundClip = dialogueTypingSoundClips[randomIndex];
                 audioSource.pitch = Random.Range(minPitch, maxPitch);
             }
-            Debug.Log(character);
+            //Debug.Log(character);
             audioSource.PlayOneShot(soundClip);
         }
     }

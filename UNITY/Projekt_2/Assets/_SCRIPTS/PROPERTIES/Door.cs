@@ -4,6 +4,9 @@ using UnityEngine.UIElements;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] bool requiresItemToOpen;
+    [SerializeField] InventoryItemData itemData;
+
     [SerializeField] Vector3 _openRotation;
     AudioSource audioSource;
     [SerializeField] AudioClip openSound;
@@ -15,6 +18,8 @@ public class Door : MonoBehaviour
     bool _isDoorOpen;
     bool _isObjectMoving;
     bool _isInteactionBlocked;
+
+    bool _isUnlocked;
 
     void OnEnable()
     {
@@ -51,6 +56,18 @@ public class Door : MonoBehaviour
     void OpenDoor(GameObject gameObject)
     {
         if(gameObject != this.gameObject || _isInteactionBlocked ) return;
+
+        if (requiresItemToOpen && !_isUnlocked)
+        {
+            if(InventorySystem.instance.Get(itemData) == null)
+            {
+                
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DOOR_LOCKED, false);
+                return;
+            }
+
+            _isUnlocked = true; 
+        }
 
         _isObjectMoving = true;
         _isInteactionBlocked = true;

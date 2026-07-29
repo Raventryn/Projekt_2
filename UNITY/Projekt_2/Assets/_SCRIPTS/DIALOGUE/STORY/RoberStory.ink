@@ -63,8 +63,12 @@
     They get so lonely...
     Thank you for your help.
     ~FinishQuest(LonelinessFishQuestId)
+    This is the end of the demo but feel free to keep exploring :)
+    Here is the key to the other flats.
+    ~AddItem("INVENTORY:MASTER_KEY")
 ->END
 
 =defaultDialogue
-   This is the end of the demo but feel free to keep exploring :)
+    The developers didn't bother to give me any more voice lines...
+   
 ->END
