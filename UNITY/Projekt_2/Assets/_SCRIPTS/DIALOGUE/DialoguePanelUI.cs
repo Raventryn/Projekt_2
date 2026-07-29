@@ -173,7 +173,7 @@ public class DialoguePanelUI : MonoBehaviour
 
         char character = charData.info.character;
 
-        if(character == '!' || character == '?' || character == '.' || character == '-') return;
+        if(character == '!' || character == '?' || character == '.' || character == '-' || character == ' ') return;
 
         AudioClip[] dialogueTypingSoundClips = currentAudioInfo.dialogueTypingSoundClips;
         int frequencyLevel = currentAudioInfo.frequencyLevel;

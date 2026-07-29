@@ -9,6 +9,8 @@ public class PlayerWalkSounds : MonoBehaviour
     [SerializeField] List<AudioClip> audioClips = new List<AudioClip>();
     AudioSource audioSource;
 
+    bool isInvoking;
+
     int lastRandomIndex;
 
     void OnEnable()

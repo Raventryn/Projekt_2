@@ -277,12 +277,15 @@ public class InventoryUI : MonoBehaviour
         if(inventoryItems.Count == 1)
         {
             _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
+            _currentItem.transform.localScale *= inventoryItems[0].UIScaleMultiplier;
             SetObjectLayers(_currentItem);
         }
         else if(inventoryItems.Count == 2)
         {
             _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
+            _currentItem.transform.localScale *= inventoryItems[0].UIScaleMultiplier;
             _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
+            _previousItem.transform.localScale *= inventoryItems[1].UIScaleMultiplier;
             _nextItem = _previousItem;
 
             SetObjectLayers(_currentItem);
@@ -294,8 +297,11 @@ public class InventoryUI : MonoBehaviour
         else
         {
             _currentItem = Instantiate(inventoryItems[0].ItemPrefab,ItemPosition("middle"), Quaternion.Euler(Vector3.zero),_InventoryContentParent.transform);
+            _currentItem.transform.localScale *= inventoryItems[0].UIScaleMultiplier;
             _previousItem = Instantiate(inventoryItems[1].ItemPrefab, ItemPosition("left"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
+            _previousItem.transform.localScale *= inventoryItems[1].UIScaleMultiplier;
             _nextItem = Instantiate(inventoryItems[2].ItemPrefab, ItemPosition("right"), Quaternion.Euler(Vector3.zero), _InventoryContentParent.transform);
+            _nextItem.transform.localScale *= inventoryItems[2].UIScaleMultiplier;
 
             SetObjectLayers(_currentItem);
             SetObjectLayers(_previousItem);

@@ -137,6 +137,7 @@ public class GameStartManager : MonoBehaviour
                 break;
 
             case 3:
+                GameEventsManager.instance.playerEvents.BlockPlayerInput(true);
                 _cameraAnimator.SetTrigger("Stand");
 
                 yield return new WaitForSeconds(_animationClips[2].length - 0.05f);

@@ -64,7 +64,11 @@ public class MainMenuManager : MonoBehaviour
 
     void SkipTypewriter(InputEventContext context)
     {
+        Debug.Log("Entered");
+
         if(isGameStarted) return;
+
+        Debug.Log("Entered post if");
 
         codeTypewriter.SkipTypewriter();
     }
@@ -113,6 +117,7 @@ public class MainMenuManager : MonoBehaviour
         {
             case ButtonType.START:
                 onFinishedFade += StartGame;
+                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.STARTGLITCHES, false);
                 StartCoroutine(FadeOut());
                 break;
             case ButtonType.OPTIONS:

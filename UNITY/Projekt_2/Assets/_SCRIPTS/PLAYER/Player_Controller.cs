@@ -308,6 +308,11 @@ public class Player_Controller : MonoBehaviour
         else if (!toggle)
         {
             _allowMove = false;
+            if (isPlayingStepSounds)
+        {
+            isPlayingStepSounds = false;
+            GameEventsManager.instance.soundEvents.StopStepSounds();
+        }
         }
     }
 

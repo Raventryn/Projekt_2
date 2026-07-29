@@ -17,3 +17,4 @@ MonoBehaviour:
   ItemPrefab: {fileID: 4090862897963121948, guid: 57740dff66e96fb47acecb5afe1a4dc9, type: 3}
   ItemInfo: These little fish thrive in large swarms. When they are alone though,
     they get very lonely
+  UIScaleMultiplier: 140

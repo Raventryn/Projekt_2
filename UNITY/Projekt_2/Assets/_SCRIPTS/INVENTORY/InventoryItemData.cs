@@ -7,5 +7,6 @@ public class InventoryItemData : ScriptableObject
     public string ItemName;
     public GameObject ItemPrefab;
     public string ItemInfo;
+    public float UIScaleMultiplier;
 
 }

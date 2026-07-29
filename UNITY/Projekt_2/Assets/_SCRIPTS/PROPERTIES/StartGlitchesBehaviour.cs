@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,14 +24,7 @@ public class StartGlitchesBehaviour : MonoBehaviour
 
     void Start()
     {
-        foreach(GameObject gameObject in glitchObjects)
-        {
-            particlesSystems.Add(gameObject.GetComponentInChildren<ParticleSystem>());
-            Renderer renderer = gameObject.GetComponent<Renderer>();
-            objectRenderers.Add(renderer);
-            objectMaterials.Add(renderer.material);
-            renderer.material = glitchMaterial;
-        }
+        StartCoroutine(DelayMaterialAssignment());
     }
 
     void DisableGlitch()
@@ -43,6 +37,20 @@ public class StartGlitchesBehaviour : MonoBehaviour
         for(int i = 0; i < objectRenderers.Count; i++)
         {
             objectRenderers[i].material = objectMaterials[i];
+        }
+    }
+
+    IEnumerator DelayMaterialAssignment()
+    {
+        yield return new WaitForEndOfFrame();
+
+        foreach(GameObject gameObject in glitchObjects)
+        {
+            particlesSystems.Add(gameObject.GetComponentInChildren<ParticleSystem>());
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            objectRenderers.Add(renderer);
+            objectMaterials.Add(renderer.material);
+            renderer.material = glitchMaterial;
         }
     }
 }

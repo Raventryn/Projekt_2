@@ -15,4 +15,5 @@ MonoBehaviour:
   ItemId: INVENTORY:CLOSET_KEY
   ItemName: Closet Key
   ItemPrefab: {fileID: 5941850887192204665, guid: 948d17da6c8883e4da793d496bbde413, type: 3}
-  ItemInfo: Bla
+  ItemInfo: This key opens the closet in the bedroom
+  UIScaleMultiplier: 100
