@@ -77,7 +77,7 @@ public class ExperienceManager : MonoBehaviour
 
         CurrentMoney += _addedMoney;
 
-        Debug.Log(CurrentMoney);
+        //Debug.Log(CurrentMoney);
 
         UpdateAbilityButtons();
 

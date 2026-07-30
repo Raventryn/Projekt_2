@@ -106,7 +106,8 @@ public enum ScannableObjectType
     TERMINAL_2,
     MONITOR_1,
     MONITOR_2,
-    FISHINGROD
+    FISHINGROD,
+    BED_ROACH
     
 
 

@@ -71,6 +71,12 @@ public class ScanObject : MonoBehaviour
         Collider = GetComponent<Collider>();
         if(ScannerManager.instance.ScannedObjects.ContainsKey(ObjectType))
             _objectScanned = ScannerManager.instance.ScannedObjects[ObjectType];
+
+        if (_objectScanned || ObjectKind == ScannableObjectKind.GENERIC)
+        {
+            HideScanGlitch(ObjectType);
+        } 
+        
         _InfoCanvasContainer.SetActive(false);
 
         if(!_objectScanned && ObjectKind != ScannableObjectKind.GENERIC)
@@ -128,13 +134,15 @@ public class ScanObject : MonoBehaviour
         if(_objectScanned == true)
         {
             ChangeMaterial(DefaultMaterial);
+            if(_GlitchParticles != null)
+                _GlitchParticles.gameObject.SetActive(false);
         }
         else
         {
             ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
         }
 
-        Debug.Log(_objectScanned + " / " + ScannerManager.instance.ScannedObjects[ObjectType]);
+        //Debug.Log(_objectScanned + " / " + ScannerManager.instance.ScannedObjects[ObjectType]);
     }
 
     //Is called once, when Scanner Raycast hits Object
@@ -171,7 +179,7 @@ public class ScanObject : MonoBehaviour
     {
         if(gameObject != this.gameObject /*|| mode != ScannerMode.SCAN*/) return;
 
-        Debug.Log("Entered");
+        //Debug.Log("Entered");
 
         _scanningObject = false;
 
@@ -191,8 +199,6 @@ public class ScanObject : MonoBehaviour
         {
             ChangeMaterial(ScannerManager.instance.ObjectNotScannedMaterial);
         }
-        
-        GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SCAN_END, false);
 
         _showCanvas.HideInformationCanvas();
     }
@@ -276,8 +282,12 @@ public class ScanObject : MonoBehaviour
     public void HideScanGlitch(ScannableObjectType type)
     {
         if(type != ObjectType) return;
-        if(_GlitchParticles == null) return;
+        if(_GlitchParticles == null)
+        {
+           return; 
+        } 
         _GlitchParticles.Stop();
+        _GlitchParticles.gameObject.SetActive(false);
         
     }
 

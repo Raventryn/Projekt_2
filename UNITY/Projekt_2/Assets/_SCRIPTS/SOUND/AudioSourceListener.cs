@@ -39,7 +39,7 @@ public class AudioSourceListener : MonoBehaviour
 
     private void PlaySound(AudioClip clip, bool isPersistent)
     {
-        Debug.Log("Received Play Audio event: " + clip);
+        //Debug.Log("Received Play Audio event: " + clip);
 
         if (isPersistent)
         {

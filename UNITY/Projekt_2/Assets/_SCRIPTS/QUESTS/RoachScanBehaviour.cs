@@ -74,7 +74,7 @@ public class RoachScanBehaviour : MonoBehaviour
 
     void StartScanning(GameObject gameObject, ScannerMode mode)
     {
-        Debug.Log(gameObject);
+        //Debug.Log(gameObject);
         if(gameObject != this.gameObject || mode != ScannerMode.SCAN || !IsScannable) return;
 
         GameEventsManager.instance.soundEvents.TriggerSound(SoundType.SIZZLE, true);
@@ -114,9 +114,10 @@ public class RoachScanBehaviour : MonoBehaviour
         {
             if (scanObject._GlitchParticles.isEmitting)
             {
-                scanObject.HideScanGlitch(scanObject.ObjectType);
                 scanObject.ChangeMaterial(scanObject.DefaultMaterial); 
-            }   
+            }
+            
+            scanObject.HideScanGlitch(scanObject.ObjectType);   
         }
 
         if (!ScannerManager.instance.ScannedObjects.ContainsKey(scanObject.ObjectType))

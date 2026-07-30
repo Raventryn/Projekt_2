@@ -86,8 +86,10 @@ public class OptionsMenuManager : MonoBehaviour
         newRes.height = screenHeight;
         newRes.refreshRateRatio = refreshRate;
 
-        _playerSettings.ScreenResolution = newRes;
-        _playerSettings.fullscreenMode = fullScreenMode;
+        //_playerSettings.ScreenResolution = newRes;
+        //_playerSettings.fullScreenMode = fullScreenMode;
+
+        QualitySettings.vSyncCount = 1;
     }
 
     void UpdateAvailableResolutions()
@@ -136,8 +138,8 @@ public class OptionsMenuManager : MonoBehaviour
         fullscreenModeDropdown.options.Add(new TMP_Dropdown.OptionData("Windowed"));
         fullScreenModes.Add(FullScreenMode.FullScreenWindow);
         fullscreenModeDropdown.options.Add(new TMP_Dropdown.OptionData("Fullscreen Window"));
-        fullScreenModes.Add(FullScreenMode.ExclusiveFullScreen);
-        fullscreenModeDropdown.options.Add(new TMP_Dropdown.OptionData("Fullscreen"));
+        //fullScreenModes.Add(FullScreenMode.ExclusiveFullScreen);
+        //fullscreenModeDropdown.options.Add(new TMP_Dropdown.OptionData("Fullscreen"));
 
         fullscreenModeDropdown.value = fullScreenModes.IndexOf(Screen.fullScreenMode);
 

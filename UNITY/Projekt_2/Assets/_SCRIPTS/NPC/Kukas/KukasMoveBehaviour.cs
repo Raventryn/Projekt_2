@@ -48,7 +48,7 @@ public class RandomMovement : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        Debug.Log("Kukas searching!");
+        //Debug.Log("Kukas searching!");
 
         Vector3 point;
 
@@ -56,7 +56,7 @@ public class RandomMovement : MonoBehaviour
         {
             Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
             agent.SetDestination(point);
-            Debug.Log("Kukas moving!");
+            //Debug.Log("Kukas moving!");
         }
 
         isWaitIngForCoroutine = false;

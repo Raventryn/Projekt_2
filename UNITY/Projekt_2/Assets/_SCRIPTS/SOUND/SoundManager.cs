@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
 
     private void SendAudioClip(SoundType sound, bool isPersistent)
     {
-        Debug.Log("Received Send Audio event: " + sound);
+        //Debug.Log("Received Send Audio event: " + sound);
 
         switch (sound)
         {

@@ -18,5 +18,5 @@ public class PlayerSettingsSO : ScriptableObject
     public float MusicVolume;
 
     public Resolution ScreenResolution;
-    public FullScreenMode fullscreenMode;
+    public FullScreenMode fullScreenMode;
 }

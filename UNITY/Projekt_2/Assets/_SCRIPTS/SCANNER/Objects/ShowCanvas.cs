@@ -23,12 +23,9 @@ public class ShowCanvas : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(InfoTextAnimation(true));
 
-        if (firstTimeShowing)
-        {
-            Typewriter.ShowText(DescriptionText);
+        Typewriter.ShowText(DescriptionText);
 
-            Typewriter.StartShowingText();
-        }    
+        Typewriter.StartShowingText();  
     }
 
     public void HideInformationCanvas()
@@ -36,10 +33,7 @@ public class ShowCanvas : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(InfoTextAnimation(false));
 
-        if(TmpText.text != DescriptionText)
-        {
             TmpText.text = "";
-        }
     }
 
     public Vector3 SetCanvasWorldPosition()

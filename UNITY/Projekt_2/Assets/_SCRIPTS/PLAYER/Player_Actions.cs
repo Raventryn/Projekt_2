@@ -23,8 +23,6 @@ public class Player_Actions : MonoBehaviour
         _walkAction = _playerInput.actions["Move"];
         _equipScannerAction = _playerInput.actions["EquipScanner"];
         _lookAction = _playerInput.actions["Look"];
-
-        Debug.Log("Building References");
     }
 
     void OnEnable()
@@ -37,8 +35,6 @@ public class Player_Actions : MonoBehaviour
         _walkAction.performed += Walk;
         _equipScannerAction.performed += EquipScanner;
         _lookAction.performed += Look;
-
-        Debug.Log("Subscribed");
     }
     void OnDisable()
     {
@@ -50,8 +46,6 @@ public class Player_Actions : MonoBehaviour
         _walkAction.performed -= Walk;
         _equipScannerAction.performed -= EquipScanner;
         _lookAction.performed -= Look;
-
-        Debug.Log("Unsubscribed");
     }
 
     void Update()
@@ -64,7 +58,6 @@ public class Player_Actions : MonoBehaviour
 
     void Interact(InputAction.CallbackContext context)
     {
-        Debug.Log("Pressed Interact");
         if(!context.performed) return;
 
         GameEventsManager.instance.inputEvents.PressedInteract();
@@ -104,7 +97,7 @@ public class Player_Actions : MonoBehaviour
 
         Vector2 walkDirection = _walkAction.ReadValue<Vector2>();
 
-        Debug.Log(walkDirection);
+        //Debug.Log(walkDirection);
 
         if(walkDirection.x > 0)
         {

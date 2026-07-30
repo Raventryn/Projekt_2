@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 45175c3c5d012cc4c8129ff7691bb760, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ThresholdMap:
@@ -53,10 +53,10 @@ Material:
     m_Floats:
     - _Brightness: 1
     - _ColorLevel: 16
-    - _DitherSpread: 0.25
+    - _DitherSpread: 0.28
     - _GREYSCALE: 0
     - _NoiseResolution: 512
-    - _Pixelation: 4
+    - _Pixelation: 3.5
     - _ThresholdMapDimension: 8
     - _USECOLORPALETTE: 0
     - _USENOISE: 1

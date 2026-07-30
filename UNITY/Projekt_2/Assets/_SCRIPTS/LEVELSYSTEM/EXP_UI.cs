@@ -59,7 +59,7 @@ public class EXP_UI : MonoBehaviour
     void AssignButtons()
     {
         _currentSO = ExperienceManager.instance.Levels[ExperienceManager.instance.CurrentPlayerLevel - 1];
-        Debug.Log(_currentSO);
+        //Debug.Log(_currentSO);
 
         for(int i = 0; i < 6; i++)
         {
