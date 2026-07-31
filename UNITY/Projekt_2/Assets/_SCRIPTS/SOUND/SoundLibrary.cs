@@ -26,4 +26,16 @@ public class SoundLibrary : MonoBehaviour
     public AudioClip SCANNER_EQUIP;
     public AudioClip SCANNER_UNEQUIP;
     public AudioClip STARTUP_SOUND;
+
+    public static SoundLibrary instance;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            return;
+        }
+
+        instance = this;
+    }
 }

@@ -7,6 +7,8 @@ public class MoveOrRotateObject : MonoBehaviour
     public bool IsObjectMoving;
     public Vector3 closedPosition;
     public Vector3 closedRotation;
+
+    public AudioSource AudioSource;
     
     Vector3 _originRotation;
     Vector3 _originPosition;
@@ -70,7 +72,7 @@ public class MoveOrRotateObject : MonoBehaviour
                     transform.localEulerAngles = targetPosition;
                     IsObjectMoving = false;
 
-                    //if(!_IsDoorOpen) GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_CLOSE, false);
+                    if (!_IsDoorOpen) AudioSource.PlayOneShot(SoundLibrary.instance.CLOSET_CLOSE);
                 }
 
                 break;

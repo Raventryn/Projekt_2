@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum FurnitureType
 {
@@ -23,6 +24,8 @@ public class OpenFurniture : MonoBehaviour
     [SerializeField] List<GameObject> m_Drawers;
     [SerializeField] List<FurnitureType> m_Type;
     [SerializeField] List<OpenDirection> m_OpenDirection;
+
+    [SerializeField] AudioSource audioSource;
 
     Dictionary<GameObject, MoveOrRotateObject> drawerComponents = new Dictionary<GameObject, MoveOrRotateObject>();
 
@@ -46,7 +49,9 @@ public class OpenFurniture : MonoBehaviour
         {
             drawerComponents.Add(m_Drawers[i], m_Drawers[i].AddComponent<MoveOrRotateObject>());
             drawerComponents[m_Drawers[i]].type = m_Type[i];
-            drawerComponents[m_Drawers[i]].openDirection = m_OpenDirection[i];
+            if(drawerComponents[m_Drawers[i]].type == FurnitureType.DOOR)
+                drawerComponents[m_Drawers[i]].openDirection = m_OpenDirection[i];
+            drawerComponents[m_Drawers[i]].AudioSource = audioSource;
         }
     }
 
@@ -74,11 +79,11 @@ public class OpenFurniture : MonoBehaviour
                     switch (drawerComponents[m_Drawers[i]].type)
                     {
                         case FurnitureType.DRAWER:
-                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DRAWER_OPEN, false);
+                            audioSource.PlayOneShot(SoundLibrary.instance.DRAWER_OPEN);
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDrawerPosition(m_Drawers[i]));
                             break;
                         case FurnitureType.DOOR:
-                            GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_OPEN, false);
+                            audioSource.PlayOneShot(SoundLibrary.instance.CLOSET_OPEN);
                             drawerComponents[m_Drawers[i]].SetObjectTarget(OpenDoorRotation(m_Drawers[i], i));
                             break;
                     }
@@ -87,11 +92,11 @@ public class OpenFurniture : MonoBehaviour
                     switch (drawerComponents[m_Drawers[i]].type)
                         {
                             case FurnitureType.DRAWER:
-                                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.DRAWER_CLOSE, false);
-                                drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedPosition);
+                            audioSource.PlayOneShot(SoundLibrary.instance.DRAWER_CLOSE);
+                            drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedPosition);
                                 break;
                             case FurnitureType.DOOR:
-                                GameEventsManager.instance.soundEvents.TriggerSound(SoundType.CLOSET_CLOSE, false);
+                               
                                 drawerComponents[m_Drawers[i]].SetObjectTarget(drawerComponents[m_Drawers[i]].closedRotation);
                                 break;
                         }
