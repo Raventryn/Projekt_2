@@ -7,10 +7,23 @@ public class FishPatrolBehaviour : MonoBehaviour
     [SerializeField] float _fishSpeed = 1;
     [SerializeField] float _newTargetIntervall = 2;
     [SerializeField] float _rotationSpeed = 20;
+    [SerializeField] string FishTypeId;
     public float PositionPadding = 0;
     Vector3 _currentTarget;
+    bool isFishVisible = true;
 
     public bool IsPatroling = true;
+
+    void OnEnable()
+    {
+        if(FishTypeId == null) return;
+        GameEventsManager.instance.questEvents.onRemoveFishFromTank += ToggleFishVisible;
+    }
+    void OnDisable()
+    {
+        if(FishTypeId == null) return;
+        GameEventsManager.instance.questEvents.onRemoveFishFromTank -= ToggleFishVisible;
+    }
 
     void Start()
     {
@@ -42,5 +55,16 @@ public class FishPatrolBehaviour : MonoBehaviour
 
         if((_currentTarget - _fish.transform.localPosition).magnitude >= 0.0005f)
             _fish.transform.rotation = Quaternion.Slerp(_fish.transform.rotation, Quaternion.LookRotation(_currentTarget - _fish.transform.localPosition, Vector3.up), _rotationSpeed * Time.deltaTime);
+    }
+
+    void ToggleFishVisible(string id)
+    {
+        if(FishTypeId == null) return;
+
+        if(id == FishTypeId)
+        {
+            isFishVisible = !isFishVisible;
+            _fish.SetActive(isFishVisible);
+        }
     }
 }

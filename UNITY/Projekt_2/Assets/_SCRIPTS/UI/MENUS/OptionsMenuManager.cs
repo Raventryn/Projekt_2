@@ -96,7 +96,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         foreach(Resolution res in allResolutions)
         {
-            if(res.refreshRateRatio.value == refreshRate.value)
+            if(res.refreshRateRatio.value == refreshRate.value && !resolutions.Contains(res))
                 resolutions.Add(res);
         }
 

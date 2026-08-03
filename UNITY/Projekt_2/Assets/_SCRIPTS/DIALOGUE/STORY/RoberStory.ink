@@ -13,37 +13,87 @@
 
 = canStartGameStart
     Hello.
-    I am Rober.
-    Bla Bla Janitor Bla Bla.
-    Before I let you go we need to calibrate your extremities.
-    Follow the movements of the projection with your hand.
-    ~StartQuest(GameStartQuestId)
+    I did not expect you to actually boot.
+    That drive I installed was almost as corruped as the one you had before.
+    ~AdvanceDialogueCamera("1")
+    Can you talk?
+    <br>
+    *[Hello World!]
+        ->continueGameStart
+    *[Quack!]
+        ->continueGameStart
+    *[Yes.]
+        ->continueGameStart
 ->END
+
+=continueGameStart
+    ~AdvanceDialogueCamera("0")
+    <wiggle s*2>Eureka!</wiggle>
+    Alright, so before I overwhelm you with too much information. Let's complete your setup first!
+    Can you move your arms?
+    ~StartQuest(GameStartQuestId)
+
+-> END
 
 = inProgressGameStart
     Well done.
-    Your databanks are heavily corrupted.
-    I have some datasets for you to restore some of the lost data.
-    You will have to match the frequency of the incoming data.
-    Adjust the wavelength and amplitude to the incoming signal.
+    ~AdvanceDialogueCamera("2")
+    Your main data storage was heavily damaged, because you were exposed to the cold for far too long.
+    I installed a new one, but its also somewhat broken and incomplete. 
+    I will load up some additional data packages, let's see if that fixes the problem?
+    
     ~AdvanceQuest(GameStartQuestId)
 ->END
 
 =canFinishGameStart
-    Good job.
-    Now your data should mostly be up to date.
-    I have an old scanner here which you can use to complete your databanks.
-    Now that you're back in working order I need you to do me a favor.
-    The residents around here use fish to generate electricity.
-    These fish need to be maintained and require frequent checkups.
-    Could you remind everyone to bring their fish to me, so I can make sure everything is in order?
+    <wave>Hmmm...</wave>
+    ~AdvanceDialogueCamera("1")
+    Seems like it worked, but you're still missing some data.
+    You might come across some visual glitches.
+    But I think for now you should be well enough to be let loose and experience the world.
+    ~AdvanceDialogueCamera("0")
+    I am <wave>Rober</wave>, the caretaker of this community.
+    Your serial number is <wave>DOL-179</wave>, looks like you were a companion robot, just like our Claire...  Maybe you will help her get out of her shell.
+    Since the other humans went away, I've been repairing robots and providing them with a place to live.
+    I'm sure you will fit in nicely.
+   ~AdvanceDialogueCamera("2") 
+    There's still some preparations to make for your new apartment and your welcome gift isn't even ready yet.
+    Will you do something for me in the meantime?
+    
+    <br>
+    
+    *[Already?!]
+        <shake>Hah very funny!</shake> I always liked the humour of you companion robots!
+        -> finishGameStart
+    *[Of course!]
+        Thank you! I always found you companion robots' willingness to help very human like.
+        -> finishGameStart
+    
+=finishGameStart
+    ~AdvanceDialogueCamera("0")
+    You may still encounter visual glitches, as we couldn't restore your data fully.
+    To help with that, you can have my old Scanner to help with processing what you can't identify.
+    Helped me many times before, <wave>these circuts don't get any younger, haha.</wave>
+    Why don't you check out your new home and introduce yourself to everyone while repairing your data?
+    ...
+    ~AdvanceDialogueCamera("1")
+    Oh and also, can your remind them to bring their fish to me, for another checkup?
+    <br>
+    *[Fish?]
+        We use water movement from fishes swimming round their tanks, to keep the lights on around here.
+        Everyone gets their own personal one.
+       <wave>But don't your worry about that yet!</wave>
+       ~AdvanceDialogueCamera("0")
+    Of, of you go now! <swing>Have fun!</swing>
+    (The devs only finished one character and quest for this demo, meet her in the apartment on the other end of the hallway lol)
+    
     //~AdvanceQuest(GameStartQuestId)
     ~FinishQuest(GameStartQuestId)
     ~SitPlayerUp()
     ~StartQuest(LonelinessFishQuestId)
     //Start Main Quest
-->END
-
+-> END
+    
 =finishedGameStart
     { LonelinessFishQuestState :
     - "IN_PROGRESS": -> waitingForFish
@@ -54,21 +104,28 @@
 ->END
 
 =waitingForFish
-    I still need that fish.
+    I'm a little busy right now, finishing up your stuff. 
+    Do you have the fishes yet?
+    *[Not yet]
+        <incr>Seems like you're just as busy then!</incr>
 -> END
 
 =deliveringFish
-    Ah you have the fish.
-    Poor little guy, I wish I had more of his kind.
-    They get so lonely...
-    Thank you for your help.
+    I'm a little busy right now, finishing up your stuff. 
+    Do you have the fishes yet?
+    *[Not yet]
+        <incr>Seems like you're just as busy then!</incr>
+        ->END
+    *[I've got them!]
+        Thank you very much! Time to check these fellas out!
     ~FinishQuest(LonelinessFishQuestId)
+    ~AdvanceDialogueCamera("1")
     This is the end of the demo but feel free to keep exploring :)
-    Here is the key to the other flats.
+    Here is the key to the other apartments, if you want to check them out.
     ~AddItem("INVENTORY:MASTER_KEY")
 ->END
 
 =defaultDialogue
-    The developers didn't bother to give me any more voice lines...
+    The developers didn't bother to give me any more voice lines. Beep beep boop, haboaschrenken, beep boop.
    
 ->END

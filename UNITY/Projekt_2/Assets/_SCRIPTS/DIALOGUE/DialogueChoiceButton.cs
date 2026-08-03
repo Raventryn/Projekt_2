@@ -28,7 +28,7 @@ public class DialogueChoiceButton : MonoBehaviour
 
         buttonRectTransform = GetComponent<RectTransform>();
 
-        _defaultScaleValue = buttonRectTransform.localScale.x;
+        _defaultScaleValue = 1f;
     }
 
     void Update()

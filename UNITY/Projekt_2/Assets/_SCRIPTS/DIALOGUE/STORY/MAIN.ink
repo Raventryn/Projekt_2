@@ -6,6 +6,7 @@ EXTERNAL AdvanceDialogueCamera(cameraStage)
 EXTERNAL SitPlayerUp()
 EXTERNAL AddItem(Id)
 EXTERNAL RemoveItem(Id)
+EXTERNAL RemoveFishFromTank(Id)
 
 //quest id (quest id + ID for variable name)
 VAR DummyQuestId = "DummyQuest"
@@ -17,7 +18,7 @@ VAR LonelinessFishQuestId = "LonelinessFishQuest"
 VAR DummyQuestState = "REQUIREMENTS_NOT_MET"
 VAR RoachQuestState = "REQUIREMENTS_NOT_MET"
 VAR GameStartQuestState = "REQUIREMENTS_NOT_MET"
-VAR LonelinessFishQuestState = "CAN_START"
+VAR LonelinessFishQuestState = "REQUIREMENTS_NOT_MET"
 
 INCLUDE DummyQuestTest.ink
 INCLUDE TestStory.ink

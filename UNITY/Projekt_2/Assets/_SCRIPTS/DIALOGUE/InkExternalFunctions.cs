@@ -13,6 +13,7 @@ public class InkExternalFunctions
         story.BindExternalFunction("SitPlayerUp", () => SitPlayerUp());
         story.BindExternalFunction("AddItem", (string Id) => AddItem(Id));
         story.BindExternalFunction("RemoveItem", (string Id) => RemoveItem(Id));
+        story.BindExternalFunction("RemoveFishFromTank", (string Id) => RemoveFishFromTank(Id));
         //story.BindExternalFunction("SendSpitEvent", () => SendSpitEvent());
     }
 
@@ -67,5 +68,10 @@ public class InkExternalFunctions
     private void RemoveItem(string Id)
     {
         GameEventsManager.instance.inventoryEvents.RemoveItem(Id);
+    }
+
+    private void RemoveFishFromTank(string Id)
+    {
+        GameEventsManager.instance.questEvents.RemoveFishFromTank(Id);
     }
 }

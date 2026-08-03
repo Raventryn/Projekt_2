@@ -20,7 +20,7 @@ public class GameStartSettingsSetup : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         RefreshRate refreshRate = Screen.currentResolution.refreshRateRatio;
-        FullScreenMode fullScreenMode = Screen.fullScreenMode;
+        FullScreenMode fullScreenMode = FullScreenMode.FullScreenWindow;
         List<Resolution> allResolutions = new List<Resolution>();
         List<Resolution> resolutions = new List<Resolution>();
         allResolutions.AddRange(Screen.resolutions);
@@ -35,9 +35,9 @@ public class GameStartSettingsSetup : MonoBehaviour
 
         //Resolution resolution = new Resolution();
 
-        resolution.width = Display.main.systemWidth;
-        resolution.height = Display.main.systemHeight;
-        resolution.refreshRateRatio = Screen.currentResolution.refreshRateRatio;
+        //resolution.width = Display.main.systemWidth;
+        //resolution.height = Display.main.systemHeight;
+        //resolution.refreshRateRatio = Screen.currentResolution.refreshRateRatio;
 
         Debug.LogWarning(resolution);
 

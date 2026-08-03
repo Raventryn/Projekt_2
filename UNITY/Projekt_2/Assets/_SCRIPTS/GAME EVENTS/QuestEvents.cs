@@ -138,4 +138,11 @@ public class QuestEvents
     {
         onDisableGlitches?.Invoke();
     }
+
+    public event Action<string> onRemoveFishFromTank;
+
+    public void RemoveFishFromTank(string id)
+    {
+        onRemoveFishFromTank?.Invoke(id);
+    }
 }
