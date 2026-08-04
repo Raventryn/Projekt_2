@@ -46,6 +46,15 @@ public class OptionsMenuManager : MonoBehaviour
 
     float _lookSensitivity;
 
+    void OnEnable()
+    {
+        GameEventsManager.instance.uiEvents.onQuitGame += SetResolutionOnQuit;
+    }
+    void OnDisable()
+    {
+        GameEventsManager.instance.uiEvents.onQuitGame -= SetResolutionOnQuit;
+    }
+
     void Start()
     {
         _lookSensitivity = _playerSettings.LookSensitivity;
@@ -67,6 +76,13 @@ public class OptionsMenuManager : MonoBehaviour
         UpdateAvailableResolutions();
 
         UpdateFullScreenModes();
+
+        SetResolution(resolutions.Count - 1);
+    }
+
+    void SetResolutionOnQuit()
+    {
+        SetResolution(resolutions.Count - 1);
     }
 
     void ReturnToMainMenu()

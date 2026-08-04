@@ -37,4 +37,11 @@ public class UIEvents
     {
         onGlitchOnMenu?.Invoke();
     }
+
+    public event Action onQuitGame;
+
+    public void QuitGame()
+    {
+        onQuitGame?.Invoke();
+    }
 }

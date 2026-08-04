@@ -102,6 +102,7 @@ public class MainMenuManager : MonoBehaviour
 
     void QuitGame()
     {
+        GameEventsManager.instance.uiEvents.QuitGame();
         onFinishedFade -= QuitGame;
         Application.Quit();
     }
