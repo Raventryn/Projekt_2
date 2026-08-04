@@ -162,8 +162,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A lighter, a portable device used to create a controlled flame and can
-        be used to ignite various flammable items.
+      value: 'A lighter, a portable device used to create a controlled flame and
+        can be used to ignite various flammable items.
+
+        Invaluable.'
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

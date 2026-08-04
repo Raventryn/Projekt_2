@@ -162,8 +162,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A pistol, a device used for attacking targets with high velocity projectiles.
+      value: 'A pistol, a device used for attacking targets with high velocity projectiles.
         Illegal to own.
+
+        Horrible invention.'
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

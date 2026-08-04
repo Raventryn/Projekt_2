@@ -233,8 +233,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A dual-screen computer terminal for remapping an android's programms
+      value: 'A dual-screen computer terminal for remapping an android''s programms
         and configurations.
+
+        Quiet!'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -233,8 +233,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A Pizza, a flat dough topped with tomato sauce and various other ingredients,
-        typically baked in a wood fired oven.
+      value: "A Pizza, a flat dough topped with tomato sauce and various other ingredients,
+        typically baked in a wood fired oven. \nThe developers told me they want
+        one right now."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

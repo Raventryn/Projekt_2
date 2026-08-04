@@ -166,8 +166,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A brick, a unit of clay and a type of builing material used to build
-        walls, pavements and other elements in masonry. '
+      value: "A brick, a unit of clay and a type of builing material used to build
+        walls, pavements and other elements in masonry. \nFavourite tool of the protesters."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

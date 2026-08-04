@@ -162,8 +162,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A first-aid kit, a collection of supplies and equipment to provide immediate
-        medical care for minor injuries and emergencies.
+      value: "A first-aid kit, a collection of supplies and equipment to provide
+        immediate medical care for minor injuries and emergencies. \nProbably for
+        the fish?"
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

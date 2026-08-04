@@ -233,9 +233,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A pair of winter goggles, used to enclose or protect the area surrounding
+      value: "A pair of winter goggles, used to enclose or protect the area surrounding
         the eye from particles, water or chemicals. Also used to protect the eyes
-        from light. '
+        from light. \n"
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

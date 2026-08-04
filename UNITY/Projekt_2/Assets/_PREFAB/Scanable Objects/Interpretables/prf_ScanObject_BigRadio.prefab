@@ -162,9 +162,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A big radio receiver and CD Player, an electronic device that receives
+      value: "A big radio receiver and CD Player, an electronic device that receives
         radio waves and converts the information carried by them to a usable form
-        and also plays compact discs. '
+        and also plays compact discs. \nKinda looks like Rober."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

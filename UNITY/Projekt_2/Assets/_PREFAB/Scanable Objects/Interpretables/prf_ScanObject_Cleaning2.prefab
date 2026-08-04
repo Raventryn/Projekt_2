@@ -166,7 +166,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A bottle of dishsoap, a type of liquid detergent used in dishwashing.
+      value: "A bottle of dishsoap, a type of liquid detergent used in dishwashing.
+        \nIt looks tasty."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

@@ -241,8 +241,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A pack of cigarettes, thin cylinders of tabacco rolled in thin paper
-        for smoking.
+      value: "A pack of cigarettes, thin cylinders of tabacco rolled in thin paper
+        for smoking. \nNo wonder they died so early."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

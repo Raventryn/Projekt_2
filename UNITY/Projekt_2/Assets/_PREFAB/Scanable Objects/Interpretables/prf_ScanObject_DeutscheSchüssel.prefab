@@ -237,8 +237,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A glass bowl in the shape of cabbage, often associated with german
-        culture. '
+      value: A glass bowl in the shape of cabbage, a staple of this country's culture.
+        I heard these just show up.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

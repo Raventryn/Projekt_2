@@ -233,8 +233,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A bullet, a kinetic projectile, a component of firearm ammunition that
-        is shot from a gun barrel. '
+      value: "A bullet, a kinetic projectile, a component of firearm ammunition that
+        is shot from a gun barrel. \nSad."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

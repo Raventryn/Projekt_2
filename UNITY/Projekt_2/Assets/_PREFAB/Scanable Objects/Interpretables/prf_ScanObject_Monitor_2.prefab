@@ -233,8 +233,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A horizontal display, an output device that visually displays information
+      value: 'A horizontal display, an output device that visually displays information
         of an attached computer.
+
+        Can''t think for themselves.'
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

@@ -237,7 +237,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A spatula, a kitchen utensil used for scraping and scrambling foods.
+      value: 'A spatula, a kitchen utensil used for scraping and scrambling foods.
+
+        Thoughts
+        of sponge.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

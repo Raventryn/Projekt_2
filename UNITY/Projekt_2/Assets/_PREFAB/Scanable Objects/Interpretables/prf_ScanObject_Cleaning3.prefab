@@ -162,8 +162,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'An all purpose cleaner, effective with most common kinds of dirt. The
-        dilute solution is neutal and weakly alkaline and safe for use on most surfaces. '
+      value: "An all purpose cleaner, effective with most common kinds of dirt. The
+        dilute solution is neutal and weakly alkaline and safe for use on most surfaces.
+        \nIt's frozen."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

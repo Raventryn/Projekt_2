@@ -5003,8 +5003,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'An opened compact disk of the 2029 album "Project E", a dreamlike synth-heavy
-        concrpt album about a character losing themselves to their internalized shame. '
+      value: "An opened compact disk of the 2029 album \"Project E\", a dreamlike
+        synth-heavy concrpt album about a character losing themselves to their internalized
+        shame. \nThe public only later realised it wasn't so bad."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

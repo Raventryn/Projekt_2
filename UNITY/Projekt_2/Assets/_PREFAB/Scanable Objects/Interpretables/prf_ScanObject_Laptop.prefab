@@ -162,8 +162,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: A portable personal computer in a clamshell form with a flat-screen
-        on the upper lid and keyboard and pointing device on the lower lid.
+      value: "A portable personal computer in a clamshell form with a flat-screen
+        on the upper lid and keyboard and pointing device on the lower lid. \nThey're
+        so pretentious, all the time."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

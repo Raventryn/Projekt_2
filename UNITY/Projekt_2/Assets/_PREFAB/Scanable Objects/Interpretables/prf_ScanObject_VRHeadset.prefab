@@ -313,8 +313,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A VR headset, a head-mounted device that uses 3D near-eye displays
-        and proportional tracking to provide a virtual reality environment. '
+      value: "A VR headset, a head-mounted device that uses 3D near-eye displays
+        and proportional tracking to provide a virtual reality environment. \nGreat
+        way to ignore reality."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

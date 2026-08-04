@@ -162,8 +162,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A screwdriver, a handhold tool used for loosening and fastening screw
-        by rotating. '
+      value: "A screwdriver, a handhold tool used for loosening and fastening screw
+        by rotating. \nMakes my head spin."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment

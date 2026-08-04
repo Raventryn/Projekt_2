@@ -20,6 +20,8 @@
     -> END
 = canStart
     Oh another DOL-Unit.
+    ...
+    Are you new?
     Where did he find you?
     <br>
         *[I don't remember.]
@@ -34,19 +36,20 @@
     The others keep to themselves I think, but so do I.
     But .. 
     ~AdvanceDialogueCamera("1")
-    But those <shake a*2>damned</shake> tiny animals don't seem to get that.
+    But those <shake a*2>damned</shake> critters don't seem to get that.
 
     <br>
     *[What are they?]
          Privacy indvading, bothersome little shits. I've told them countless times that I don't want to be their friend.
          ~AdvanceDialogueCamera("0")
-         <wave a * 0.5f>I don't make friends.</wave>
+         I don't .. <wave a * 0.5f>make friends.</wave>
          -> finishStart
         
     
 = finishStart
     <br>
     *[Should I try to uninvite them?]
+        ...
         Suit yourself.
         ~StartQuest(RoachQuestId)
         ->END
@@ -61,14 +64,15 @@
     *[They're gone!]
         Oh...
         Well, um .. thank you then.
-        You're good at convincing people, it seems. 
+        You're good at convincing, it seems. 
         ...
-        Please don't do that with me. 
+        Please don't try that with me. 
         ->continueFinish
         
 = continueFinish
-    *[Actually Rober asked me to bring him your fish.]
+    *[Actually, Rober asked me to bring him your fish.]
         Oh.
+        ...
         Time flies really fast lately.
         I'm not sure, well ..
         You can take him... but bring him back as soon as you can.
@@ -84,9 +88,10 @@
     Do you think he enjoys his time away from me?
     I get the feeling he doesn't want to be around other fish.
     ~AdvanceDialogueCamera("2")
+    ...
     Why else would Rober have given him to me?
     And ..
     ~AdvanceDialogueCamera("0")
     His colors change so much when he's gone. 
-    Can't be good. 
+    <wiggle>Can't be good.</wiggle>
     -> END

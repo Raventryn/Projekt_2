@@ -162,8 +162,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A moisturizing face cream, used for protecting and moisturizing the
-        skin. '
+      value: "A moisturizing face cream, used for protecting and moisturizing the
+        skin. \nNot mine though."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

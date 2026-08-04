@@ -163,9 +163,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_text
-      value: 'A discus fish, native to the Amazon river basin, highly popular with
+      value: "A discus fish, native to the Amazon river basin, highly popular with
         fishkeepers for their striking appearance. Known to be very difficult to
-        keep. '
+        keep. \nExcentric little guy. Doing his own thing."
       objectReference: {fileID: 0}
     - target: {fileID: 8121019404221555178, guid: de01862ecf5ea9840888cb25240d0aeb, type: 3}
       propertyPath: m_HorizontalAlignment
