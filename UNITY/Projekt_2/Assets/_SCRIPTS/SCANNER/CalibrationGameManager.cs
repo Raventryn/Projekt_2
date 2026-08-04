@@ -325,6 +325,8 @@ public class CalibrationGameManager : MonoBehaviour
 
     void ShowHintPanels(GameObject panel, bool toggle)
     {
+        if(_panels[1].activeSelf) return;
+
         panel.SetActive(toggle);
         _lastUsedPanel = panel;
     }
