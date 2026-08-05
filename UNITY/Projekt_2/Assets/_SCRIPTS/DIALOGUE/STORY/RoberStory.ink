@@ -73,12 +73,12 @@
 =finishGameStart
     ~AdvanceDialogueCamera("0")
     You may still encounter visual glitches, as we couldn't restore your data fully.
-    To change that, you can have my old Scanner to help with processing what you can't identify.
+    To change that, you can have my old scanner to help with processing what you can't identify.
     Helped me many times before, <wave>these circuts don't get any younger, haha.</wave>
     Why don't you check out your new home and introduce yourself to everyone while repairing your data?
     ...
     ~AdvanceDialogueCamera("1")
-    Oh and also, can your remind them to bring their fish to me, for another checkup?
+    Oh and also, can you remind them to bring their fish to me, for another checkup?
     <br>
     *[Fish?]
         We use water movement from fishes swimming around their tanks, to keep the lights on around here.
@@ -106,14 +106,14 @@
 
 =waitingForFish
     I'm a little busy right now, finishing up your stuff. 
-    Do you have the fishes yet?
+    Do you have the fish yet?
     *[Not yet]
         <incr>Seems like you're just as busy then!</incr>
 -> END
 
 =deliveringFish
     I'm a little busy right now, finishing up your stuff. 
-    Do you have the fishes yet?
+    Do you have the fish yet?
     <br>
     *[Not yet]
         <incr>Seems like you're just as busy then!</incr>

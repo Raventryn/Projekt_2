@@ -37,16 +37,15 @@
     But .. 
     ~AdvanceDialogueCamera("1")
     But those <shake a*2>damned</shake> critters don't seem to get that.
-
     <br>
     *[What are they?]
+        <shake>Cockroaches.</shake>
          Privacy indvading, bothersome little shits. I've told them countless times that I don't want to be their friend.
          ~AdvanceDialogueCamera("0")
-         I don't .. <wave a * 0.5f>make friends.</wave>
          -> finishStart
-        
     
 = finishStart
+    I don't .. <wave a * 0.5f>make friends.</wave>
     <br>
     *[Should I try to uninvite them?]
         ...
@@ -66,12 +65,13 @@
         Well, um .. thank you then.
         You're good at convincing, it seems. 
         ...
-        Please don't try that with me. 
         ->continueFinish
         
 = continueFinish
+    Please don't try that with me.
+    <br>
     *[Actually, Rober asked me to bring him your fish.]
-        Oh.
+        Oh... already?
         ...
         Time flies really fast lately.
         I'm not sure, well ..

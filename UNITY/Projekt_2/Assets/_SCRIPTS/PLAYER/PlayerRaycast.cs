@@ -67,6 +67,9 @@ public class PlayerRaycast : MonoBehaviour
                 case "Locked_Object":
                     GameEventsManager.instance.inputEvents.Interaction(InteractionType.LOCKED_OBJECT, hit.collider.gameObject);
                     break;
+                case "Door":
+                    GameEventsManager.instance.inputEvents.Interaction(InteractionType.DOOR, hit.collider.gameObject);
+                    break;
             }
             
         }
@@ -110,6 +113,9 @@ public class PlayerRaycast : MonoBehaviour
                         break;
                     case "Locked_Object":
                         GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.PICKUP);
+                        break;
+                    case "Door":
+                        GameEventsManager.instance.uiEvents.ShowInteractionWidget(InteractionType.DOOR);
                         break;
                 }
             }  

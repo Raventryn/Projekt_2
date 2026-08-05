@@ -35,6 +35,7 @@ public class ScanObject : MonoBehaviour
     float _pulseScaleValue;
     bool _isPulseObject;
     bool _isObjectPulseSize;
+    bool _hasParticles;
     string _descriptionText;
 
 
